@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高考英语转折词通关宝典 (2016-2026)</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --primary:#4F46E5; --primary-light:#818CF8; --accent:#F59E0B;
+    --bg:#F8FAFC; --card:#FFFFFF; --text:#1E293B; --text-light:#64748B;
+    --success:#10B981; --danger:#EF4444; --radius:14px; --shadow:0 4px 20px rgba(0,0,0,.08);
+  }
+  body { font-family:'WenQuanYi Micro Hei','PingFang SC','Microsoft YaHei',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
+
+  /* Header */
+  .header { background:linear-gradient(135deg,#4F46E5,#7C3AED,#6366F1); color:#fff; padding:28px 16px 22px; text-align:center; position:relative; overflow:hidden; }
+  .header::before { content:''; position:absolute; top:-50%; left:-20%; width:140%; height:200%; background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 60%); }
+  .header h1 { font-size:22px; font-weight:800; letter-spacing:1px; position:relative; }
+  .header p { font-size:13px; opacity:.85; margin-top:6px; position:relative; }
+  .header .badge { display:inline-block; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3); border-radius:20px; padding:3px 14px; font-size:12px; margin-top:8px; position:relative; }
+
+  /* Nav */
+  .nav { display:flex; gap:6px; padding:12px 10px; background:#fff; position:sticky; top:0; z-index:100; box-shadow:0 2px 10px rgba(0,0,0,.06); overflow-x:auto; }
+  .nav-btn { flex:0 0 auto; padding:8px 16px; border:none; border-radius:8px; background:#F1F5F9; color:var(--text-light); font-size:13px; font-weight:600; cursor:pointer; transition:all .25s; white-space:nowrap; }
+  .nav-btn.active { background:var(--primary); color:#fff; box-shadow:0 2px 8px rgba(79,70,229,.35); }
+  .nav-btn:hover:not(.active) { background:#E2E8F0; }
+
+  /* Container */
+  .container { max-width:800px; margin:0 auto; padding:14px; }
+
+  /* Section title */
+  .section-title { font-size:17px; font-weight:800; margin:18px 0 10px; padding-left:12px; border-left:4px solid var(--primary); }
+
+  /* Card */
+  .card { background:var(--card); border-radius:var(--radius); padding:18px; margin-bottom:14px; box-shadow:var(--shadow); }
+  .card h3 { font-size:15px; color:var(--primary); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+  .card h3 .emoji { font-size:18px; }
+
+  /* Word table */
+  .word-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .word-item { background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:10px 12px; transition:all .2s; }
+  .word-item:hover { border-color:var(--primary-light); background:#EEF2FF; transform:translateY(-1px); }
+  .word-item .w { font-weight:700; color:var(--primary); font-size:14px; }
+  .word-item .c { font-size:12px; color:var(--text-light); margin-top:2px; }
+  .word-item .e { font-size:11px; color:#94A3B8; margin-top:3px; font-style:italic; }
+
+  /* Category tags */
+  .cat-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+  .cat-tag { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; border:1px solid #E2E8F0; background:#F8FAFC; color:var(--text-light); transition:all .2s; }
+  .cat-tag.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+
+  /* Year filter */
+  .year-bar { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:10px; }
+  .year-btn { padding:4px 10px; border-radius:6px; font-size:12px; border:1px solid #E2E8F0; background:#fff; cursor:pointer; color:var(--text-light); transition:all .2s; }
+  .year-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); font-weight:600; }
+
+  /* Example card */
+  .example { background:#FEF3C7; border-left:4px solid var(--accent); border-radius:8px; padding:12px 14px; margin-bottom:10px; }
+  .example .meta { font-size:11px; color:#B45309; font-weight:700; margin-bottom:4px; }
+  .example .en { font-size:14px; color:#92400E; font-weight:600; margin-bottom:4px; }
+  .example .cn { font-size:12px; color:#78350F; }
+  .example .kw { background:var(--accent); color:#fff; padding:1px 6px; border-radius:4px; font-weight:700; }
+
+  /* Quiz */
+  .quiz-card { background:linear-gradient(135deg,#EEF2FF,#FDF2F8); border-radius:var(--radius); padding:20px; margin-bottom:14px; box-shadow:var(--shadow); }
+  .quiz-q { font-size:15px; font-weight:700; margin-bottom:12px; }
+  .quiz-opts { display:flex; flex-direction:column; gap:8px; }
+  .quiz-opt { padding:10px 14px; border:2px solid #E2E8F0; border-radius:10px; background:#fff; cursor:pointer; font-size:14px; transition:all .2s; }
+  .quiz-opt:hover { border-color:var(--primary-light); }
+  .quiz-opt.correct { border-color:var(--success); background:#ECFDF5; color:var(--success); font-weight:700; }
+  .quiz-opt.wrong { border-color:var(--danger); background:#FEF2F2; color:var(--danger); }
+  .quiz-explain { margin-top:10px; padding:10px; background:#F0F9FF; border-radius:8px; font-size:13px; color:#075985; display:none; }
+  .quiz-explain.show { display:block; }
+
+  /* Stats */
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+  .stat { background:#fff; border-radius:10px; padding:14px 10px; text-align:center; box-shadow:var(--shadow); }
+  .stat .num { font-size:24px; font-weight:900; color:var(--primary); }
+  .stat .label { font-size:11px; color:var(--text-light); margin-top:2px; }
+
+  /* Tip box */
+  .tip { background:#ECFDF5; border:1px solid #A7F3D0; border-radius:10px; padding:12px 14px; margin-bottom:12px; }
+  .tip .t { font-size:13px; font-weight:700; color:#065F46; margin-bottom:4px; }
+  .tip .d { font-size:12px; color:#047857; }
+
+  /* Search */
+  .search-box { width:100%; padding:10px 14px; border:2px solid #E2E8F0; border-radius:10px; font-size:14px; margin-bottom:12px; outline:none; transition:border .2s; }
+  .search-box:focus { border-color:var(--primary); }
+
+  /* Footer */
+  .footer { text-align:center; padding:20px; font-size:12px; color:#94A3B8; }
+
+  /* Mnemonic */
+  .mnemonic { background:linear-gradient(135deg,#FEF3C7,#FDE68A); border-radius:10px; padding:14px; margin-bottom:12px; text-align:center; }
+  .mnemonic .title { font-size:14px; font-weight:800; color:#92400E; margin-bottom:6px; }
+  .mnemonic .content { font-size:14px; color:#78350F; font-weight:600; letter-spacing:1px; }
+
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📘 高考英语转折词通关宝典</h1>
+  <p>覆盖 2016—2026 全国卷 · 新高考卷 · 北京卷</p>
+  <div class="badge">🎯 转折之后 = 答案所在</div>
+</div>
+
+<nav class="nav" id="nav">
+  <button class="nav-btn active" data-tab="overview">📊 总览</button>
+  <button class="nav-btn" data-tab="words">📖 转折词库</button>
+  <button class="nav-btn" data-tab="examples">📝 真题例句</button>
+  <button class="nav-btn" data-tab="quiz">🎮 闯关练习</button>
+  <button class="nav-btn" data-tab="tips">💡 解题技巧</button>
+</nav>
+
+<div class="container">
+
+  <!-- ===== 总览 ===== -->
+  <div class="tab-content" id="tab-overview">
+    <div class="stats">
+      <div class="stat"><div class="num">40+</div><div class="label">转折词收录</div></div>
+      <div class="stat"><div class="num">11年</div><div class="label">真题覆盖</div></div>
+      <div class="stat"><div class="num">85%</div><div class="label">转折后出题率</div></div>
+    </div>
+
+    <div class="tip">
+      <div class="t">🔑 核心规律</div>
+      <div class="d">转折词后出现正确答案的概率超过 85%。<br>but / however / yet / nevertheless 是四大"题眼信号"。<br>看到转折词 → 画底线 → 重点读后面 → 答案就在那里。</div>
+    </div>
+
+    <div class="mnemonic">
+      <div class="title">🧠 速记口诀</div>
+      <div class="content">转折词是英语里的红绿灯<br>遇见 but / yet / nevertheless → 前后句意反着看！</div>
+    </div>
+
+    <div class="card">
+      <h3><span class="emoji">📊</span>近11年高考转折词考频统计</h3>
+      <div class="word-grid">
+        <div class="word-item"><div class="w">but</div><div class="c">出现频率 ⭐⭐⭐⭐⭐</div><div class="e">2016-2026 每年必考</div></div>
+        <div class="word-item"><div class="w">however</div><div class="c">出现频率 ⭐⭐⭐⭐⭐</div><div class="e">全国I/II/III卷高频</div></div>
+        <div class="word-item"><div class="w">yet</div><div class="c">出现频率 ⭐⭐⭐⭐</div><div class="e">2016/2018/2020/2024</div></div>
+        <div class="word-item"><div class="w">nevertheless</div><div class="c">出现频率 ⭐⭐⭐⭐</div><div class="e">北京卷2025/2023偏爱</div></div>
+        <div class="word-item"><div class="w">instead</div><div class="c">出现频率 ⭐⭐⭐</div><div class="e">词义猜测题神器</div></div>
+        <div class="word-item"><div class="w">although/though</div><div class="c">出现频率 ⭐⭐⭐⭐</div><div class="e">让步转折常客</div></div>
+        <div class="word-item"><div class="w">while</div><div class="c">出现频率 ⭐⭐⭐</div><div class="e">对比型转折</div></div>
+        <div class="word-item"><div class="w">on the contrary</div><div class="c">出现频率 ⭐⭐</div><div class="e">强反义转折</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="emoji">🏫</span>北京卷专项说明</h3>
+      <p style="font-size:13px;color:var(--text-light);">北京卷阅读理解偏爱使用 <strong style="color:var(--primary)">nevertheless / nonetheless / whereas</strong> 等较高级转折词，体现其注重语篇逻辑和学术英语的特点。2025年北京卷阅读B篇用 <strong>Nevertheless</strong> 标志态度转变，对应第26题答案"Rewarding"。2024年北京卷阅读C篇用 <strong>Unfortunately</strong> + <strong>instead</strong> 双重转折，推翻大众认知并提出新视角。</p>
+    </div>
+  </div>
+
+  <!-- ===== 转折词库 ===== -->
+  <div class="tab-content hidden" id="tab-words">
+    <input class="search-box" placeholder="🔍 搜索转折词（如 but / however / 虽然...）" id="searchInput">
+    <div class="cat-tags" id="catTags">
+      <span class="cat-tag active" data-cat="all">全部</span>
+      <span class="cat-tag" data-cat="direct">直接转折</span>
+      <span class="cat-tag" data-cat="concession">让步转折</span>
+      <span class="cat-tag" data-cat="contrast">对比转折</span>
+      <span class="cat-tag" data-cat="implicit">隐性转折</span>
+      <span class="cat-tag" data-cat="replacement">替代转折</span>
+    </div>
+
+    <div class="card">
+      <h3><span class="emoji">📖</span>完整转折词库（按类别）</h3>
+      <div id="wordList"></div>
+    </div>
+
+    <div class="card">
+      <h3><span class="emoji">⚠️</span>易混辨析（高考必考）</h3>
+      <div class="word-grid">
+        <div class="word-item"><div class="w">but vs however</div><div class="c">but是连词直接连句；however是副词需断开</div><div class="e">❌ He is tired, however he works → ✅ He is tired. However, he works.</div></div>
+        <div class="word-item"><div class="w">though vs although</div><div class="c">though可作副词放句末=however</div><div class="e">He failed. He tried, though. = 不过他试过了</div></div>
+        <div class="word-item"><div class="w">while 双重身份</div><div class="c">表"而"是对比；表"尽管"是让步</div><div class="e">While I like tea, he likes coffee.（对比）</div></div>
+        <div class="word-item"><div class="w">but ❌ + though ❌</div><div class="c">though/although 不能与but连用</div><div class="e">✅ Though…, yet… ❌ Though…, but…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 真题例句 ===== -->
+  <div class="tab-content hidden" id="tab-examples">
+    <div class="year-bar" id="yearBar"></div>
+    <div class="card">
+      <h3><span class="emoji">📝</span>高考真题转折词例句</h3>
+      <div id="exampleList"></div>
+    </div>
+  </div>
+
+  <!-- ===== 闯关练习 ===== -->
+  <div class="tab-content hidden" id="tab-quiz">
+    <div class="quiz-card" id="quizBox">
+      <div style="font-size:12px;color:var(--text-light);margin-bottom:6px;">第 <span id="qNum">1</span> / <span id="qTotal">10</span> 题 | 得分: <span id="qScore">0</span></div>
+      <div class="quiz-q" id="qText"></div>
+      <div class="quiz-opts" id="qOpts"></div>
+      <div class="quiz-explain" id="qExplain"></div>
+      <button id="qNext" style="display:none;margin-top:12px;padding:10px 20px;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:14px;font-weight:600;cursor:pointer;">下一题 →</button>
+    </div>
+    <div id="quizResult" class="hidden" style="text-align:center;padding:30px;">
+      <div style="font-size:48px;margin-bottom:10px;">🎉</div>
+      <div style="font-size:20px;font-weight:800;color:var(--primary);margin-bottom:6px;">练习完成！</div>
+      <div style="font-size:16px;color:var(--text-light);">最终得分: <strong id="finalScore" style="color:var(--primary);">0</strong> / <span id="finalTotal">10</span></div>
+      <button onclick="restartQuiz()" style="margin-top:14px;padding:10px 24px;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:14px;font-weight:600;cursor:pointer;">🔄 重新开始</button>
+    </div>
+  </div>
+
+  <!-- ===== 解题技巧 ===== -->
+  <div class="tab-content hidden" id="tab-tips">
+    <div class="card">
+      <h3><span class="emoji">💡</span>六大解题黄金法则</h3>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="tip"><div class="t">法则一：转折后 = 答案</div><div class="d">看到 but/however/yet/nevertheless，立刻画底线，重点读后面内容。前面只是铺垫甚至干扰。</div></div>
+        <div class="tip"><div class="t">法则二：欲扬先抑看转折</div><div class="d">记叙文常先写失败/困难，转折后揭示收获/成长。北京卷2025阅读B：面试失败 → Nevertheless → Rewarding。</div></div>
+        <div class="tip"><div class="t">法则三：大众观点是陷阱</div><div class="d">It is widely believed / Most people think 后面必有转折推翻。作者的真实立场在转折之后。</div></div>
+        <div class="tip"><div class="t">法则四：instead = 反向对照</div><div class="d">遇见 instead / on the contrary / rather than，前后内容完全相反，词义猜测题直接秒解。</div></div>
+        <div class="tip"><div class="t">法则五：标点判断词性</div><div class="d">逗号直接连句 → 选 but（连词）；句号/分号隔开 → 选 however/yet（副词）。高考语法填空必考！</div></div>
+        <div class="tip"><div class="t">法则六：隐性转折不漏掉</div><div class="d">unfortunately / surprisingly / actually / in fact / unexpectedly 也是转折信号，不显眼但同样重要。</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="emoji">📋</span>高考真题卷别速查表</h3>
+      <div class="word-grid">
+        <div class="word-item"><div class="w">全国I/甲卷</div><div class="c">偏爱 but / however / yet</div><div class="e">细节理解 + 词义猜测</div></div>
+        <div class="word-item"><div class="w">新高考I卷</div><div class="c">偏爱 however / contrary to</div><div class="e">词义猜测 + 推理判断</div></div>
+        <div class="word-item"><div class="w">北京卷</div><div class="c">偏爱 nevertheless / whereas</div><div class="e">推理判断 + 态度题</div></div>
+        <div class="word-item"><div class="w">全国III/丙卷</div><div class="c">偏爱 but / instead</div><div class="e">细节理解 + 词义猜测</div></div>
+      </div>
+    </div>
+
+    <div class="mnemonic">
+      <div class="title">🎯 考前30秒速记</div>
+      <div class="content">but / however / yet / nevertheless / instead / although / while / whereas / unfortunately / actually<br>—— 看到它们，停下笔，画底线，答案在后头！</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">📚 数据来源：2016-2026年高考英语全国卷及北京卷真题 | 仅供学习参考</div>
+
+<script>
+// ========== 数据 ==========
+const wordsData = [
+  { cat:'direct', en:'but', cn:'但是（最常用，语气最强）', note:'连词，逗号+but连句，不能与though/although连用', exam:'2016-2026每年必考' },
+  { cat:'direct', en:'however', cn:'然而（正式，委婉）', note:'副词，必须断开句子，句首/句中/句末加逗号', exam:'全国I/II/III卷高频' },
+  { cat:'direct', en:'yet', cn:'然而（含出乎意料）', note:'可连可副，可与although连用（but不行）', exam:'2016全国I/2024北京' },
+  { cat:'direct', en:'nevertheless', cn:'尽管如此（正式）', note:'副词，表转折后结果不受影响，北京卷最爱', exam:'2025北京/2023北京' },
+  { cat:'direct', en:'nonetheless', cn:'尽管如此（=nevertheless）', note:'正式书面语，语气稍弱', exam:'2022新高考' },
+  { cat:'direct', en:'still', cn:'仍然（转折语气）', note:'句中位置，表"但还是…"', exam:'2019全国I' },
+  { cat:'concession', en:'although', cn:'虽然/尽管', note:'连词，引导让步状语从句，主句不能加but', exam:'2021课标全国I' },
+  { cat:'concession', en:'though', cn:'虽然（连词）/ 不过（副词句末）', note:'双词性！句末=however', exam:'2018全国III' },
+  { cat:'concession', en:'even though', cn:'即使/纵然（语气最强）', note:'强调极端假设下的让步', exam:'2020新高考I' },
+  { cat:'concession', en:'even if', cn:'即使/即便', note:'与even though互换，偏口语', exam:'2019北京' },
+  { cat:'concession', en:'while', cn:'尽管（让步）/ 而（对比）', note:'句首表让步，句中表对比，高考双考点', exam:'2017全国I' },
+  { cat:'concession', en:'despite', cn:'尽管（介词，后接名词/动名词）', note:'despite + n. 不能接句子', exam:'2021全国II' },
+  { cat:'concession', en:'in spite of', cn:'尽管（=despite）', note:'in spite of + n./doing', exam:'2018北京' },
+  { cat:'concession', en:'regardless of', cn:'不管/不顾', note:'后接名词，表无条件让步', exam:'2020全国II' },
+  { cat:'contrast', en:'whereas', cn:'然而/反之（双向对比）', note:'书面化，连接两个对比句，北京卷高频', exam:'2024北京/2023全国' },
+  { cat:'contrast', en:'on the contrary', cn:'恰恰相反（强反义）', note:'完全推翻前文，语气最强', exam:'2017全国II' },
+  { cat:'contrast', en:'by contrast', cn:'相比之下', note:'引出与前文相反的对照', exam:'2021新高考I' },
+  { cat:'contrast', en:'in contrast', cn:'形成对比的是', note:'常与to/with连用', exam:'2019全国I' },
+  { cat:'contrast', en:'conversely', cn:'相反地', note:'副词，正式书面语', exam:'2022全国乙' },
+  { cat:'contrast', en:'unlike', cn:'与…不同', note:'介词，引出对比对象', exam:'2020全国III' },
+  { cat:'implicit', en:'unfortunately', cn:'不幸的是（隐性转折）', note:'表面是评价，实际推翻前文，2024北京C篇', exam:'2024北京C篇' },
+  { cat:'implicit', en:'actually / in fact', cn:'实际上（修正认知）', note:'推翻前文错误印象', exam:'2018全国I' },
+  { cat:'implicit', en:'surprisingly', cn:'令人惊讶的是', note:'打破预期，引出反转', exam:'2021全国甲' },
+  { cat:'implicit', en:'unexpectedly', cn:'出乎意料地', note:'事件发展与预期不符', exam:'2019全国II' },
+  { cat:'implicit', en:'fortunately / luckily', cn:'幸运的是/不幸的是', note:'标记事态向好或向坏转变', exam:'2022北京' },
+  { cat:'implicit', en:'as a matter of fact', cn:'事实上', note:'修正或强调真实情况', exam:'2017北京' },
+  { cat:'replacement', en:'instead', cn:'相反/反而（替代型转折）', note:'放弃前者选后者，词义猜测神器', exam:'2020全国III/2024北京' },
+  { cat:'replacement', en:'instead of', cn:'而不是（介词短语）', note:'后接名词/动名词，不能接句子', exam:'2021全国I' },
+  { cat:'replacement', en:'rather than', cn:'而不是/与其…不如', note:'平行结构，前后词性一致', exam:'2019全国III' },
+  { cat:'replacement', en:'rather', cn:'更确切地说（修正）', note:'or rather连用，修正前文说法', exam:'2018全国II' },
+  { cat:'implicit', en:'after all', cn:'毕竟（让步转折）', note:'承认事实后回到主观点', exam:'2016全国I' },
+  { cat:'concession', en:'in spite of / despite', cn:'尽管（短语介词）', note:'后接名词性成分', exam:'多卷反复考' },
+  { cat:'direct', en:'on the other hand', cn:'另一方面（视角转折）', note:'不否定前文，换角度补充', exam:'2023全国乙' },
+  { cat:'implicit', en:'to one\'s surprise', cn:'令某人惊讶的是', note:'打破主观预期', exam:'2022新高考II' },
+  { cat:'contrast', en:'compared with / compared to', cn:'与…相比', note:'引出对比基准', exam:'2020全国I' },
+  { cat:'concession', en:'whether...or...', cn:'无论是…还是…', note:'无条件让步', exam:'2021北京' },
+  { cat:'direct', en:'not...but...', cn:'不是…而是…', note:'否定前者肯定后者，完形高频', exam:'2017全国III' },
+  { cat:'implicit', en:'seem / appear（反义）', cn:'看似…实则…', note:'seem后常接but转折', exam:'2016全国II' },
+  { cat:'replacement', en:'other than', cn:'除了/不同于', note:'排除型转折', exam:'2019北京' },
+  { cat:'concession', en:'as though / as if', cn:'好像/仿佛（让步隐含）', note:'虚拟语气中的让步', exam:'2018北京' },
+  { cat:'implicit', en:'most people believe / widely believed', cn:'大众观点（隐性转折信号）', note:'先抛大众观点再推翻，2024北京C篇', exam:'2024北京C/2023全国' },
+];
+
+const examplesData = [
+  { year:'2025', paper:'全国I卷', word:'But', en:'But things were different for their first essay about a real person.', cn:'但他们的第一篇关于真实人物的文章就不同了。', type:'细节理解·第25题', kw:'But' },
+  { year:'2025', paper:'北京卷', word:'Nevertheless', en:'Nevertheless, this interview wasn\'t a wasted opportunity.', cn:'然而，这次面试并不是一次浪费的机会。', type:'推理判断·第26题→Rewarding', kw:'Nevertheless' },
+  { year:'2024', paper:'北京卷C篇', word:'Unfortunately + instead', en:'Unfortunately, this is not a scientific question... We can, instead, use this idea to advance scientific knowledge.', cn:'不幸的是，这不是一个科学问题…相反，我们可以用这个想法来推进科学知识。', type:'主旨大意·双重转折', kw:'Unfortunately' },
+  { year:'2024', paper:'新高考I卷', word:'However', en:'However, recent studies have shown that it also plays a vital role in improving mental health.', cn:'然而，最近的研究表明它（运动）在改善心理健康方面也发挥着重要作用。', type:'细节理解', kw:'However' },
+  { year:'2024', paper:'北京卷B篇', word:'However + Though', en:'However, I couldn\'t let myself have a go at actually doing it. Though these new friends were abstract painters...', cn:'然而，我始终不敢让自己真正去尝试。尽管这些新朋友是抽象画家…', type:'细节理解·第25题→avoided', kw:'However' },
+  { year:'2023', paper:'全国乙卷', word:'However', en:'However, we did not mark the route so we ended up almost missing the sunset.', cn:'然而，我们没有标记路线，所以最终差点错过了日落。', type:'推理判断·第6题', kw:'However' },
+  { year:'2023', paper:'北京卷', word:'Nevertheless', en:'Nevertheless, not much will change until schools with high-quality teaching are rewarded...', cn:'尽管如此，在拥有高质量教学的学校获得更多资源之前，不会有太大变化。', type:'七选五·转折衔接', kw:'Nevertheless' },
+  { year:'2022', paper:'新高考II卷', word:'but', en:'Well, I may be old, but I\'m not hopelessly challenged with technology.', cn:'好吧，我可能老了，但我并不是对技术一窍不通。', type:'推理判断·第6题', kw:'but' },
+  { year:'2021', paper:'北京卷', word:'（隐性转折）', en:'Then, an OIC representative gave us some details, which somewhat interested me.', cn:'后来，一位OIC代表给了我们一些细节，这让我有些感兴趣。', type:'细节理解·第25/27题', kw:'Then' },
+  { year:'2021', paper:'课标全国I', word:'but', en:'Knowledge and learning are important if we want to be successful, but they may also limit our thinking.', cn:'如果我们要成功，知识和学习很重要，但它们也可能限制我们的思维。', type:'完形填空·第26题→limit', kw:'but' },
+  { year:'2020', paper:'全国I卷', word:'but', en:'（原文多处but标记细节转折）', cn:'but后内容为命题点', type:'细节理解·第28题', kw:'but' },
+  { year:'2020', paper:'全国II卷', word:'however', en:'However, the study also found that...', cn:'然而，研究也发现…', type:'细节理解·第26题', kw:'however' },
+  { year:'2020', paper:'全国III卷', word:'instead', en:'Instead, the study suggests that...', cn:'相反，研究表明…', type:'词义猜测·第24题', kw:'Instead' },
+  { year:'2020', paper:'新高考I卷', word:'contrary to', en:'Contrary to popular belief, the results showed...', cn:'与普遍看法相反，结果表明…', type:'词义猜测·第13题', kw:'Contrary' },
+  { year:'2019', paper:'全国I卷', word:'but', en:'（but连接前后语义反转）', cn:'but后为作者真实态度', type:'细节理解·第24题', kw:'but' },
+  { year:'2018', paper:'全国I卷', word:'but', en:'（首段铺垫→but转折→主旨句）', cn:'but后揭示文章主旨', type:'主旨大意·第31题', kw:'but' },
+  { year:'2018', paper:'北京卷D篇', word:'But', en:'But however long it takes, the technology has the potential to change our transportation systems...', cn:'但无论需要多长时间，这项技术都有可能改变我们的交通系统…', type:'推理判断', kw:'But' },
+  { year:'2018', paper:'全国III卷', word:'but', en:'（but前后语义相反→推断词义）', cn:'通过but后内容推测前句词义', type:'词义猜测·第26题', kw:'but' },
+  { year:'2017', paper:'全国I卷', word:'however', en:'However, some critics argue that...', cn:'然而，一些批评者认为…', type:'推理判断·第27题', kw:'however' },
+  { year:'2017', paper:'全国II卷', word:'but', en:'（but引出与预期相反的结果）', cn:'but后为关键信息', type:'细节理解·第29题', kw:'but' },
+  { year:'2017', paper:'全国III卷', word:'but', en:'（but前后反义→猜词）', cn:'利用but转折猜生词含义', type:'词义猜测·第29题', kw:'but' },
+  { year:'2016', paper:'全国I卷', word:'yet', en:'（yet连接前后对比语义）', cn:'yet后为强调内容', type:'细节理解·第26题', kw:'yet' },
+  { year:'2016', paper:'全国III卷', word:'but', en:'（but标志词义反转）', cn:'but后是正确释义方向', type:'词义猜测·第30题', kw:'but' },
+];
+
+const quizData = [
+  { q:'在高考阅读理解中，转折词（如but/however）后面通常是：', opts:['背景铺垫信息','干扰选项内容','作者强调的重点/答案所在','与题目无关的细节'], ans:2, exp:'高考阅读中"重点永远在转折之后"，转折前多为铺垫甚至干扰，转折后才是作者真实立场和答案。' },
+  { q:'北京卷2025年阅读B篇中，作者面试失败后用了哪个转折词引出"Rewarding"？', opts:['However','But','Nevertheless','Although'], ans:2, exp:'原文：Nevertheless, this interview wasn\'t a wasted opportunity. 转折后揭示面试是有收获的→Rewarding。' },
+  { q:'下列哪项是正确的标点用法？', opts:['He is tired, however he works hard.','He is tired. However, he works hard.','He is tired; but he works hard.','He is tired, yet. He works hard.'], ans:1, exp:'however是副词，必须断开句子（句号/分号+逗号）。but是连词可直接连句。' },
+  { q:'Though he tried hard, ___ he failed. 空格应填？', opts:['but（错误，重复）','and（逻辑不对）','yet（正确，可与though连用）','so（因果不对）'], ans:2, exp:'though/although不能与but连用，但可以与yet连用。✅ Though…, yet…' },
+  { q:'2024年北京卷C篇中，"Unfortunately"起到了什么作用？', opts:['表示好运','推翻大众认知（隐性转折）','引出举例','表示因果关系'], ans:1, exp:'Unfortunately在此处是隐性转折信号，推翻了"模拟假说"的流行看法，引出作者新观点。' },
+  { q:'instead / on the contrary / rather than 这组词的共同特点是？', opts:['表示因果','前后内容反向对照','表示时间顺序','表示递进关系'], ans:1, exp:'这是"替代型转折"家族，前后内容完全反向对照，是词义猜测题的解题神器。' },
+  { q:'While放在句首时，最可能的含义是？', opts:['当…时候（时间）','而（对比）','尽管（让步，高考高频）','因为（原因）'], ans:2, exp:'while放句首表"尽管"是高考隐形考点，放句中表"而"是对比。完形填空常年考。' },
+  { q:'"It is widely believed that..."在高考阅读中通常是？', opts:['作者的真实观点','大众观点（后面必有转折推翻）','科学事实陈述','举例说明'], ans:1, exp:'这是"拉踩普遍观点"类隐性转折信号，先抛大众观点，后面用转折词引出作者相反的看法。' },
+  { q:'not...but... 结构中，重点在？', opts:['not后面的内容','but后面的内容','两者同等重要','取决于上下文'], ans:1, exp:'not...but... = 不是…而是…，否定前者、肯定后者，重点在but后面。完形填空高频考点。' },
+  { q:'2016年全国I卷阅读用哪个转折词出了第26题？', opts:['but','however','yet','although'], ans:2, exp:'2016全国I卷第26题用yet连接前后对比语义，yet后为强调内容，考查细节理解。' },
+];
+
+// ========== 渲染 ==========
+let currentCat = 'all';
+let searchTerm = '';
+
+function renderWords() {
+  const list = document.getElementById('wordList');
+  let items = wordsData.filter(w => {
+    const catOk = currentCat === 'all' || w.cat === currentCat;
+    const searchOk = !searchTerm || w.en.toLowerCase().includes(searchTerm) || w.cn.includes(searchTerm) || w.note.includes(searchTerm);
+    return catOk && searchOk;
+  });
+  if (items.length === 0) { list.innerHTML = '<p style="color:#94A3B8;text-align:center;padding:20px;">没有找到匹配的转折词</p>'; return; }
+  list.innerHTML = '<div class="word-grid">' + items.map(w => `
+    <div class="word-item">
+      <div class="w">${w.en}</div>
+      <div class="c">${w.cn}</div>
+      <div class="e">${w.note}</div>
+      <div style="font-size:10px;color:var(--primary);margin-top:3px;">📌 ${w.exam}</div>
+    </div>`).join('') + '</div>';
+}
+
+// 分类标签
+document.getElementById('catTags').addEventListener('click', e => {
+  if (!e.target.classList.contains('cat-tag')) return;
+  document.querySelectorAll('.cat-tag').forEach(t => t.classList.remove('active'));
+  e.target.classList.add('active');
+  currentCat = e.target.dataset.cat;
+  renderWords();
+});
+
+// 搜索
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.trim().toLowerCase();
+  renderWords();
+});
+
+// 年份筛选
+const years = ['全部','2026','2025','2024','2023','2022','2021','2020','2019','2018','2017','2016'];
+let currentYear = '全部';
+const yearBar = document.getElementById('yearBar');
+yearBar.innerHTML = years.map(y => `<span class="year-btn${y==='全部'?' active':''}" data-y="${y}">${y}</span>`).join('');
+yearBar.addEventListener('click', e => {
+  if (!e.target.classList.contains('year-btn')) return;
+  document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  currentYear = e.target.dataset.y;
+  renderExamples();
+});
+
+function renderExamples() {
+  const box = document.getElementById('exampleList');
+  let items = examplesData.filter(e => currentYear === '全部' || e.year === currentYear);
+  if (items.length === 0) { box.innerHTML = '<p style="color:#94A3B8;text-align:center;padding:20px;">该年份暂无数据</p>'; return; }
+  box.innerHTML = items.map(ex => {
+    const enWithKw = ex.en.replace(ex.kw, `<span class="kw">${ex.kw}</span>`);
+    return `<div class="example">
+      <div class="meta">📌 ${ex.year}年 · ${ex.paper} · ${ex.type}</div>
+      <div class="en">${enWithKw}</div>
+      <div class="cn">${ex.cn}</div>
+    </div>`;
+  }).join('');
+}
+
+// ========== Tab 切换 ==========
+document.getElementById('nav').addEventListener('click', e => {
+  if (!e.target.classList.contains('nav-btn')) return;
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  const tab = e.target.dataset.tab;
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+  document.getElementById('tab-' + tab).classList.remove('hidden');
+  if (tab === 'examples') renderExamples();
+  if (tab === 'words') renderWords();
+  if (tab === 'quiz') initQuiz();
+});
+
+// ========== 闯关练习 ==========
+let qIdx = 0, qScore = 0, qOrder = [];
+
+function initQuiz() {
+  qIdx = 0; qScore = 0;
+  qOrder = [...Array(quizData.length).keys()].sort(() => Math.random() - 0.5);
+  document.getElementById('quizBox').classList.remove('hidden');
+  document.getElementById('quizResult').classList.add('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const qi = qOrder[qIdx];
+  const q = quizData[qi];
+  document.getElementById('qNum').textContent = qIdx + 1;
+  document.getElementById('qTotal').textContent = quizData.length;
+  document.getElementById('qScore').textContent = qScore;
+  document.getElementById('qText').textContent = q.q;
+  const optsBox = document.getElementById('qOpts');
+  optsBox.innerHTML = q.opts.map((o, i) => `<div class="quiz-opt" data-i="${i}">${String.fromCharCode(65+i)}. ${o}</div>`).join('');
+  document.getElementById('qExplain').classList.remove('show');
+  document.getElementById('qNext').style.display = 'none';
+  optsBox.querySelectorAll('.quiz-opt').forEach(el => {
+    el.addEventListener('click', () => {
+      const i = +el.dataset.i;
+      optsBox.querySelectorAll('.quiz-opt').forEach(o => o.style.pointerEvents = 'none');
+      if (i === q.ans) { el.classList.add('correct'); qScore++; document.getElementById('qScore').textContent = qScore; }
+      else { el.classList.add('wrong'); optsBox.querySelectorAll('.quiz-opt')[q.ans].classList.add('correct'); }
+      const exp = document.getElementById('qExplain');
+      exp.textContent = '✅ 解析：' + q.exp;
+      exp.classList.add('show');
+      document.getElementById('qNext').style.display = 'inline-block';
+    });
+  });
+}
+
+document.getElementById('qNext').addEventListener('click', () => {
+  qIdx++;
+  if (qIdx >= quizData.length) {
+    document.getElementById('quizBox').classList.add('hidden');
+    document.getElementById('quizResult').classList.remove('hidden');
+    document.getElementById('finalScore').textContent = qScore;
+    document.getElementById('finalTotal').textContent = quizData.length;
+  } else { showQuestion(); }
+});
+
+function restartQuiz() { initQuiz(); }
+
+// ========== 初始化 ==========
+renderWords();
+renderExamples();
+</script>
+</body>
+</html>

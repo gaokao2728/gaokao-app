@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高考语文背诵默写练习</title>
+<style>
+  :root {
+    --primary: #4a6cf7;
+    --primary-light: #eef2ff;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-500: #64748b;
+    --gray-700: #334155;
+    --gray-900: #0f172a;
+    --radius: 12px;
+    --shadow: 0 2px 12px rgba(0,0,0,.08);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,.12);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ===== Header ===== */
+  .header {
+    background: linear-gradient(135deg, #4a6cf7 0%, #7c3aed 100%);
+    color: #fff;
+    padding: 20px 0 28px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-lg);
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .header h1 { font-size: 20px; font-weight: 700; letter-spacing: .5px; }
+  .header h1 .icon { margin-right: 6px; }
+  .header-meta { font-size: 13px; opacity: .85; }
+  .nav-tabs {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .nav-tab {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    background: rgba(255,255,255,.15);
+    color: #fff;
+    border: none;
+    white-space: nowrap;
+    transition: all .2s;
+  }
+  .nav-tab.active { background: #fff; color: var(--primary); font-weight: 600; }
+  .nav-tab:hover:not(.active) { background: rgba(255,255,255,.25); }
+
+  /* ===== Main ===== */
+  .main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 16px 80px;
+  }
+
+  /* ===== Stats Bar ===== */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 14px 10px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .stat-num { font-size: 24px; font-weight: 700; color: var(--primary); }
+  .stat-label { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+
+  /* ===== Filter Bar ===== */
+  .filter-bar {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .filter-bar label { font-size: 13px; color: var(--gray-500); margin-right: 4px; }
+  .chip {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50);
+    color: var(--gray-700);
+    transition: all .2s;
+    user-select: none;
+  }
+  .chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .chip:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
+
+  /* ===== Cards ===== */
+  .card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: all .25s;
+  }
+  .card:hover { box-shadow: var(--shadow-lg); }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .card-title { font-size: 16px; font-weight: 700; }
+  .card-title .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge-wen { background: #ede9fe; color: #7c3aed; }
+  .badge-shi { background: #dbeafe; color: #2563eb; }
+  .badge-star { color: var(--warning); font-size: 13px; }
+
+  /* ===== Question ===== */
+  .question-context {
+    background: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--gray-700);
+    margin-bottom: 14px;
+    line-height: 1.8;
+  }
+  .question-context .hint-label {
+    font-weight: 600;
+    color: var(--primary);
+    margin-right: 4px;
+  }
+
+  .answer-area { margin-bottom: 12px; }
+  .answer-input {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px 14px;
+    border: 2px solid var(--gray-200);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color .2s;
+    line-height: 1.8;
+  }
+  .answer-input:focus { outline: none; border-color: var(--primary); }
+  .answer-input.correct { border-color: var(--success); background: #f0fdf4; }
+  .answer-input.wrong { border-color: var(--danger); background: #fef2f2; }
+
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all .2s;
+  }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: #3a5ce5; }
+  .btn-outline { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+  .btn-outline:hover { background: var(--primary-light); }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-ghost { background: var(--gray-100); color: var(--gray-700); }
+  .btn-ghost:hover { background: var(--gray-200); }
+
+  /* ===== Result ===== */
+  .result-box {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 8px;
+    display: none;
+    animation: fadeIn .3s;
+  }
+  .result-box.show { display: block; }
+  .result-box.correct { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .result-box.wrong { background: #fef2f2; border: 1px solid #fecaca; }
+  .result-title { font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+  .result-title.ok { color: var(--success); }
+  .result-title.bad { color: var(--danger); }
+  .diff-line { font-size: 14px; line-height: 2; }
+  .diff-correct { color: var(--success); font-weight: 600; }
+  .diff-wrong { color: var(--danger); text-decoration: line-through; }
+  .diff-missing { color: var(--danger); border-bottom: 2px solid var(--danger); padding: 0 2px; }
+
+  /* ===== Flashcard Mode ===== */
+  .flashcard {
+    perspective: 1000px;
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    min-height: 220px;
+    transform-style: preserve-3d;
+    transition: transform .5s;
+    cursor: pointer;
+  }
+  .flashcard-inner.flipped { transform: rotateY(180deg); }
+  .flashcard-face {
+    position: absolute;
+    width: 100%;
+    min-height: 220px;
+    backface-visibility: hidden;
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .flashcard-front {
+    background: linear-gradient(135deg, #eef2ff, #faf5ff);
+    border: 2px solid #c7d2fe;
+  }
+  .flashcard-back {
+    background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+    border: 2px solid #bbf7d0;
+    transform: rotateY(180deg);
+  }
+  .flashcard-prompt { font-size: 13px; color: var(--gray-500); margin-bottom: 10px; }
+  .flashcard-text { font-size: 18px; font-weight: 600; line-height: 1.8; }
+  .flashcard-hint { font-size: 13px; color: var(--gray-500); margin-top: 14px; }
+  .flashcard-nav { display: flex; gap: 10px; justify-content: center; margin-top: 16px; }
+
+  /* ===== Progress ===== */
+  .progress-section { margin-bottom: 20px; }
+  .progress-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    box-shadow: var(--shadow);
+  }
+  .progress-name { flex: 1; font-size: 14px; font-weight: 500; }
+  .progress-bar-bg {
+    width: 120px;
+    height: 8px;
+    background: var(--gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width .4s;
+  }
+  .progress-count { font-size: 12px; color: var(--gray-500); min-width: 50px; text-align: right; }
+
+  /* ===== Wrong Book ===== */
+  .wrong-item {
+    padding: 12px 14px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #fef2f2;
+  }
+  .wrong-item .wrong-q { font-size: 13px; color: var(--gray-700); margin-bottom: 6px; }
+  .wrong-item .wrong-a { font-size: 14px; color: var(--danger); }
+  .wrong-item .wrong-correct { font-size: 14px; color: var(--success); font-weight: 600; }
+
+  /* ===== Section Title ===== */
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 24px 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid var(--primary);
+  }
+
+  /* ===== Empty State ===== */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--gray-500);
+  }
+  .empty-state .big-icon { font-size: 48px; margin-bottom: 12px; }
+
+  /* ===== Toast ===== */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--gray-900);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    opacity: 0;
+    transition: all .3s;
+    z-index: 999;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 640px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .header h1 { font-size: 17px; }
+    .card { padding: 16px; }
+    .flashcard-text { font-size: 16px; }
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <h1><span class="icon">📖</span>高考语文背诵默写练习</h1>
+      <div class="header-meta">北京卷 · 50篇 · 2028届适用</div>
+    </div>
+    <div class="nav-tabs" id="navTabs">
+      <button class="nav-tab active" data-view="practice">✍️ 情境默写</button>
+      <button class="nav-tab" data-view="flashcard">🃏 背诵卡片</button>
+      <button class="nav-tab" data-view="wrongbook">📕 错题库</button>
+      <button class="nav-tab" data-view="progress">📊 学习进度</button>
+      <button class="nav-tab" data-view="directory">📋 篇目总览</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Stats -->
+  <div class="stats-bar" id="statsBar"></div>
+
+  <!-- Practice View -->
+  <div class="view" id="view-practice">
+    <div class="filter-bar" id="filterBar">
+      <label>筛选：</label>
+      <span class="chip active" data-filter="all">全部</span>
+      <span class="chip" data-filter="wen">文言文</span>
+      <span class="chip" data-filter="shi">诗词曲</span>
+      <span class="chip" data-filter="star5">★★★★★</span>
+      <span class="chip" data-filter="star4">★★★★</span>
+      <span class="chip" data-filter="star3">★★★</span>
+      <span class="chip" data-filter="wrong">只看错题</span>
+    </div>
+    <div id="practiceContainer"></div>
+    <div class="btn-row" style="justify-content:center; margin-top:16px;">
+      <button class="btn btn-primary" id="btnNext">下一题 →</button>
+      <button class="btn btn-outline" id="btnRandom">🎲 随机一题</button>
+    </div>
+  </div>
+
+  <!-- Flashcard View -->
+  <div class="view" id="view-flashcard" style="display:none;">
+    <div class="filter-bar">
+      <label>模式：</label>
+      <span class="chip active" data-fcmode="prompt">看提示背原文</span>
+      <span class="chip" data-fcmode="verse">看原文背提示</span>
+    </div>
+    <div id="flashcardContainer"></div>
+  </div>
+
+  <!-- Wrong Book View -->
+  <div class="view" id="view-wrongbook" style="display:none;">
+    <div class="section-title">我的错题库</div>
+    <div id="wrongBookContainer"></div>
+  </div>
+
+  <!-- Progress View -->
+  <div class="view" id="view-progress" style="display:none;">
+    <div class="section-title">篇目掌握进度</div>
+    <div id="progressContainer"></div>
+  </div>
+
+  <!-- Directory View -->
+  <div class="view" id="view-directory" style="display:none;">
+    <div class="section-title">50篇总览（点击篇名快速练习）</div>
+    <div id="directoryContainer"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   高考语文背诵默写 - 题库 & 应用逻辑
+   北京卷 50 篇
+   ============================================================ */
+
+// ---------- 篇目元信息 ----------
+const PIANMU = [
+  // 文言文 18
+  { id:1,  name:'《劝学》',                cat:'wen', ce:'必修上', star:5, freq:'5年4考' },
+  { id:2,  name:'《师说》',                cat:'wen', ce:'必修上', star:5, freq:'5年3考' },
+  { id:3,  name:'《赤壁赋》',              cat:'wen', ce:'必修上', star:5, freq:'5年4考' },
+  { id:4,  name:'《登泰山记》',            cat:'wen', ce:'必修上', star:3, freq:'' },
+  { id:5,  name:'《子路曾皙冉有公西华侍坐》', cat:'wen', ce:'必修下', star:4, freq:'' },
+  { id:6,  name:'《谏太宗十思疏》',        cat:'wen', ce:'必修下', star:4, freq:'' },
+  { id:7,  name:'《答司马谏议书》',        cat:'wen', ce:'必修下', star:3, freq:'' },
+  { id:8,  name:'《阿房宫赋》',            cat:'wen', ce:'必修下', star:4, freq:'5年2考' },
+  { id:9,  name:'《六国论》',              cat:'wen', ce:'必修下', star:5, freq:'5年4考' },
+  { id:10, name:'《论语》十二章',          cat:'wen', ce:'选必上', star:5, freq:'5年5考' },
+  { id:11, name:'《屈原列传》节选',        cat:'wen', ce:'选必中', star:4, freq:'2024考' },
+  { id:12, name:'《过秦论》',              cat:'wen', ce:'选必中', star:4, freq:'' },
+  { id:13, name:'《五代史伶官传序》',      cat:'wen', ce:'选必中', star:4, freq:'' },
+  { id:14, name:'《离骚》节选',            cat:'wen', ce:'选必下', star:4, freq:'' },
+  { id:15, name:'《陈情表》',              cat:'wen', ce:'选必下', star:4, freq:'' },
+  { id:16, name:'《项脊轩志》',            cat:'wen', ce:'选必下', star:3, freq:'' },
+  { id:17, name:'《归去来兮辞并序》',      cat:'wen', ce:'选必下', star:3, freq:'' },
+  { id:18, name:'《种树郭橐驼传》',        cat:'wen', ce:'选必下', star:3, freq:'' },
+  { id:19, name:'《石钟山记》',            cat:'wen', ce:'选必下', star:3, freq:'' },
+  // 诗词曲 32
+  { id:20, name:'《静女》',                cat:'shi', ce:'必修上', star:3, freq:'' },
+  { id:21, name:'《无衣》',                cat:'shi', ce:'选必上', star:3, freq:'' },
+  { id:22, name:'《离骚》节选',            cat:'shi', ce:'必修下', star:4, freq:'' },
+  { id:23, name:'《涉江采芙蓉》',          cat:'shi', ce:'必修上', star:3, freq:'' },
+  { id:24, name:'《短歌行》',              cat:'shi', ce:'必修上', star:5, freq:'5年3考' },
+  { id:25, name:'《归园田居·其一》',       cat:'shi', ce:'必修上', star:4, freq:'' },
+  { id:26, name:'《拟行路难·其四》',       cat:'shi', ce:'选必下', star:3, freq:'' },
+  { id:27, name:'《春江花月夜》',          cat:'shi', ce:'选必上', star:4, freq:'' },
+  { id:28, name:'《蜀道难》',              cat:'shi', ce:'选择性必修', star:4, freq:'' },
+  { id:29, name:'《梦游天姥吟留别》',      cat:'shi', ce:'必修上', star:4, freq:'' },
+  { id:30, name:'《将进酒》',              cat:'shi', ce:'选必上', star:5, freq:'5年2考' },
+  { id:31, name:'《燕歌行》',              cat:'shi', ce:'选必中', star:3, freq:'' },
+  { id:32, name:'《蜀相》',                cat:'shi', ce:'选必下', star:5, freq:'5年3考' },
+  { id:33, name:'《客至》',                cat:'shi', ce:'选必下', star:4, freq:'2023考' },
+  { id:34, name:'《登高》',                cat:'shi', ce:'必修上', star:5, freq:'5年4考' },
+  { id:35, name:'《登岳阳楼》',            cat:'shi', ce:'必修下', star:4, freq:'' },
+  { id:36, name:'《琵琶行并序》',          cat:'shi', ce:'必修上', star:5, freq:'5年3考' },
+  { id:37, name:'《李凭箜篌引》',          cat:'shi', ce:'选必中', star:3, freq:'' },
+  { id:38, name:'《锦瑟》',                cat:'shi', ce:'必修上', star:5, freq:'5年3考' },
+  { id:39, name:'《虞美人》',              cat:'shi', ce:'必修上', star:5, freq:'5年3考' },
+  { id:40, name:'《望海潮》',              cat:'shi', ce:'选必下', star:3, freq:'' },
+  { id:41, name:'《桂枝香·金陵怀古》',     cat:'shi', ce:'必修下', star:4, freq:'' },
+  { id:42, name:'《江城子·乙卯正月二十日夜记梦》', cat:'shi', ce:'选必上', star:4, freq:'' },
+  { id:43, name:'《念奴娇·赤壁怀古》',     cat:'shi', ce:'必修上', star:5, freq:'5年4考' },
+  { id:44, name:'《登快阁》',              cat:'shi', ce:'选必下', star:3, freq:'' },
+  { id:45, name:'《鹊桥仙》',              cat:'shi', ce:'必修上', star:4, freq:'2022考' },
+  { id:46, name:'《声声慢》',              cat:'shi', ce:'必修上', star:4, freq:'' },
+  { id:47, name:'《书愤》',                cat:'shi', ce:'选必中', star:4, freq:'5年2考' },
+  { id:48, name:'《临安春雨初霁》',        cat:'shi', ce:'选必下', star:4, freq:'2025考' },
+  { id:49, name:'《念奴娇·过洞庭》',      cat:'shi', ce:'必修下', star:4, freq:'2025考' },
+  { id:50, name:'《永遇乐·京口北固亭怀古》', cat:'shi', ce:'必修上', star:5, freq:'5年4考' },
+  { id:51, name:'《扬州慢》',              cat:'shi', ce:'选必下', star:4, freq:'5年2考' },
+];
+
+// ---------- 情境默写题库 ----------
+// 每题: pianmuId, context(提示语), blanks(填空数组，按顺序), tolerance(容错字符)
+const QUESTIONS = [
+  // ===== 《劝学》=====
+  { pid:1, ctx:'荀子在《劝学》中，用"______，______"两句，以"木"和"金"为喻，说明学习可以使人改变和提升。',
+    ans:['故木受绳则直','金就砺则利'] },
+  { pid:1, ctx:'《劝学》中，用"______，______"两句，通过"登高"的比喻，说明借助外物可以拓展视野。',
+    ans:['吾尝跂而望矣','不如登高之博见也'] },
+  { pid:1, ctx:'荀子在《劝学》中指出，蚯蚓虽然身体柔弱，却能"______，______"，这是用心专一的缘故。',
+    ans:['上食埃土','下饮黄泉'] },
+  { pid:1, ctx:'《劝学》中"______，______"两句，强调君子并非天资异于常人，而是善于借助外物。',
+    ans:['君子生非异也','善假于物也'] },
+  { pid:1, ctx:'荀子在《劝学》中用"______，______"两句，以骏马和劣马为喻，说明学习贵在坚持。',
+    ans:['骐骥一跃','不能十步'] },
+  { pid:1, ctx:'《劝学》中"______，______"两句，用雕刻为喻，强调学习要持之以恒，不可半途而废。',
+    ans:['锲而不舍','金石可镂'] },
+
+  // ===== 《师说》=====
+  { pid:2, ctx:'韩愈在《师说》中，阐述老师的作用时指出："______，______。"',
+    ans:['师者','所以传道受业解惑也'] },
+  { pid:2, ctx:'《师说》中，韩愈认为"弟子不必不如师，师不必贤于弟子"的原因是："______，______。"',
+    ans:['闻道有先后','术业有专攻'] },
+  { pid:2, ctx:'韩愈在《师说》中指出，古之圣人"______，______"，因而更加圣明。',
+    ans:['其出人也远矣','犹且从师而问焉'] },
+  { pid:2, ctx:'《师说》中，韩愈批评当时士大夫之族以地位高低为借口不愿从师的两句是："______，______。"',
+    ans:['位卑则足羞','官盛则近谀'] },
+
+  // ===== 《赤壁赋》=====
+  { pid:3, ctx:'苏轼在《赤壁赋》中，描写月亮升起后，月光映照江面，水天一色的句子是："______，______。"',
+    ans:['白露横江','水光接天'] },
+  { pid:3, ctx:'《赤壁赋》中，苏轼用"______，______"两句，描写箫声的悲凉，能使潜藏的蛟龙起舞，孤舟的寡妇哭泣。',
+    ans:['舞幽壑之潜蛟','泣孤舟之嫠妇'] },
+  { pid:3, ctx:'苏轼在《赤壁赋》中，借客人之口表达人生短暂、渺小之感的句子是："______，______。"',
+    ans:['寄蜉蝣于天地','渺沧海之一粟'] },
+  { pid:3, ctx:'《赤壁赋》中，苏轼认为如果从不变的角度看，万物与人都是无穷的，原句是："______，______。"',
+    ans:['自其不变者而观之','则物与我皆无尽也'] },
+  { pid:3, ctx:'苏轼在《赤壁赋》结尾，写客转悲为喜，洗杯斟酒，相与枕藉而眠的句子是："______，______。"',
+    ans:['相与枕藉乎舟中','不知东方之既白'] },
+
+  // ===== 《登高》=====
+  { pid:34, ctx:'杜甫在《登高》中，用"______，______"两句，描写秋日登高所见之景，气势雄浑，意境开阔。',
+    ans:['风急天高猿啸哀','渚清沙白鸟飞回'] },
+  { pid:34, ctx:'《登高》中，杜甫用"______，______"两句，写落木萧萧、长江奔涌，抒发了韶光易逝、壮志难酬的感慨。',
+    ans:['无边落木萧萧下','不尽长江滚滚来'] },
+  { pid:34, ctx:'杜甫在《登高》中，感叹自己漂泊异乡、年老多病的句子是："______，______。"',
+    ans:['万里悲秋常作客','百年多病独登台'] },
+
+  // ===== 《念奴娇·赤壁怀古》=====
+  { pid:43, ctx:'苏轼在《念奴娇·赤壁怀古》中，描写赤壁壮丽景色的句子是："______，______，______。"',
+    ans:['乱石穿空','惊涛拍岸','卷起千堆雪'] },
+  { pid:43, ctx:'《念奴娇·赤壁怀古》中，苏轼用"______，______"两句，描绘周瑜从容破敌的英雄形象。',
+    ans:['谈笑间','樯橹灰飞烟灭'] },
+  { pid:43, ctx:'苏轼在《念奴娇·赤壁怀古》结尾，以酒祭月，表达旷达之情的句子是："______，______。"',
+    ans:['人生如梦','一尊还酹江月'] },
+
+  // ===== 《永遇乐·京口北固亭怀古》=====
+  { pid:50, ctx:'辛弃疾在《永遇乐·京口北固亭怀古》中，用"______，______"两句，描写刘裕北伐时的英雄气概。',
+    ans:['金戈铁马','气吞万里如虎'] },
+  { pid:50, ctx:'《永遇乐》中，辛弃疾以"______，______，______"三句，描写刘义隆草率北伐，仓皇败退的场景。',
+    ans:['元嘉草草','封狼居胥','赢得仓皇北顾'] },
+  { pid:50, ctx:'辛弃疾在《永遇乐》结尾，用"______，______"两句，以廉颇自比，表达壮志未酬的悲愤。',
+    ans:['凭谁问','廉颇老矣，尚能饭否'] },
+
+  // ===== 《六国论》=====
+  { pid:9, ctx:'苏洵在《六国论》中，开门见山提出中心论点的句子是："______，______，______，______。"',
+    ans:['六国破灭','非兵不利','战不善','弊在赂秦'] },
+  { pid:9, ctx:'《六国论》中，苏洵用"______，______"两句，说明诸侯割地越多，秦国侵略越急。',
+    ans:['奉之弥繁','侵之愈急'] },
+  { pid:9, ctx:'苏洵在《六国论》结尾，借古讽今，告诫北宋统治者不要重蹈六国覆辙的句子是："______，______，______。"',
+    ans:['苟以天下之大','下而从六国破亡之故事','是又在六国下矣'] },
+
+  // ===== 《论语》十二章 =====
+  { pid:10, ctx:'《论语》中，孔子用"______，______"两句，阐述学习与思考应结合起来的道理。',
+    ans:['学而不思则罔','思而不学则殆'] },
+  { pid:10, ctx:'《论语》中，曾子用"______，______"两句，强调士人要有远大的抱负和坚韧的意志。',
+    ans:['士不可以不弘毅','任重而道远'] },
+  { pid:10, ctx:'《论语》中，孔子阐述"仁"的内涵，认为"仁"就是要克制自己、遵守礼的句子是："______，______。"',
+    ans:['克己复礼为仁','一日克己复礼，天下归仁焉'] },
+  { pid:10, ctx:'《论语》中，孔子用"______，______"两句，说明见到贤人要想着向他看齐，见到不贤的人要反省自己。',
+    ans:['见贤思齐焉','见不贤而内自省也'] },
+
+  // ===== 《短歌行》=====
+  { pid:24, ctx:'曹操在《短歌行》中，用"______，______"两句，以朝露比喻人生短暂。',
+    ans:['譬如朝露','去日苦多'] },
+  { pid:24, ctx:'《短歌行》中，曹操用"______，______"两句，借用《诗经》中的句子，表达对贤才的渴望。',
+    ans:['青青子衿','悠悠我心'] },
+  { pid:24, ctx:'曹操在《短歌行》结尾，用"______，______"两句，表达自己要像周公一样礼遇天下贤才。',
+    ans:['周公吐哺','天下归心'] },
+
+  // ===== 《将进酒》=====
+  { pid:30, ctx:'李白在《将进酒》中，用"______，______"两句，以黄河奔流、人生易老表达时光流逝的感慨。',
+    ans:['君不见黄河之水天上来','奔流到海不复回'] },
+  { pid:30, ctx:'《将进酒》中，李白用"______，______"两句，以白发悲叹人生短暂，转而以饮酒行乐自我宽慰。',
+    ans:['君不见高堂明镜悲白发','朝如青丝暮成雪'] },
+  { pid:30, ctx:'李白在《将进酒》中，表达自信豪迈之情的千古名句是："______，______。"',
+    ans:['天生我材必有用','千金散尽还复来'] },
+
+  // ===== 《蜀相》=====
+  { pid:32, ctx:'杜甫在《蜀相》中，描写武侯祠春景，以乐景衬哀情的句子是："______，______。"',
+    ans:['映阶碧草自春色','隔叶黄鹂空好音'] },
+  { pid:32, ctx:'《蜀相》中，杜甫用"______，______"两句，概括诸葛亮一生的功业。',
+    ans:['三顾频烦天下计','两朝开济老臣心'] },
+  { pid:32, ctx:'杜甫在《蜀相》结尾，以"______，______"两句，表达对诸葛亮壮志未酬的惋惜与同情。',
+    ans:['出师未捷身先死','长使英雄泪满襟'] },
+
+  // ===== 《琵琶行》=====
+  { pid:36, ctx:'白居易在《琵琶行》中，用"______，______"两句，描写秋夜送客时萧瑟的景象。',
+    ans:['浔阳江头夜送客','枫叶荻花秋瑟瑟'] },
+  { pid:36, ctx:'《琵琶行》中，白居易用"______，______"两句，描写琵琶声暂歇后，突然迸发出激越的乐声。',
+    ans:['银瓶乍破水浆迸','铁骑突出刀枪鸣'] },
+  { pid:36, ctx:'白居易在《琵琶行》中，借江州月夜景色抒发谪居孤寂之感的句子是："______，______。"',
+    ans:['醉不成欢惨将别','别时茫茫江浸月'] },
+
+  // ===== 《锦瑟》=====
+  { pid:38, ctx:'李商隐在《锦瑟》中，用"______，______"两句，以锦瑟起兴，引发对往事的追忆。',
+    ans:['锦瑟无端五十弦','一弦一柱思华年'] },
+  { pid:38, ctx:'《锦瑟》中，李商隐用"______，______"两句，以庄周梦蝶、望帝啼鹃的典故，表达迷惘与哀怨。',
+    ans:['庄生晓梦迷蝴蝶','望帝春心托杜鹃'] },
+  { pid:38, ctx:'李商隐在《锦瑟》结尾，用"______，______"两句，表达往事如烟、惘然若失的感伤。',
+    ans:['此情可待成追忆','只是当时已惘然'] },
+
+  // ===== 《虞美人》=====
+  { pid:39, ctx:'李煜在《虞美人》中，用"______，______"两句，以春花秋月反衬亡国之痛。',
+    ans:['春花秋月何时了','往事知多少'] },
+  { pid:39, ctx:'《虞美人》中，李煜用"______，______"两句，以江水喻愁，将抽象情感具象化。',
+    ans:['问君能有几多愁','恰似一江春水向东流'] },
+
+  // ===== 《阿房宫赋》=====
+  { pid:8, ctx:'杜牧在《阿房宫赋》中，用"______，______"两句，描写阿房宫占地之广、楼阁之高。',
+    ans:['覆压三百余里','隔离天日'] },
+  { pid:8, ctx:'《阿房宫赋》中，杜牧用"______，______"两句，以钉头与粮仓对比，揭露秦的奢靡。',
+    ans:['钉头磷磷','多于在庾之粟粒'] },
+  { pid:8, ctx:'杜牧在《阿房宫赋》结尾，借秦亡警示后人的句子是："______，______；______，______。"',
+    ans:['秦人不暇自哀','而后人哀之','后人哀之而不鉴之','亦使后人而复哀后人也'] },
+
+  // ===== 《陈情表》=====
+  { pid:15, ctx:'李密在《陈情表》中，用"______，______"两句，陈述自己从小孤苦，祖母抚养长大的经历。',
+    ans:['臣以险衅','夙遭闵凶'] },
+  { pid:15, ctx:'《陈情表》中，李密用"______，______"两句，说明自己与祖母相依为命，不能远离。',
+    ans:['臣无祖母','无以至今日'] },
+
+  // ===== 《归去来兮辞》=====
+  { pid:17, ctx:'陶渊明在《归去来兮辞》中，用"______，______"两句，表达迷途知返、辞官归隐的决心。',
+    ans:['实迷途其未远','觉今是而昨非'] },
+  { pid:17, ctx:'《归去来兮辞》中，陶渊明描写归家后自斟自饮、赏景之乐的句子是："______，______。"',
+    ans:['引壶觞以自酌','眄庭柯以怡颜'] },
+
+  // ===== 《屈原列传》节选 =====
+  { pid:11, ctx:'司马迁在《屈原列传》中，评价《离骚》"其称文小而其指极大，举类迩而见义远"，原句是："______，______，______，______。"',
+    ans:['其文约','其辞微','其志洁','其行廉'] },
+
+  // ===== 《过秦论》=====
+  { pid:12, ctx:'贾谊在《过秦论》中，用"______，______"两句，描写秦孝公当初的雄心壮志。',
+    ans:['有席卷天下','包举宇内'] },
+  { pid:12, ctx:'《过秦论》中，贾谊总结秦亡原因的句子是："______，______。"',
+    ans:['仁义不施','而攻守之势异也'] },
+
+  // ===== 《五代史伶官传序》=====
+  { pid:13, ctx:'欧阳修在《五代史伶官传序》中，用"______，______"两句，提出盛衰之理在于人事的中心论点。',
+    ans:['盛衰之理','虽曰天命，岂非人事哉'] },
+  { pid:13, ctx:'《五代史伶官传序》中，欧阳修用"______，______"两句，说明忧劳可以兴国，逸豫可以亡身。',
+    ans:['忧劳可以兴国','逸豫可以亡身'] },
+
+  // ===== 《梦游天姥吟留别》=====
+  { pid:29, ctx:'李白在《梦游天姥吟留别》中，用"______，______"两句，描写天姥山高耸入云的气势。',
+    ans:['天姥连天向天横','势拔五岳掩赤城'] },
+  { pid:29, ctx:'《梦游天姥吟留别》中，李白用"______，______"两句，表达不事权贵、傲岸不羁的胸襟。',
+    ans:['安能摧眉折腰事权贵','使我不得开心颜'] },
+
+  // ===== 《蜀道难》=====
+  { pid:28, ctx:'李白在《蜀道难》中，用"______，______"两句，以蚕丛鱼凫的传说，点明蜀道由来之久远。',
+    ans:['蚕丛及鱼凫','开国何茫然'] },
+  { pid:28, ctx:'《蜀道难》中，李白用"______，______"两句，描写青泥岭山路的曲折盘旋。',
+    ans:['青泥何盘盘','百步九折萦岩峦'] },
+  { pid:28, ctx:'李白在《蜀道难》结尾，用"______，______，______"三句，以蜀地险恶、战乱频发警告友人。',
+    ans:['剑阁峥嵘而崔嵬','一夫当关','万夫莫开'] },
+
+  // ===== 《声声慢》=====
+  { pid:46, ctx:'李清照在《声声慢》中，用"______，______"两句，以叠字起笔，渲染愁苦凄凉的心境。',
+    ans:['寻寻觅觅','冷冷清清'] },
+  { pid:46, ctx:'《声声慢》中，李清照用"______，______"两句，描写秋日黄昏梧桐细雨的景象，以景结情。',
+    ans:['梧桐更兼细雨','到黄昏点点滴滴'] },
+
+  // ===== 《书愤》=====
+  { pid:47, ctx:'陆游在《书愤》中，用"______，______"两句，回忆早年北望中原、气吞胡虏的豪情。',
+    ans:['早岁那知世事艰','中原北望气如山'] },
+  { pid:47, ctx:'《书愤》中，陆游用"______，______"两句，以诸葛亮自比，表达壮志未酬的悲愤。',
+    ans:['出师一表真名世','千载谁堪伯仲间'] },
+
+  // ===== 《扬州慢》=====
+  { pid:51, ctx:'姜夔在《扬州慢》中，用"______，______"两句，描写劫后扬州城的荒凉景象。',
+    ans:['过春风十里','尽荠麦青青'] },
+  { pid:51, ctx:'《扬州慢》中，姜夔用"______，______，______"三句，以拟人手法写战乱对芍药的摧残。',
+    ans:['念桥边红药','年年知为谁生','纵豆蔻词工'] },
+
+  // ===== 《临安春雨初霁》=====
+  { pid:48, ctx:'陆游在《临安春雨初霁》中，用"______，______"两句，描写江南春雨初晴后的清新景色。',
+    ans:['小楼一夜听春雨','深巷明朝卖杏花'] },
+  { pid:48, ctx:'《临安春雨初霁》中，陆游用"______，______"两句，以闲适之事反衬内心的不平与愤懑。',
+    ans:['矮纸斜行闲作草','晴窗细乳戏分茶'] },
+
+  // ===== 《登快阁》=====
+  { pid:44, ctx:'黄庭坚在《登快阁》中，用"______，______"两句，描写快阁所见秋日江天辽阔的景象。',
+    ans:['落木千山天远大','澄江一道月分明'] },
+
+  // ===== 《鹊桥仙》=====
+  { pid:45, ctx:'秦观在《鹊桥仙》中，用"______，______"两句，以牛郎织女一年一会的传说，反衬人间爱情的可贵。',
+    ans:['金风玉露一相逢','便胜却人间无数'] },
+  { pid:45, ctx:'《鹊桥仙》中，秦观用"______，______"两句，表达爱情不在于朝朝暮暮的豁达见解。',
+    ans:['两情若是久长时','又岂在朝朝暮暮'] },
+
+  // ===== 《客至》=====
+  { pid:33, ctx:'杜甫在《客至》中，用"______，______"两句，描写居所环境清幽、少有人来访的闲适。',
+    ans:['舍南舍北皆春水','但见群鸥日日来'] },
+  { pid:33, ctx:'《客至》中，杜甫用"______，______"两句，描写待客时因家贫而自愧、尽欢的场景。',
+    ans:['盘飧市远无兼味','樽酒家贫只旧醅'] },
+
+  // ===== 《春江花月夜》=====
+  { pid:27, ctx:'张若虚在《春江花月夜》中，用"______，______"两句，描写春江月夜潮水连海、明月共生的壮阔景象。',
+    ans:['春江潮水连海平','海上明月共潮生'] },
+  { pid:27, ctx:'《春江花月夜》中，张若虚用"______，______"两句，感叹人生短暂、江月长存的哲理。',
+    ans:['人生代代无穷已','江月年年望相似'] },
+
+  // ===== 《谏太宗十思疏》=====
+  { pid:6, ctx:'魏征在《谏太宗十思疏》中，用"______，______"两句，以树木和水源为喻，说明积德的重要性。',
+    ans:['求木之长者','必固其根本'] },
+  { pid:6, ctx:'《谏太宗十思疏》中，魏征劝谏唐太宗要"居安思危，戒奢以俭"的句子是："______，______。"',
+    ans:['居安思危','戒奢以俭'] },
+
+  // ===== 《答司马谏议书》=====
+  { pid:7, ctx:'王安石在《答司马谏议书》中，用"______，______"两句，表明自己推行新法的决心，不为流言所动。',
+    ans:['度义而后动','是而不见可悔故也'] },
+
+  // ===== 《子路曾皙冉有公西华侍坐》=====
+  { pid:5, ctx:'《侍坐》中，曾皙描绘的理想社会图景是："______，______，______，______。"',
+    ans:['浴乎沂','风乎舞雩','咏而归','冠者五六人'] },
+
+  // ===== 《项脊轩志》=====
+  { pid:16, ctx:'归有光在《项脊轩志》中，用"______，______"两句，描写项脊轩修葺后，明月照射、桂影摇曳的清幽景色。',
+    ans:['明月半墙','桂影斑驳'] },
+
+  // ===== 《归园田居》=====
+  { pid:25, ctx:'陶渊明在《归园田居·其一》中，用"______，______"两句，以鸟鱼为喻，表达回归田园的强烈愿望。',
+    ans:['羁鸟恋旧林','池鱼思故渊'] },
+  { pid:25, ctx:'《归园田居·其一》中，陶渊明描写田园清幽景色的句子是："______，______。"',
+    ans:['暧暧远人村','依依墟里烟'] },
+
+  // ===== 《涉江采芙蓉》=====
+  { pid:23, ctx:'《涉江采芙蓉》中，用"______，______"两句，表达采花欲赠远方的思念之情。',
+    ans:['采之欲遗谁','所思在远道'] },
+
+  // ===== 《登岳阳楼》=====
+  { pid:35, ctx:'杜甫在《登岳阳楼》中，用"______，______"两句，描写洞庭湖浩瀚壮阔、分裂吴楚的景象。',
+    ans:['吴楚东南坼','乾坤日夜浮'] },
+  { pid:35, ctx:'《登岳阳楼》中，杜甫用"______，______"两句，抒写漂泊西南、老病孤舟的身世之悲。',
+    ans:['亲朋无一字','老病有孤舟'] },
+
+  // ===== 《桂枝香·金陵怀古》=====
+  { pid:41, ctx:'王安石在《桂枝香·金陵怀古》中，用"______，______"两句，描写金陵晚秋的壮丽景色。',
+    ans:['正故国晚秋','天气初肃'] },
+  { pid:41, ctx:'《桂枝香》中，王安石用"______，______，______"三句，化用杜牧诗句，感叹六朝兴衰。',
+    ans:['至今商女','时时犹唱','后庭遗曲'] },
+
+  // ===== 《江城子·乙卯正月二十日夜记梦》=====
+  { pid:42, ctx:'苏轼在《江城子》中，用"______，______"两句，描写梦回故乡，与亡妻相对无言的悲痛。',
+    ans:['相顾无言','惟有泪千行'] },
+  { pid:42, ctx:'《江城子》中，苏轼用"______，______，______"三句，想象亡妻在明月之夜思念自己。',
+    ans:['料得年年肠断处','明月夜','短松冈'] },
+
+  // ===== 《念奴娇·过洞庭》=====
+  { pid:49, ctx:'张孝祥在《念奴娇·过洞庭》中，用"______，______"两句，描写洞庭湖月夜的澄澈空明。',
+    ans:['素月分辉','明河共影'] },
+  { pid:49, ctx:'《念奴娇·过洞庭》中，张孝祥用"______，______"两句，以冰雪比喻自己内心的纯净高洁。',
+    ans:['应念岭海经年','孤光自照'] },
+
+  // ===== 《燕歌行》=====
+  { pid:31, ctx:'高适在《燕歌行》中，用"______，______"两句，描写战士拼死作战，而将领却在军帐中欣赏歌舞。',
+    ans:['战士军前半死生','美人帐下犹歌舞'] },
+
+  // ===== 《李凭箜篌引》=====
+  { pid:37, ctx:'李贺在《李凭箜篌引》中，用"______，______"两句，以昆山玉碎、凤凰鸣叫形容箜篌声的清越。',
+    ans:['昆山玉碎凤凰叫','芙蓉泣露香兰笑'] },
+
+  // ===== 《望海潮》=====
+  { pid:40, ctx:'柳永在《望海潮》中，用"______，______，______"三句，描写杭州城的自然风光与都市繁华。',
+    ans:['重湖叠巘清嘉','有三秋桂子','十里荷花'] },
+
+  // ===== 《苏幕遮》不在北京50篇内，跳过 =====
+
+  // ===== 《静女》=====
+  { pid:20, ctx:'《静女》中，用"______，______"两句，描写男子等待女子时焦灼不安的心情。',
+    ans:['爱而不见','搔首踟蹰'] },
+
+  // ===== 《无衣》=====
+  { pid:21, ctx:'《无衣》中，用"______，______"两句，表现战士们同穿战袍、共赴国难的昂扬斗志。',
+    ans:['岂曰无衣','与子同袍'] },
+
+  // ===== 《离骚》节选 =====
+  { pid:22, ctx:'屈原在《离骚》中，用"______，______"两句，表达自己虽遭贬斥，仍坚持高洁品格的决心。',
+    ans:['亦余心之所善兮','虽九死其犹未悔'] },
+  { pid:22, ctx:'《离骚》中，屈原用"______，______"两句，以莲荷为喻，表明自己高洁的品性。',
+    ans:['制芰荷以为衣兮','集芙蓉以为裳'] },
+
+  // ===== 《拟行路难·其四》=====
+  { pid:26, ctx:'鲍照在《拟行路难·其四》中，用"______，______"两句，以水流方向喻人生际遇的不平。',
+    ans:['泻水置平地','各自东西南北流'] },
+
+  // ===== 《登泰山记》=====
+  { pid:4, ctx:'姚鼐在《登泰山记》中，描写泰山日出时云霞绚丽多彩的句子是："______，______。"',
+    ans:['极天云一线异色','须臾成五采'] },
+
+  // ===== 《种树郭橐驼传》=====
+  { pid:18, ctx:'柳宗元在《种树郭橐驼传》中，用"______，______"两句，点明种树要顺应天性的道理。',
+    ans:['顺木之天','以致其性焉尔'] },
+
+  // ===== 《石钟山记》=====
+  { pid:19, ctx:'苏轼在《石钟山记》中，用"______，______"两句，说明认识事物要亲身考察，不可主观臆断。',
+    ans:['事不目见耳闻','而臆断其有无'] },
+
+  // ===== 《五代史伶官传序》补充 =====
+  { pid:13, ctx:'欧阳修在《五代史伶官传序》中，用"______，______"两句，说明"满招损，谦受益"的道理。',
+    ans:['满招损','谦得益'] },
+];
+
+/* ============================================================
+   应用状态 & 工具函数
+   ============================================================ */
+const STATE = {
+  view: 'practice',
+  filter: 'all',
+  currentQ: null,
+  fcMode: 'prompt',
+  fcIndex: 0,
+  wrongList: JSON.parse(localStorage.getItem('gk_wrong') || '[]'),
+  correctCount: parseInt(localStorage.getItem('gk_correct') || '0'),
+  totalCount: parseInt(localStorage.getItem('gk_total') || '0'),
+  streak: parseInt(localStorage.getItem('gk_streak') || '0'),
+  bestStreak: parseInt(localStorage.getItem('gk_bestStreak') || '0'),
+  pianmuProgress: JSON.parse(localStorage.getItem('gk_pmProg') || '{}'),
+};
+
+function saveState() {
+  localStorage.setItem('gk_wrong', JSON.stringify(STATE.wrongList));
+  localStorage.setItem('gk_correct', STATE.correctCount);
+  localStorage.setItem('gk_total', STATE.totalCount);
+  localStorage.setItem('gk_streak', STATE.streak);
+  localStorage.setItem('gk_bestStreak', STATE.bestStreak);
+  localStorage.setItem('gk_pmProg', JSON.stringify(STATE.pianmuProgress));
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+function getPianmu(id) { return PIANMU.find(p => p.id === id); }
+
+function starStr(n) { return '★'.repeat(n) + '☆'.repeat(5 - n); }
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ============================================================
+   导航切换
+   ============================================================ */
+document.getElementById('navTabs').addEventListener('click', e => {
+  if (!e.target.classList.contains('nav-tab')) return;
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  e.target.classList.add('active');
+  const v = e.target.dataset.view;
+  STATE.view = v;
+  document.querySelectorAll('.view').forEach(el => el.style.display = 'none');
+  document.getElementById('view-' + v).style.display = '';
+  render();
+});
+
+/* ============================================================
+   筛选
+   ============================================================ */
+document.getElementById('filterBar').addEventListener('click', e => {
+  if (!e.target.classList.contains('chip')) return;
+  document.querySelectorAll('#filterBar .chip').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  STATE.filter = e.target.dataset.filter;
+  render();
+});
+
+document.querySelectorAll('.filter-bar [data-fcmode]').forEach(el => {
+  el.addEventListener('click', e => {
+    document.querySelectorAll('.filter-bar [data-fcmode]').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
+    STATE.fcMode = e.target.dataset.fcmode;
+    render();
+  });
+});
+
+/* ============================================================
+   渲染入口
+   ============================================================ */
+function render() {
+  renderStats();
+  if (STATE.view === 'practice') renderPractice();
+  else if (STATE.view === 'flashcard') renderFlashcard();
+  else if (STATE.view === 'wrongbook') renderWrongBook();
+  else if (STATE.view === 'progress') renderProgress();
+  else if (STATE.view === 'directory') renderDirectory();
+}
+
+function renderStats() {
+  const acc = STATE.totalCount ? Math.round(STATE.correctCount / STATE.totalCount * 100) : 0;
+  const html = `
+    <div class="stat-card"><div class="stat-num">${STATE.totalCount}</div><div class="stat-label">已做题</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--success)">${STATE.correctCount}</div><div class="stat-label">答对</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--primary)">${acc}%</div><div class="stat-label">正确率</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--warning)">${STATE.bestStreak}</div><div class="stat-label">最长连对</div></div>
+  `;
+  document.getElementById('statsBar').innerHTML = html;
+}
+
+/* ============================================================
+   情境默写练习
+   ============================================================ */
+function getFilteredQuestions() {
+  let list = QUESTIONS.slice();
+  const f = STATE.filter;
+  if (f === 'wen') list = list.filter(q => getPianmu(q.pid).cat === 'wen');
+  else if (f === 'shi') list = list.filter(q => getPianmu(q.pid).cat === 'shi');
+  else if (f === 'star5') list = list.filter(q => getPianmu(q.pid).star === 5);
+  else if (f === 'star4') list = list.filter(q => getPianmu(q.pid).star === 4);
+  else if (f === 'star3') list = list.filter(q => getPianmu(q.pid).star === 3);
+  else if (f === 'wrong') {
+    const wids = new Set(STATE.wrongList.map(w => w.qid));
+    list = list.filter(q => wids.has(QUESTIONS.indexOf(q)));
+  }
+  return list;
+}
+
+function pickRandomQuestion() {
+  const list = getFilteredQuestions();
+  if (!list.length) return null;
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+function renderPractice() {
+  const container = document.getElementById('practiceContainer');
+  if (!STATE.currentQ) STATE.currentQ = pickRandomQuestion();
+  const q = STATE.currentQ;
+  if (!q) {
+    container.innerHTML = `<div class="empty-state"><div class="big-icon">🎉</div>当前筛选下没有题目，换个筛选试试！</div>`;
+    return;
+  }
+  const pm = getPianmu(q.pid);
+  const blanksHtml = q.ans.map((_, i) => `
+    <div style="margin-bottom:10px;">
+      <div style="font-size:13px;color:var(--gray-500);margin-bottom:4px;">第${i+1}空</div>
+      <textarea class="answer-input" data-idx="${i}" placeholder="在此输入第${i+1}空的答案…" rows="2"></textarea>
+    </div>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          ${escHtml(pm.name)}
+          <span class="badge ${pm.cat==='wen'?'badge-wen':'badge-shi'}">${pm.cat==='wen'?'文言文':'诗词曲'}</span>
+          <span class="badge" style="background:var(--gray-100);color:var(--gray-700);">${pm.ce}</span>
+        </div>
+        <div class="card-title badge-star">${starStr(pm.star)}</div>
+      </div>
+      <div class="question-context">
+        <span class="hint-label">📝 情境提示：</span><br>${escHtml(q.ctx)}
+      </div>
+      <div class="answer-area">${blanksHtml}</div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnCheck">✔ 检查答案</button>
+        <button class="btn btn-outline" id="btnShow">👁 显示答案</button>
+        <button class="btn btn-ghost" id="btnClear">�✗ 清空</button>
+      </div>
+      <div class="result-box" id="resultBox"></div>
+    </div>
+  `;
+
+  // 自动聚焦第一个输入框
+  const firstInput = container.querySelector('.answer-input');
+  if (firstInput) {
+    firstInput.focus();
+    // 回车切到下一个
+    container.querySelectorAll('.answer-input').forEach((ta, i, all) => {
+      ta.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          if (i < all.length - 1) all[i+1].focus();
+          else document.getElementById('btnCheck').click();
+        }
+      });
+    });
+  }
+
+  document.getElementById('btnCheck').addEventListener('click', () => checkAnswer());
+  document.getElementById('btnShow').addEventListener('click', () => showAnswer());
+  document.getElementById('btnClear').addEventListener('click', () => {
+    container.querySelectorAll('.answer-input').forEach(ta => ta.value = '');
+    container.querySelector('.result-box').classList.remove('show');
+    container.querySelectorAll('.answer-input').forEach(ta => {
+      ta.classList.remove('correct','wrong');
+    });
+    firstInput.focus();
+  });
+}
+
+function normalize(s) {
+  return s.trim()
+    .replace(/[\s　]+/g, '')
+    .replace(/[，。！？、；：""''（）—…\-\.\,\!\?\;\:\"\'\(\)]/g, '');
+}
+
+function checkAnswer() {
+  const q = STATE.currentQ;
+  const inputs = document.querySelectorAll('.answer-input');
+  let allCorrect = true;
+  let results = [];
+  inputs.forEach((ta, i) => {
+    const userAns = normalize(ta.value);
+    const correctAns = normalize(q.ans[i]);
+    if (userAns === correctAns) {
+      ta.classList.add('correct');
+      ta.classList.remove('wrong');
+      results.push({ ok: true, user: ta.value, correct: q.ans[i] });
+    } else {
+      ta.classList.add('wrong');
+      ta.classList.remove('correct');
+      allCorrect = false;
+      results.push({ ok: false, user: ta.value, correct: q.ans[i] });
+    }
+  });
+
+  STATE.totalCount++;
+  const box = document.getElementById('resultBox');
+  if (allCorrect) {
+    STATE.correctCount++;
+    STATE.streak++;
+    if (STATE.streak > STATE.bestStreak) STATE.bestStreak = STATE.streak;
+    box.className = 'result-box show correct';
+    box.innerHTML = `<div class="result-title ok">✅ 全部正确！连对 ${STATE.streak} 题 🔥</div>`;
+    showToast('答对了！+1');
+    // 从错题本移除
+    const qid = QUESTIONS.indexOf(q);
+    STATE.wrongList = STATE.wrongList.filter(w => w.qid !== qid);
+    // 更新篇目进度
+    const prog = STATE.pianmuProgress[q.pid] || { correct:0, total:0 };
+    prog.correct++; prog.total++;
+    STATE.pianmuProgress[q.pid] = prog;
+  } else {
+    STATE.streak = 0;
+    box.className = 'result-box show wrong';
+    let html = `<div class="result-title bad">❌ 有错误，请看正确答案：</div><div class="diff-line">`;
+    results.forEach((r, i) => {
+      html += `<div style="margin-bottom:6px;"><b>第${i+1}空：</b>`;
+      if (r.ok) {
+        html += `<span class="diff-correct">${escHtml(r.correct)}</span> ✓`;
+      } else {
+        html += `<span class="diff-wrong">${escHtml(r.user)||'(空)'}</span> → <span class="diff-correct">${escHtml(r.correct)}</span>`;
+      }
+      html += `</div>`;
+    });
+    html += `</div>`;
+    box.innerHTML = html;
+    showToast('有错误，已加入错题库');
+    // 加入错题本
+    const qid = QUESTIONS.indexOf(q);
+    if (!STATE.wrongList.find(w => w.qid === qid)) {
+      STATE.wrongList.push({ qid, pid: q.pid, ctx: q.ctx, ans: q.ans, ts: Date.now() });
+    }
+    const prog = STATE.pianmuProgress[q.pid] || { correct:0, total:0 };
+    prog.total++;
+    STATE.pianmuProgress[q.pid] = prog;
+  }
+  saveState();
+  renderStats();
+}
+
+function showAnswer() {
+  const q = STATE.currentQ;
+  const inputs = document.querySelectorAll('.answer-input');
+  inputs.forEach((ta, i) => {
+    ta.value = q.ans[i];
+    ta.classList.add('correct');
+    ta.classList.remove('wrong');
+  });
+  const box = document.getElementById('resultBox');
+  box.className = 'result-box show correct';
+  box.innerHTML = `<div class="result-title ok">💡 已显示正确答案，试着背一遍再做题</div>`;
+}
+
+document.getElementById('btnNext').addEventListener('click', () => {
+  STATE.currentQ = pickRandomQuestion();
+  render();
+});
+
+document.getElementById('btnRandom').addEventListener('click', () => {
+  STATE.currentQ = pickRandomQuestion();
+  render();
+  showToast('已随机抽取新题');
+});
+
+/* ============================================================
+   背诵卡片模式
+   ============================================================ */
+function renderFlashcard() {
+  const container = document.getElementById('flashcardContainer');
+  const list = QUESTIONS.slice();
+  if (!list.length) return;
+  const q = list[STATE.fcIndex % list.length];
+  const pm = getPianmu(q.pid);
+  const isPrompt = STATE.fcMode === 'prompt';
+  const frontText = isPrompt ? escHtml(q.ctx) : q.ans.map((a,i)=>`<b>第${i+1}空：</b>${escHtml(a)}`).join('<br>');
+  const backText = isPrompt ? q.ans.map((a,i)=>`<b>第${i+1}空：</b>${escHtml(a)}`).join('<br>') : escHtml(q.ctx);
+
+  container.innerHTML = `
+    <div class="flashcard">
+      <div class="flashcard-inner" id="fcInner">
+        <div class="flashcard-face flashcard-front">
+          <div class="flashcard-prompt">${isPrompt?'📝 情境提示（点击翻转看答案）':'📖 正确答案（点击翻转看提示）'}</div>
+          <div class="flashcard-text">${frontText}</div>
+          <div class="flashcard-hint">${escHtml(pm.name)} · ${pm.ce}</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="flashcard-prompt">✅ 答案</div>
+          <div class="flashcard-text">${backText}</div>
+          <div class="flashcard-hint">${escHtml(pm.name)} · ${pm.ce}</div>
+        </div>
+      </div>
+    </div>
+    <div class="flashcard-nav">
+      <button class="btn btn-ghost" id="fcPrev">← 上一张</button>
+      <button class="btn btn-primary" id="fcFlip">🔄 翻转</button>
+      <button class="btn btn-ghost" id="fcNext">下一张 →</button>
+    </div>
+    <div style="text-align:center;font-size:12px;color:var(--gray-500);margin-top:6px;">
+      第 ${STATE.fcIndex % list.length + 1} / ${list.length} 题
+    </div>
+  `;
+  const inner = document.getElementById('fcInner');
+  inner.addEventListener('click', () => inner.classList.toggle('flipped'));
+  document.getElementById('fcFlip').addEventListener('click', () => inner.classList.toggle('flipped'));
+  document.getElementById('fcPrev').addEventListener('click', () => { STATE.fcIndex--; render(); });
+  document.getElementById('fcNext').addEventListener('click', () => { STATE.fcIndex++; render(); });
+}
+
+/* ============================================================
+   错题库
+   ============================================================ */
+function renderWrongBook() {
+  const container = document.getElementById('wrongBookContainer');
+  if (!STATE.wrongList.length) {
+    container.innerHTML = `<div class="empty-state"><div class="big-icon">🎊</div>暂无错题，继续加油！</div>`;
+    return;
+  }
+  // 按篇目分组
+  const grouped = {};
+  STATE.wrongList.forEach((w, idx) => {
+    if (!grouped[w.pid]) grouped[w.pid] = [];
+    grouped[w.pid].push({ ...w, idx });
+  });
+  let html = '';
+  Object.keys(grouped).forEach(pid => {
+    const pm = getPianmu(parseInt(pid));
+    html += `<div style="margin-bottom:18px;">
+      <div class="card-title" style="margin-bottom:8px;">
+        ${escHtml(pm.name)}
+        <span class="badge ${pm.cat==='wen'?'badge-wen':'badge-shi'}">${pm.cat==='wen'?'文言文':'诗词曲'}</span>
+        <span style="font-size:12px;color:var(--gray-500);">（${grouped[pid].length}题）</span>
+      </div>`;
+    grouped[pid].forEach(w => {
+      html += `<div class="wrong-item">
+        <div class="wrong-q"><b>提示：</b>${escHtml(w.ctx)}</div>
+        <div class="wrong-correct"><b>答案：</b>${w.ans.map((a,i)=>`第${i+1}空：${escHtml(a)}`).join('；')}</div>
+        <div style="margin-top:6px;">
+          <button class="btn btn-outline btn-sm" data-remove="${w.idx}" style="padding:3px 10px;font-size:12px;">移除</button>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+  container.querySelectorAll('[data-remove]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.remove);
+      STATE.wrongList.splice(idx, 1);
+      saveState();
+      render();
+      showToast('已从错题库移除');
+    });
+  });
+}
+
+/* ============================================================
+   学习进度
+   ============================================================ */
+function renderProgress() {
+  const container = document.getElementById('progressContainer');
+  // 按册数分组
+  const groups = {
+    '必修上': PIANMU.filter(p => p.ce === '必修上'),
+    '必修下': PIANMU.filter(p => p.ce === '必修下'),
+    '选必上': PIANMU.filter(p => p.ce === '选必上'),
+    '选必中': PIANMU.filter(p => p.ce === '选必中'),
+    '选必下': PIANMU.filter(p => p.ce === '选必下'),
+  };
+  let html = '';
+  Object.keys(groups).forEach(ce => {
+    const items = groups[ce];
+    if (!items.length) return;
+    html += `<div style="margin-bottom:18px;"><div class="card-title" style="margin-bottom:10px;">📚 ${ce}（${items.length}篇）</div>`;
+    items.forEach(pm => {
+      const prog = STATE.pianmuProgress[pm.id] || { correct:0, total:0 };
+      const pct = prog.total ? Math.round(prog.correct / prog.total * 100) : 0;
+      const barColor = pct >= 80 ? 'var(--success)' : pct >= 50 ? 'var(--primary)' : 'var(--warning)';
+      html += `<div class="progress-item">
+        <div class="progress-name">${escHtml(pm.name)} ${starStr(pm.star).replace(/★/g,'<span style="color:var(--warning)">★</span>').replace(/☆/g,'<span style="color:var(--gray-300)">☆</span>')}</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
+        <div class="progress-count">${prog.correct}/${prog.total} (${pct}%)</div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  container.innerHTML = html;
+}
+
+/* ============================================================
+   篇目总览
+   ============================================================ */
+function renderDirectory() {
+  const container = document.getElementById('directoryContainer');
+  const groups = {
+    '文言文': PIANMU.filter(p => p.cat === 'wen'),
+    '诗词曲': PIANMU.filter(p => p.cat === 'shi'),
+  };
+  let html = '';
+  Object.keys(groups).forEach(cat => {
+    const items = groups[cat];
+    html += `<div style="margin-bottom:18px;"><div class="card-title" style="margin-bottom:10px;">${cat}（${items.length}篇）</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;">`;
+    items.forEach(pm => {
+      const prog = STATE.pianmuProgress[pm.id] || { correct:0, total:0 };
+      const pct = prog.total ? Math.round(prog.correct / prog.total * 100) : 0;
+      html += `<div class="card" style="padding:12px 14px;cursor:pointer;" data-pid="${pm.id}">
+        <div style="font-weight:600;font-size:14px;margin-bottom:4px;">${escHtml(pm.name)}</div>
+        <div style="font-size:12px;color:var(--gray-500);">${pm.ce} · ${starStr(pm.star)} · 进度 ${pct}%</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  container.innerHTML = html;
+  container.querySelectorAll('[data-pid]').forEach(card => {
+    card.addEventListener('click', () => {
+      const pid = parseInt(card.dataset.pid);
+      STATE.filter = 'all';
+      document.querySelectorAll('#filterBar .chip').forEach(c => c.classList.remove('active'));
+      document.querySelector('#filterBar .chip[data-filter="all"]').classList.add('active');
+      // 找该篇目第一题
+      const q = QUESTIONS.find(qq => qq.pid === pid);
+      if (q) {
+        STATE.currentQ = q;
+        // 切到练习视图
+        document.querySelector('.nav-tab[data-view="practice"]').click();
+      }
+    });
+  });
+}
+
+/* ============================================================
+   初始化
+   ============================================================ */
+render();
+</script>
+</body>
+</html>

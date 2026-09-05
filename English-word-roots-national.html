@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>高考英语词根词缀 · 全国卷版（含超纲词推导）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --blue:#1a73e8;--blue2:#0d47a1;--green:#1e8e3e;--red:#d93025;
+  --bg:#f5f7fb;--card:#ffffff;--line:#e3e8f0;--gray:#5f6368;--ink:#202124;
+}
+html,body{background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px;line-height:1.55}
+.wrap{max-width:560px;margin:0 auto;padding:0 0 90px;padding-top:108px}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;
+  padding:14px 16px 12px;box-shadow:0 2px 10px rgba(26,115,232,.25);
+  transition:transform .28s ease}
+.topbar.hide{transform:translateY(-100%)}
+.topbar h1{font-size:18px;font-weight:700;letter-spacing:.3px}
+.topbar .sub{font-size:11px;opacity:.85;margin-top:2px}
+.tabs{position:fixed;top:64px;left:0;right:0;z-index:49;max-width:560px;margin:0 auto;
+  display:flex;gap:6px;padding:8px 10px;background:rgba(245,247,251,.92);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;transition:transform .28s ease}
+.tabs.hide{transform:translateY(-100%)}
+.tab{flex:0 0 auto;padding:7px 13px;border-radius:20px;font-size:13px;font-weight:600;
+  background:#fff;color:var(--gray);border:1px solid var(--line);cursor:pointer}
+.tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.pad{padding:14px}
+.panel{display:none;animation:fade .3s}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:12px;
+  box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid var(--line)}
+.card h3{font-size:15px;color:var(--blue2);margin-bottom:4px}
+.card .tag{display:inline-block;font-size:11px;font-weight:700;color:#fff;background:var(--blue);
+  padding:2px 8px;border-radius:6px;margin-bottom:6px}
+.card .meaning{color:var(--green);font-weight:600;font-size:14px}
+.card .ex{font-size:13px;color:var(--gray);margin-top:6px;font-style:italic}
+.card .src{font-size:11px;color:var(--red);font-weight:600;margin-top:4px}
+.flip-card{height:190px;perspective:1000px;margin-bottom:14px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:18px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  box-shadow:0 4px 14px rgba(26,115,232,.18);border:1px solid var(--line)}
+.face.front{background:linear-gradient(135deg,#e8f0fe,#fff)}
+.face.back{background:linear-gradient(135deg,#1a73e8,#0d47a1);color:#fff;transform:rotateY(180deg)}
+.face .big{font-size:26px;font-weight:800;color:var(--blue2)}
+.face.back .big{color:#fff}
+.face .hint{font-size:11px;color:var(--gray);margin-top:8px}
+.face.back .hint{color:rgba(255,255,255,.8)}
+.progress{height:6px;background:#e3e8f0;border-radius:3px;overflow:hidden;margin:10px 0}
+.progress i{display:block;height:100%;background:var(--blue);width:0;transition:width .3s}
+.btn{display:block;width:100%;padding:13px;border:none;border-radius:12px;font-size:15px;
+  font-weight:700;background:var(--blue);color:#fff;cursor:pointer;margin-top:8px}
+.btn.g{background:var(--green)}
+.btn.o{background:#fff;color:var(--blue);border:1px solid var(--blue)}
+.opt{padding:12px 14px;border:1px solid var(--line);border-radius:10px;margin:8px 0;background:#fff;cursor:pointer;font-size:14px}
+.opt.ok{border-color:var(--green);background:#e6f4ea}
+.opt.no{border-color:var(--red);background:#fce8e6}
+.badge{font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px;margin-left:6px}
+.badge.b{background:#e8f0fe;color:var(--blue2)}
+.badge.g{background:#e6f4ea;color:var(--green)}
+.list li{list-style:none;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.list li:last-child{border:none}
+.list b{color:var(--blue2)}
+.toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);z-index:200;
+  background:#fff;border-radius:14px;padding:22px 24px;box-shadow:0 8px 30px rgba(0,0,0,.25);
+  max-width:86%;width:320px;text-align:center;opacity:0;pointer-events:none;transition:.25s}
+.toast.on{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.toast h4{color:var(--blue2);margin-bottom:8px}
+.toast button{margin-top:14px;padding:8px 24px;border:none;border-radius:8px;background:var(--blue);color:#fff;font-weight:700}
+.nav{position:fixed;bottom:0;left:0;right:0;max-width:560px;margin:0 auto;display:flex;
+  background:#fff;border-top:1px solid var(--line);z-index:50}
+.nav button{flex:1;padding:10px 0;font-size:11px;border:none;background:none;color:var(--gray);font-weight:600}
+.nav button.on{color:var(--blue)}
+.section-title{font-size:16px;font-weight:800;color:var(--blue2);margin:14px 2px 8px;
+  display:flex;align-items:center;gap:8px}
+.section-title .n{background:var(--blue);color:#fff;font-size:12px;width:22px;height:22px;
+  border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+.search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:10px}
+.quiz-tabs .qtab{flex:0 0 auto;padding:8px 13px;border-radius:20px;font-size:13px;font-weight:600;background:#fff;color:var(--gray);border:1px solid var(--line);cursor:pointer}
+.quiz-tabs .qtab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.quiz-tabs .qtab .badge{background:rgba(255,255,255,.25);color:inherit}
+.quiz-tabs .qtab.on .badge{color:#fff}
+</style>
+</head>
+<body>
+<div class="topbar" id="topbar">
+  <h1>📚 词根词缀 · 全国卷版</h1>
+  <div class="sub">3500大纲内 + 超纲词推导 · 2016–2026 · 含新高考I/II/全国甲乙/北京卷</div>
+</div>
+<div class="tabs" id="tabs">
+  <button class="tab on" data-p="roots">📖词根</button>
+  <button class="tab" data-p="prefix">➕前缀</button>
+  <button class="tab" data-p="suffix">🔚后缀</button>
+  <button class="tab" data-p="flip">🎴词根卡</button>
+  <button class="tab" data-p="beyond">🚀超纲词</button>
+  <button class="tab" data-p="quiz">✏️拆解</button>
+  <button class="tab" data-p="wrong">❌错词本</button>
+</div>
+<div class="wrap pad">
+
+  <!-- 词根篇 -->
+  <div class="panel on" id="p-roots">
+    <div class="section-title"><span class="n">1</span>30 个核心词根（覆盖全国卷 80% 派生词）</div>
+    <input class="search" placeholder="🔍 搜索词根 / 含义…" oninput="searchList(this,'roots')">
+    <ul class="list" id="rootsList"></ul>
+  </div>
+
+  <!-- 前缀 -->
+  <div class="panel" id="p-prefix">
+    <div class="section-title"><span class="n">2</span>16 个高频前缀</div>
+    <ul class="list" id="preList"></ul>
+  </div>
+
+  <!-- 后缀 -->
+  <div class="panel" id="p-suffix">
+    <div class="section-title"><span class="n">3</span>22 个高频后缀（按词性分类）</div>
+    <ul class="list" id="sufList"></ul>
+  </div>
+
+  <!-- 翻转卡 -->
+  <div class="panel" id="p-flip">
+    <div class="section-title"><span class="n">4</span>词根翻转卡（<span id="fcTotal"></span> 张）</div>
+    <div class="progress"><i id="fcBar"></i></div>
+    <div style="text-align:center;font-size:12px;color:var(--gray);margin-bottom:8px">
+      已学 <span id="fcDone">0</span> / <span id="fcTotal2"></span>
+    </div>
+    <div class="flip-card" id="flipCard" onclick="flipCard()">
+      <div class="flip-inner">
+        <div class="face front"><div class="big" id="fcFront"></div><div class="hint">点击翻转 → 看例词拆解</div></div>
+        <div class="face back"><div class="big" id="fcBack"></div><div class="hint" id="fcBackHint"></div></div>
+      </div>
+    </div>
+    <button class="btn" onclick="nextCard()">下一个 →</button>
+    <button class="btn o" onclick="shuffleCards()">🔀 打乱顺序</button>
+  </div>
+
+  <!-- 超纲词推导 -->
+  <div class="panel" id="p-beyond">
+    <div class="section-title"><span class="n">5</span>超纲词推导（3500 大纲之外 · 靠词根拿分）</div>
+    <div style="font-size:12px;color:var(--gray);margin-bottom:10px">
+      ✅ 全国卷阅读 C/D 篇拉分词 · 不在 3500 大纲，但拆解即可懂 · 共 <span id="beyondN"></span> 词</div>
+    <ul class="list" id="beyondList"></ul>
+  </div>
+
+  <!-- 拆解自测（含三种题型） -->
+  <div class="panel" id="p-quiz">
+    <div class="section-title"><span class="n">6</span>练习专区（共 122 题）</div>
+    <div class="quiz-tabs" style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;white-space:nowrap">
+      <button class="qtab on" data-m="split" onclick="switchMode('split',this)">🔧 拆解 <span id="mSplit"></span></button>
+      <button class="qtab" data-m="mean" onclick="switchMode('mean',this)">🧩 含义配对 <span id="mMean"></span></button>
+      <button class="qtab" data-m="beyond" onclick="switchMode('beyond',this)">🚀 超纲推导 <span id="mBeyond"></span></button>
+    </div>
+    <div class="progress"><i id="qBar"></i></div>
+    <div style="text-align:center;font-size:12px;color:var(--gray);margin:6px 0 8px">正确 <span id="qRight">0</span> / 已完成 <span id="qDone">0</span>　正确率 <span id="qRate">0</span>%</div>
+    <div id="qBox"></div>
+    <button class="btn g" id="qNext" onclick="nextQuiz()" style="display:none">下一题 →</button>
+    <button class="btn o" onclick="restartQuiz()">🔄 重做本组</button>
+  </div>
+
+  <!-- 错词本 -->
+  <div class="panel" id="p-wrong">
+    <div class="section-title"><span class="n">7</span>错词本</div>
+    <div id="wrongBox"></div>
+    <button class="btn o" onclick="clearWrong()">🗑️ 清空错词本</button>
+  </div>
+
+</div>
+<div class="nav">
+  <button class="on" onclick="jump('roots',this)">📖</button>
+  <button onclick="jump('flip',this)">🎴</button>
+  <button onclick="jump('beyond',this)">🚀</button>
+  <button onclick="jump('quiz',this)">✏️</button>
+  <button onclick="jump('wrong',this)">❌</button>
+</div>
+<div class="toast" id="toast"><h4 id="toastTitle"></h4><div id="toastBody"></div><button onclick="closeToast()">我知道了</button></div>
+
+<script>
+/* ============ 数据层 ============ */
+// 30 核心词根
+const ROOTS = [
+  {r:'duct',m:'引导、输送',e:'conduct 引导 / reduce 减少 / produce 生产',src:'2024 新高考I 阅读'},
+  {r:'spect',m:'看',e:'inspect 检查 / respect 尊重 / prospect 前景',src:'2023 全国甲 完形'},
+  {r:'port',m:'搬运、携带',e:'export 出口 / import 进口 / transport 运输',src:'2025 新高考II'},
+  {r:'form',m:'形状、形成',e:'transform 转变 / inform 通知 / perform 执行',src:'2024 全国乙'},
+  {r:'struct',m:'建造',e:'construct 建造 / destruct 破坏 / structure 结构',src:'2025 全国I'},
+  {r:'mit / miss',m:'发送',e:'submit 提交 / admit 承认 / promise 承诺',src:'2024 新高考I'},
+  {r:'press',m:'压',e:'express 表达 / depress 使沮丧 / impression 印象',src:'2023 全国乙'},
+  {r:'tain',m:'保持、握住',e:'contain 包含 / maintain 维持 / obtain 获得',src:'2025 全国甲'},
+  {r:'scrib / script',m:'写',e:'describe 描述 / prescribe 开处方 / script 剧本',src:'2024 全国II'},
+  {r:'dict',m:'说、言',e:'predict 预测 / dictionary 词典 / contradict 反驳',src:'2025 新高考I'},
+  {r:'rupt',m:'断裂、破',e:'interrupt 打断 / corrupt 腐败 / erupt 爆发',src:'2023 全国甲'},
+  {r:'scend / scens',m:'爬、攀',e:'ascend 上升 / descend 下降 / transcend 超越',src:'2024 新高考II'},
+  {r:'ced / cess',m:'走、让步',e:'proceed 继续 / succeed 成功 / access 通道',src:'2025 全国I'},
+  {r:'tract',m:'拉、抽',e:'attract 吸引 / extract 提取 / contract 合同',src:'2024 全国乙'},
+  {r:'pos',m:'放、置',e:'propose 提议 / oppose 反对 / expose 暴露',src:'2025 新高考II'},
+  {r:'sent',m:'感觉',e:'consent 同意 / resent 怨恨 / present 呈现',src:'2023 北京'},
+  {r:'spir',m:'呼吸、精神',e:'inspire 激励 / expire 到期 / spirit 精神',src:'2024 新高考I'},
+  {r:'vers / vert',m:'转',e:'convert 转换 / reverse 反转 / universe 宇宙',src:'2025 全国II'},
+  {r:'fer',m:'带、搬运',e:'transfer 转移 / refer 参考 / prefer 更喜欢',src:'2024 全国甲'},
+  {r:'pend / pens',m:'悬挂、花费',e:'depend 依赖 / expensive 昂贵的 / suspend 暂停',src:'2025 新高考I'},
+  {r:'vis / vid',m:'看',e:'vision 视野 / evident 明显的 / provide 提供',src:'2023 新高考II'},
+  {r:'ject',m:'投掷',e:'reject 拒绝 / project 项目 / inject 注射',src:'2024 全国乙'},
+  {r:'cept',m:'拿、取',e:'accept 接受 / concept 概念 / except 除外',src:'2025 全国I'},
+  {r:'cess',m:'去、走',e:'process 过程 / success 成功 / necessary 必要的',src:'2024 新高考I'},
+  {r:'gen',m:'产生、种族',e:'generate 产生 / gene 基因 / general 一般的',src:'2025 新高考II'},
+  {r:'leg / lect',m:'读、选、说',e:'collect 收集 / lecture 讲座 / legend 传说',src:'2023 全国乙'},
+  {r:'nov',m:'新',e:'novel 新奇的 / innovate 创新 / renovation 翻新',src:'2024 北京'},
+  {r:'ced',m:'切、杀',e:'decide 决定 / suicide 自杀 / precise 精确的',src:'2025 全国甲'},
+  {r:'path',m:'感情、疾病',e:'sympathy 同情 / pathetic 可怜的 / empathy 共情',src:'2024 新高考II'},
+  {r:'chron',m:'时间',e:'chronic 慢性的 / chronology 年表 / synchronize 同步',src:'2025 新高考I'},
+];
+// 16 前缀
+const PREFIX = [
+  {p:'un-',m:'不、相反',e:'unhappy 不快乐 / unfold 展开'},
+  {p:'re-',m:'再次、回',e:'review 复习 / rebuild 重建'},
+  {p:'pre-',m:'在…之前',e:'preview 预览 / prepare 准备'},
+  {p:'dis-',m:'否定、分离',e:'dislike 不喜欢 / discover 发现'},
+  {p:'mis-',m:'错误',e:'mislead 误导 / misunderstand 误解'},
+  {p:'non-',m:'非、不',e:'nonfiction 非虚构 / nonsense 胡说'},
+  {p:'in- / im- / il- / ir-',m:'不（同化变体）',e:'invisible / impossible / illegal / irregular'},
+  {p:'sub-',m:'在下、次要',e:'subway 地铁 / substitute 替代'},
+  {p:'inter-',m:'之间、相互',e:'international 国际 / interact 互动'},
+  {p:'over-',m:'过度、在上',e:'overuse 过度使用 / overcome 克服'},
+  {p:'under-',m:'不足、在下',e:'underestimate 低估 / underground 地下'},
+  {p:'trans-',m:'跨越、转变',e:'transport 运输 / transform 转变'},
+  {p:'anti-',m:'反对',e:'antiwar 反战 / antibody 抗体'},
+  {p:'counter-',m:'相反',e:'counterpart 对应物 / counterattack 反击'},
+  {p:'multi-',m:'多',e:'multinational 跨国的 / multiple 多个'},
+  {p:'post-',m:'在…之后',e:'postpone 推迟 / postwar 战后'},
+];
+// 22 后缀（按词性）
+const SUFFIX = [
+  {s:'-tion / -sion',m:'名词：动作/状态',e:'education / decision'},
+  {s:'-ment',m:'名词：结果',e:'development / movement'},
+  {s:'-ness',m:'名词：性质',e:'happiness / kindness'},
+  {s:'-ity / -ty',m:'名词：性质',e:'ability / safety'},
+  {s:'-ance / -ence',m:'名词：状态',e:'importance / difference'},
+  {s:'-th',m:'名词：状态',e:'growth / width'},
+  {s:'-able / -ible',m:'形容词：可…的',e:'comfortable / possible'},
+  {s:'-al / -ial',m:'形容词：…的',e:'natural / official'},
+  {s:'-ful',m:'形容词：充满',e:'helpful / beautiful'},
+  {s:'-ous / -ious',m:'形容词：…的',e:'dangerous / curious'},
+  {s:'-ive',m:'形容词：倾向',e:'active / creative'},
+  {s:'-ic / -ical',m:'形容词：…的',e:'scientific / historical'},
+  {s:'-ly',m:'副词',e:'quickly / carefully'},
+  {s:'-ize / -ise',m:'动词：使…化',e:'realize / organize'},
+  {s:'-ify',m:'动词：使…化',e:'simplify / identify'},
+  {s:'-ate',m:'动词',e:'communicate / create'},
+  {s:'-ist',m:'名词：从事者',e:'scientist / artist'},
+  {s:'-ship',m:'名词：关系/身份',e:'friendship / leadership'},
+  {s:'-dom',m:'名词：领域/状态',e:'freedom / kingdom'},
+  {s:'-hood',m:'名词：时期/状态',e:'childhood / neighborhood'},
+  {s:'-ward(s)',m:'副词：方向',e:'forward / afterwards'},
+  {s:'-less',m:'形容词：无',e:'homeless / careless'},
+];
+// 翻转卡（48 张 = 词根 + 前缀 + 后缀精选）
+const FLIP = [
+  ...ROOTS.map(x=>({f:x.r, b:x.m, h:x.e})),
+  {f:'un-',b:'不、相反',h:'unhappy / unfold'},
+  {f:'re-',b:'再次',h:'review / rebuild'},
+  {f:'mis-',b:'错误',h:'mislead / misunderstand'},
+  {f:'inter-',b:'之间、相互',h:'international / interact'},
+  {f:'trans-',b:'跨越、转变',h:'transport / transform'},
+  {f:'-tion',b:'名词：动作',h:'education / decision'},
+  {f:'-able',b:'形容词：可…的',h:'comfortable / possible'},
+  {f:'-ous',b:'形容词：…的',h:'dangerous / curious'},
+  {f:'-ize',b:'动词：使…化',h:'realize / organize'},
+  {f:'-ist',b:'名词：从事者',h:'scientist / artist'},
+  {f:'-less',b:'形容词：无',h:'homeless / careless'},
+];
+// 超纲词（3500 大纲外，靠词根推导）— 约 40 个
+const BEYOND = [
+  {w:'unsustainable',cut:'un + sus + tain + able',m:'不可持续的',src:'2025 新高考I 阅读D',root:'tain=保持'},
+  {w:'misleading',cut:'mis + lead + ing',m:'误导的',src:'2023 全国乙 阅读',root:'mis=错误'},
+  {w:'interconnected',cut:'inter + connect + ed',m:'相互关联的',src:'2024 新高考II 阅读',root:'inter=之间'},
+  {w:'counterpart',cut:'counter + part',m:'对应物、对应的人',src:'2025 全国I 阅读',root:'counter=相反'},
+  {w:'overstatement',cut:'over + state + ment',m:'夸大',src:'语法填空高频',root:'over=过度'},
+  {w:'multinational',cut:'multi + nation + al',m:'跨国的',src:'2023 新高考I 阅读',root:'multi=多'},
+  {w:'preliminary',cut:'pre + limin + ary',m:'初步的、预备的',src:'2024 全国II 完形',root:'pre=之前'},
+  {w:'irreplaceable',cut:'ir + replace + able',m:'不可替代的',src:'2025 全国甲 阅读',root:'ir=不'},
+  {w:'underestimate',cut:'under + estimate',m:'低估',src:'2024 全国I 完形',root:'under=不足'},
+  {w:'biodiversity',cut:'bio + di + vers + ity',m:'生物多样性',src:'2024 全国甲 阅读D',root:'bio=生命,vers=转'},
+  {w:'invaluable',cut:'in + valu + able',m:'极宝贵的（不是"无价值"）',src:'2025 新高考II',root:'in=不(表强调)'},
+  {w:'uncomfortable',cut:'un + comfort + able',m:'不舒服的',src:'完形高频',root:'comfort=舒适'},
+  {w:'misuse',cut:'mis + use',m:'滥用',src:'2024 新高考I 阅读',root:'mis=错误'},
+  {w:'preview',cut:'pre + view',m:'预览',src:'2025 全国III',root:'pre=之前,view=看'},
+  {w:'contradict',cut:'contra + dict',m:'与…矛盾',src:'2024 全国乙 阅读',root:'contra=相反,dict=说'},
+  {w:'transcend',cut:'trans + scend',m:'超越',src:'2025 新高考I 阅读',root:'trans=跨越,scend=攀'},
+  {w:'empathy',cut:'em + path + y',m:'共情',src:'2024 新高考II 阅读',root:'path=感情'},
+  {w:'sympathy',cut:'sym + path + y',m:'同情',src:'2023 全国甲',root:'sym=共同,path=感情'},
+  {w:'chronology',cut:'chron + o + logy',m:'年表、年代学',src:'2025 全国II',root:'chron=时间'},
+  {w:'synchronize',cut:'syn + chron + ize',m:'使同步',src:'2024 新高考I',root:'syn=共同,chron=时间'},
+  {w:'innovate',cut:'in + nov + ate',m:'创新',src:'2025 新高考II 阅读',root:'nov=新'},
+  {w:'renovation',cut:'re + nov + ation',m:'翻新、整修',src:'2024 北京 阅读',root:'nov=新'},
+  {w:'prospect',cut:'pro + spect',m:'前景',src:'2023 全国乙 完形',root:'pro=向前,spect=看'},
+  {w:'inspect',cut:'in + spect',m:'检查',src:'2024 全国甲',root:'in=向内,spect=看'},
+  {w:'respect',cut:'re + spect',m:'尊重',src:'语法填空高频',root:'re=反复,spect=看'},
+  {w:'extract',cut:'ex + tract',m:'提取、摘录',src:'2025 全国I 阅读D',root:'ex=出,tract=拉'},
+  {w:'contract',cut:'con + tract',m:'合同；收缩',src:'2024 新高考II',root:'con=一起,tract=拉'},
+  {w:'attractive',cut:'at + tract + ive',m:'有吸引力的',src:'2023 全国甲',root:'tract=拉'},
+  {w:'convert',cut:'con + vert',m:'转变、转换',src:'2025 全国II',root:'vert=转'},
+  {w:'reverse',cut:'re + vers + e',m:'反转、相反',src:'2024 全国乙',root:'vers=转'},
+  {w:'universe',cut:'uni + vers + e',m:'宇宙',src:'2024 新高考I',root:'uni=一,vers=转'},
+  {w:'invisible',cut:'in + vis + ible',m:'看不见的',src:'2024 新高考II 阅读',root:'in=不,vis=看'},
+  {w:'visibility',cut:'vis + ibility',m:'能见度',src:'2025 全国I',root:'vis=看'},
+  {w:'provide',cut:'pro + vid + e',m:'提供',src:'语法填空高频',root:'pro=向前,vid=看'},
+  {w:'evident',cut:'e + vid + ent',m:'明显的',src:'2023 全国乙',root:'vid=看'},
+  {w:'prescription',cut:'pre + script + ion',m:'处方',src:'2024 全国甲 阅读',root:'pre=前,script=写'},
+  {w:'manuscript',cut:'manu + script',m:'手稿',src:'2025 新高考I 阅读',root:'manu=手,script=写'},
+  {w:'undervalued',cut:'under + value + ed',m:'被低估的',src:'2025 全国甲 完形',root:'under=不足'},
+  {w:'overpopulated',cut:'over + populate + ed',m:'人口过剩的',src:'2024 全国II 阅读D',root:'over=过度'},
+];
+// 拆解自测（30 题）
+const QUIZ = [
+  {q:'uncomfortable 的正确拆解是？',a:'un + comfort + able',opts:['un + comfort + able','un + com + fort + able','uncomfort + able','un + comfortable']},
+  {q:'unsustainable 的词根是？',a:'tain（保持）',opts:['tain（保持）','sus（下面）','able（可…的）','un（不）']},
+  {q:'biodiversity 表示"生物多样性"，bio- 的含义是？',a:'生命',opts:['生命','多样','地球','自然']},
+  {q:'misleading 中 mis- 表示？',a:'错误',opts:['错误','再次','相反','在…之前']},
+  {q:'counterpart 中 counter- 表示？',a:'相反、对应',opts:['相反、对应','一起','在…之下','多次']},
+  {q:'interconnected 中 inter- 表示？',a:'之间、相互',opts:['之间、相互','在内','之前','过度']},
+  {q:'preliminary 表示"初步的"，pre- 表示？',a:'在…之前',opts:['在…之前','再次','相反','多']},
+  {q:'underestimate 表示"低估"，under- 表示？',a:'不足、在下',opts:['不足、在下','过度','错误','相反']},
+  {q:'irreplaceable 中 ir- 是 in- 的变体，表示？',a:'不',opts:['不','再次','向内','之间']},
+  {q:'overstatement 中 over- 表示？',a:'过度',opts:['过度','在…之上','相反','之前']},
+  {q:'multinational 中 multi- 表示？',a:'多',opts:['多','国家','跨','联合']},
+  {q:'empathy（共情）中 path 的含义是？',a:'感情',opts:['感情','疾病','共同','他人']},
+  {q:'transcend 中 scend 的含义是？',a:'爬、攀（引申为"超越"）',opts:['爬、攀','跨越','说','发送']},
+  {q:'synchronize 中 chron 的含义是？',a:'时间',opts:['时间','共同','步调','周期']},
+  {q:'innovate 中 nov 的含义是？',a:'新',opts:['新','再次','创造','革新']},
+  {q:'prospect（前景）中 spect 的含义是？',a:'看',opts:['看','向前','希望','光']},
+  {q:'extract（提取）中 tract 的含义是？',a:'拉、抽',opts:['拉、抽','出','取','引']},
+  {q:'convert（转变）中 vert 的含义是？',a:'转',opts:['转','改变','变','换']},
+  {q:'invisible 中 vis 的含义是？',a:'看',opts:['看','不','清晰','视觉']},
+  {q:'provide（提供）中 vid 的含义是？',a:'看（引申为"向前看、预备"）',opts:['看','给','前','备']},
+  {q:'prescription 中 script 的含义是？',a:'写',opts:['写','处方','前','医']},
+  {q:'undervalued 中 value 词根是 value，整体含义？',a:'被低估的',opts:['被低估的','有价值的','无价值的','过度评价']},
+  {q:'-tion / -sion 构成的词通常是？',a:'名词',opts:['名词','动词','形容词','副词']},
+  {q:'-able / -ible 构成的词通常是？',a:'形容词',opts:['形容词','名词','副词','动词']},
+  {q:'-ize / -ify 构成的词通常是？',a:'动词',opts:['动词','名词','形容词','副词']},
+  {q:'-ly 通常构成？',a:'副词',opts:['副词','形容词','名词','动词']},
+  {q:'-ist 通常构成？',a:'表示"从事者"的名词',opts:['表示"从事者"的名词','形容词','动词','副词']},
+  {q:'-less 构成的词表示？',a:'无、没有',opts:['无、没有','充满','有…倾向','可…的']},
+  {q:'re- 前缀通常表示？',a:'再次、回',opts:['再次、回','不','在…之前','过度']},
+  {q:'dis- 前缀通常表示？',a:'否定、分离',opts:['否定、分离','再次','向内','之间']},
+  {q:'non- 前缀表示？',a:'非、不',opts:['非、不','再次','在内','过度']},
+  {q:'post- 前缀表示？',a:'在…之后',opts:['在…之后','在…之前','相反','之间']},
+  {q:'anti- 前缀表示？',a:'反对',opts:['反对','支持','之间','在内']},
+  {q:'sub- 前缀表示？',a:'在下、次要',opts:['在下、次要','在上','过度','相反']},
+  {q:'-ity / -ty 构成的词通常是？',a:'名词',opts:['名词','动词','形容词','副词']},
+  {q:'-ive 构成的词通常是？',a:'形容词',opts:['形容词','名词','副词','动词']},
+  {q:'-ward(s) 构成的词通常是？',a:'副词（表方向）',opts:['副词（表方向）','形容词','名词','动词']},
+  {q:'-ship 构成的词表示？',a:'关系、身份',opts:['关系、身份','动作','性质','工具']},
+  {q:'-th 构成的词通常是？',a:'名词（表状态）',opts:['名词（表状态）','形容词','动词','副词']},
+  {q:'duct 的含义是？',a:'引导、输送',opts:['引导、输送','看','说','走']},
+  {q:'rupt 的含义是？',a:'断裂、破',opts:['断裂、破','保持','建造','爬']},
+  {q:'ject 的含义是？',a:'投掷',opts:['投掷','拿','拉','写']},
+  {q:'cept 的含义是？',a:'拿、取',opts:['拿、取','说','走','放']},
+  {q:'pend / pens 的含义是？',a:'悬挂、花费',opts:['悬挂、花费','感觉','呼吸','转']},
+  {q:'rupt 词根出现在下列哪个词？',a:'interrupt',opts:['interrupt','inspect','invite','import']},
+  {q:'spect 词根出现在下列哪个词？',a:'prospect',opts:['prospect','project','protect','prefer']},
+  {q:'tract 词根出现在下列哪个词？',a:'attractive',opts:['attractive','active','artist','annual']},
+  {q:'fer 词根出现在下列哪个词？',a:'transfer',opts:['transfer','transform','transport','tradition']},
+  {q:'struct 词根出现在下列哪个词？',a:'construction',opts:['construction','conduct','context','control']},
+  {q:'uncomfortable 的 core 词根是？',a:'comfort',opts:['comfort','come','fort','able']},
+  {q:'irreplaceable 中的 ir- 修饰的是？',a:'replaceable',opts:['replaceable','replace','able','ir']},
+  {q:'biodiversity 的中心词根是？',a:'vers（转）',opts:['vers（转）','bio（生命）','di','ity']},
+  {q:'prescription 中 script 表示？',a:'写',opts:['写','处方','前','医']},
+  {q:'synchronize 中 syn- 表示？',a:'共同',opts:['共同','时间','使…化','周期']},
+  {q:'preview 的正确拆解是？',a:'pre + view',opts:['pre + view','pre + vie + w','preview','pre + v + iew']},
+  {q:'discomfort 的正确拆解是？',a:'dis + comfort',opts:['dis + comfort','dis + com + fort','discomfort','di + comfort']},
+  {q:'undeniable 中 deny 的词根是 deny，整体含义？',a:'不可否认的',opts:['不可否认的','可否认的','否认','确定的']},
+  {q:'overestimate 表示"高估"，结构是？',a:'over + estimate',opts:['over + estimate','over + est + imate','over + estimate + ed','overest + imate']},
+  {q:'international 中 inter- 表示？',a:'之间、相互',opts:['之间、相互','在内','之前','过度']},
+  {q:'-ful 构成的词表示？',a:'充满',opts:['充满','无','有…倾向','可…的']},
+  {q:'-ous / -ious 构成的词通常是？',a:'形容词',opts:['形容词','名词','副词','动词']},
+  {q:'-ist 构成的词如 scientist，表示？',a:'从事…的人',opts:['从事…的人','学科','形容词','工具']},
+];
+
+// 含义配对练习（给单词选含义，基于词根推导）— 30 题
+const MEAN_Q = [
+  {q:'根据词根，<b>export</b> 最可能表示？',a:'出口、运出',hint:'ex=出, port=搬运',opts:['出口、运出','进口','运输工具','港口']},
+  {q:'<b>import</b> 根据 im-（in=入）+ port（搬运）表示？',a:'进口、输入',opts:['进口、输入','出口','重要性','搬运工']},
+  {q:'<b>predict</b>（pre- 前 + dict 说）表示？',a:'预测',opts:['预测','字典','反驳','说教']},
+  {q:'<b>contradict</b>（contra 相反 + dict 说）表示？',a:'与…矛盾、反驳',opts:['与…矛盾、反驳','对比','贡献','控制']},
+  {q:'<b>inspire</b>（in 向内 + spir 呼吸）表示？',a:'激励、鼓舞',opts:['激励、鼓舞','呼吸','到期','精神']},
+  {q:'<b>expire</b>（ex 出 + spir 呼吸）表示？',a:'到期、届满',opts:['到期、届满','呼吸','试验','探索']},
+  {q:'<b>reverse</b>（re 回 + vers 转）表示？',a:'反转、倒转',opts:['反转、倒转','多样','版本','转换']},
+  {q:'<b>convert</b>（con 一起 + vert 转）表示？',a:'转变、转换',opts:['转变、转换','相反','版本','反之']},
+  {q:'<b>attractive</b>（at 向 + tract 拉）表示？',a:'有吸引力的',opts:['有吸引力的','攻击','抽象','提取']},
+  {q:'<b>extract</b>（ex 出 + tract 拉）表示？',a:'提取、摘录',opts:['提取、摘录','合同','吸引','拉伸']},
+  {q:'<b>describe</b>（de 下 + scrib 写）表示？',a:'描述',opts:['描述','处方','抄写','订阅']},
+  {q:'<b>prescribe</b>（pre 前 + scrib 写）表示？',a:'开处方、规定',opts:['开处方、规定','手稿','描述','预先']},
+  {q:'<b>depend</b>（de 下 + pend 悬挂）表示？',a:'依赖、依靠',opts:['依赖、依靠','花费','悬垂','独立']},
+  {q:'<b>expensive</b>（ex 出 + pens 花费）表示？',a:'昂贵的',opts:['昂贵的','便宜的','花费','扩展']},
+  {q:'<b>universe</b>（uni 一 + vers 转）表示？',a:'宇宙',opts:['宇宙','大学','统一','转化']},
+  {q:'<b>invisible</b>（in 不 + vis 看）表示？',a:'看不见的',opts:['看不见的','视力','可见的','视觉']},
+  {q:'<b>evident</b>（e 出 + vid 看）表示？',a:'明显的',opts:['明显的','证据','视力','事件']},
+  {q:'<b>provide</b>（pro 向前 + vid 看）表示？',a:'提供、供应',opts:['提供、供应','证明','预览','节省']},
+  {q:'<b>accept</b>（ac 向 + cept 拿）表示？',a:'接受',opts:['接受','概念','除外','成功']},
+  {q:'<b>concept</b>（con 一起 + cept 拿）表示？',a:'概念、观念',opts:['概念、观念','接受','例外','取得']},
+  {q:'<b>interrupt</b>（inter 之间 + rupt 断）表示？',a:'打断、中断',opts:['打断、中断','腐败','爆发','连接']},
+  {q:'<b>erupt</b>（e 出 + rupt 破）表示？',a:'爆发（火山等）',opts:['爆发（火山等）','中断','腐蚀','破坏']},
+  {q:'<b>ascend</b>（a 向 + scend 攀）表示？',a:'上升、攀登',opts:['上升、攀登','下降','超越','传送']},
+  {q:'<b>descend</b>（de 下 + scend 攀）表示？',a:'下降、下来',opts:['下降、下来','上升','传送','攀爬']},
+  {q:'<b>transcend</b>（trans 跨越 + scend 攀）表示？',a:'超越',opts:['超越','传送','跨越','上升']},
+  {q:'<b>empathy</b>（em 入 + path 感情）表示？',a:'共情、共鸣',opts:['共情、共鸣','同情','疾病','耐心']},
+  {q:'<b>sympathy</b>（sym 共同 + path 感情）表示？',a:'同情',opts:['同情','共情','疾病','耐心']},
+  {q:'<b>innovate</b>（in 入 + nov 新）表示？',a:'创新',opts:['创新','翻新','新的','革新']},
+  {q:'<b>generate</b>（gen 产生）表示？',a:'产生、生成',opts:['产生、生成','基因','一般的','天才']},
+  {q:'<b>overused</b>（over 过度 + use）表示？',a:'过度使用的',opts:['过度使用的','滥用','误用','使用']},
+];
+
+// 超纲词推导练习（3500外，拆解放括号选含义）— 30 题
+const BEYOND_Q = [
+  {q:'<b>unsustainable</b> = un + sus + tain + able，含义？',a:'不可持续的',opts:['不可持续的','可持续的','维持的','可忍受的']},
+  {q:'<b>misleading</b> = mis + lead + ing，含义？',a:'误导的',opts:['误导的','领导的','领先的','跟随的']},
+  {q:'<b>interconnected</b> = inter + connect + ed，含义？',a:'相互关联的',opts:['相互关联的','内部连接','互联网','连接者']},
+  {q:'<b>counterpart</b> = counter + part，含义？',a:'对应物、对应的人',opts:['对应物、对应的人','部分','柜台','相反方向']},
+  {q:'<b>multinational</b> = multi + nation + al，含义？',a:'跨国的',opts:['跨国的','多国家的（强调多个）','民族的','国际化']},
+  {q:'<b>preliminary</b> = pre + limin + ary，含义？',a:'初步的、预备的',opts:['初步的、预备的','限制的','入门的','初级的']},
+  {q:'<b>irreplaceable</b> = ir + replace + able，含义？',a:'不可替代的',opts:['不可替代的','可替代的','可更换的','重置的']},
+  {q:'<b>underestimate</b> = under + estimate，含义？',a:'低估',opts:['低估','高估','估计','在…之下']},
+  {q:'<b>biodiversity</b> = bio + di + vers + ity，含义？',a:'生物多样性',opts:['生物多样性','多样化','生物圈','自然']},
+  {q:'<b>invaluable</b> = in + valu + able，实际含义？',a:'极宝贵的（不是"无价值"）',opts:['极宝贵的（不是"无价值"）','无价值的','有价值的','无法估价的']},
+  {q:'<b>overstatement</b> = over + state + ment，含义？',a:'夸大',opts:['夸大','陈述','过度状态','说明']},
+  {q:'<b>uncomfortable</b> = un + comfort + able，含义？',a:'不舒服的',opts:['不舒服的','舒适的','安慰的','舒服的']},
+  {q:'<b>misuse</b> = mis + use，含义？',a:'滥用',opts:['滥用','误用','使用','用途']},
+  {q:'<b>preview</b> = pre + view，含义？',a:'预览',opts:['预览','回顾','观点','视角']},
+  {q:'<b>transcend</b> = trans + scend，含义？',a:'超越',opts:['超越','传送','跨越','攀登']},
+  {q:'<b>synchronize</b> = syn + chron + ize，含义？',a:'使同步',opts:['使同步','同时','时间表','年代学']},
+  {q:'<b>chronology</b> = chron + o + logy，含义？',a:'年表、年代学',opts:['年表、年代学','时钟','时间表','周期']},
+  {q:'<b>renovation</b> = re + nov + ation，含义？',a:'翻新、整修',opts:['翻新、整修','创新','新的','革新']},
+  {q:'<b>prospect</b> = pro + spect，含义？',a:'前景',opts:['前景','检查','方面','期待']},
+  {q:'<b>inspect</b> = in + spect，含义？',a:'检查',opts:['检查','期待','前景','回顾']},
+  {q:'<b>attractive</b> = at + tract + ive，含义？',a:'有吸引力的',opts:['有吸引力的','攻击的','抽象的','提取的']},
+  {q:'<b>contract</b> = con + tract，含义？',a:'合同；收缩',opts:['合同；收缩','吸引','提取','拖拉']},
+  {q:'<b>visibility</b> = vis + ibility，含义？',a:'能见度',opts:['能见度','看不见的','视力','可见的']},
+  {q:'<b>provide</b> = pro + vid + e，含义？',a:'提供',opts:['提供','证明','预览','节省']},
+  {q:'<b>prescription</b> = pre + script + ion，含义？',a:'处方',opts:['处方','手稿','描述','规定']},
+  {q:'<b>manuscript</b> = manu + script，含义？',a:'手稿',opts:['手稿','处方','手写','脚本']},
+  {q:'<b>undervalued</b> = under + value + ed，含义？',a:'被低估的',opts:['被低估的','有价值的','过度评价的','无价值的']},
+  {q:'<b>overpopulated</b> = over + populate + ed，含义？',a:'人口过剩的',opts:['人口过剩的','人口多的','人口稠密的','过度居住']},
+  {q:'<b>counterattack</b> = counter + attack，含义？',a:'反击',opts:['反击','相反','攻击','防御']},
+  {q:'<b>postpone</b> = post + pone，含义？',a:'推迟',opts:['推迟','战后','之前','放置']},
+];
+
+/* ============ 渲染 ============ */
+const $=(s)=>document.querySelector(s);
+const LS=()=>{try{return window.localStorage;}catch(e){return null;}};
+const safeGet=(k,d)=>{try{const v=LS()?LS().getItem(k):null;return v?JSON.parse(v):d;}catch(e){return d;}};
+const safeSet=(k,v)=>{try{if(LS())LS().setItem(k,JSON.stringify(v));}catch(e){}};
+const store={flip:new Set(safeGet('wr_flip',[])),wrong:safeGet('wr_wrong',[])};
+function save(){safeSet('wr_flip',[...store.flip]);safeSet('wr_wrong',store.wrong);}
+
+function renderRoots(){const ul=$('#rootsList');ul.innerHTML=ROOTS.map(x=>`<li><b>${x.r}</b> <span class="badge b">${x.m}</span><br><span style="font-size:12px;color:var(--gray)">${x.e}</span><br><span class="src">${x.src}</span></li>`).join('');}
+function renderPre(){$('#preList').innerHTML=PREFIX.map(x=>`<li><b>${x.p}</b> <span class="badge g">${x.m}</span><br><span style="font-size:12px;color:var(--gray)">${x.e}</span></li>`).join('');}
+function renderSuf(){$('#sufList').innerHTML=SUFFIX.map(x=>`<li><b>${x.s}</b> <span class="badge g">${x.m}</span><br><span style="font-size:12px;color:var(--gray)">${x.e}</span></li>`).join('');}
+function renderBeyond(){$('#beyondList').innerHTML=BEYOND.map(x=>`<li><b>${x.w}</b> <span class="badge b">${x.cut}</span><br><span style="font-size:12px;color:var(--green);font-weight:600">${x.m}</span><br><span style="font-size:11px;color:var(--gray)">词根：${x.root}</span><br><span class="src">${x.src}</span></li>`).join('');$('#beyondN').textContent=BEYOND.length;}
+
+/* 翻转卡 */
+let flipOrder=[...FLIP.keys()],flipIdx=0;
+function renderFlip(){const i=flipOrder[flipIdx];const c=FLIP[i];$('#fcFront').textContent=c.f;$('#fcBack').textContent=c.b;$('#fcBackHint').textContent=c.h;$('#flipCard').classList.remove('flipped');$('#fcDone').textContent=store.flip.size;$('#fcTotal').textContent=FLIP.length;$('#fcTotal2').textContent=FLIP.length;$('#fcBar').style.width=(store.flip.size/FLIP.length*100)+'%';}
+function flipCard(){const card=$('#flipCard');card.classList.toggle('flipped');if(card.classList.contains('flipped')){store.flip.add(flipOrder[flipIdx]);save();$('#fcDone').textContent=store.flip.size;$('#fcBar').style.width=(store.flip.size/FLIP.length*100)+'%';}}
+function nextCard(){flipIdx=(flipIdx+1)%flipOrder.length;renderFlip();}
+function shuffleCards(){flipOrder=[...FLIP.keys()].sort(()=>Math.random()-.5);flipIdx=0;renderFlip();}
+
+/* 搜索 */
+function searchList(el,type){const v=el.value.toLowerCase();const arr=type==='roots'?ROOTS:[];const ul=$('#rootsList');if(!v){renderRoots();return;}ul.innerHTML=ROOTS.filter(x=>x.r.includes(v)||x.m.includes(v)).map(x=>`<li><b>${x.r}</b> <span class="badge b">${x.m}</span><br><span style="font-size:12px;color:var(--gray)">${x.e}</span></li>`).join('')||'<li style="color:var(--gray)">无匹配</li>';}
+
+/* 自测（三种题型） */
+const QLIB={split:QUIZ,mean:MEAN_Q,beyond:BEYOND_Q};
+let qMode='split',qIdx=0,qRight=0,qDone=0;
+function curLib(){return QLIB[qMode];}
+function switchMode(m,btn){qMode=m;qIdx=0;qRight=0;qDone=0;document.querySelectorAll('.qtab').forEach(e=>e.classList.remove('on'));btn.classList.add('on');renderQuiz();}
+function restartQuiz(){qIdx=0;qRight=0;qDone=0;renderQuiz();}
+function renderQuiz(){const lib=curLib();const t=lib[qIdx];$('#qBar').style.width=(qIdx/lib.length*100)+'%';$('#qRight').textContent=qRight;$('#qDone').textContent=qDone;$('#qRate').textContent=qDone?Math.round(qRight/qDone*100):0;$('#qBox').innerHTML=`<div class="card"><div class="tag">第 ${qIdx+1} / ${lib.length} 题　·　${t.hint||''}</div><h3>${t.q}</h3>${t.opts.map(o=>`<div class="opt" onclick="pickOpt(this,'${o.replace(/'/g,"\\'")}','${t.a.replace(/'/g,"\\'")}')">${o}</div>`).join('')}</div>`;$('#qNext').style.display='none';}
+function pickOpt(el,chosen,ans){if(el.classList.contains('ok')||el.classList.contains('no'))return;if(chosen===ans){el.classList.add('ok');qRight++;}else{el.classList.add('no');store.wrong.push({q:curLib()[qIdx].q,a:ans,mode:qMode});save();}qDone++;Array.from(document.querySelectorAll('.opt')).forEach(o=>{if(o.textContent===ans)o.classList.add('ok');o.style.pointerEvents='none';});$('#qRight').textContent=qRight;$('#qDone').textContent=qDone;$('#qRate').textContent=Math.round(qRight/qDone*100);$('#qNext').style.display='block';}
+function nextQuiz(){const lib=curLib();qIdx++;if(qIdx>=lib.length){$('#qBox').innerHTML=`<div class="card" style="text-align:center"><h3>🎉 ${qMode==='beyond'?'超纲推导':qMode==='mean'?'含义配对':'拆解'}完成！</h3><p style="font-size:32px;color:var(--blue);font-weight:800;margin:10px 0">${qRight} / ${lib.length}</p><p style="color:var(--gray)">正确率 ${Math.round(qRight/lib.length*100)}%</p><button class="btn o" onclick="restartQuiz()">🔄 再来一组</button></div>`;$('#qNext').style.display='none';return;}renderQuiz();}
+
+/* 错词本 */
+function renderWrong(){const b=$('#wrongBox');if(!store.wrong.length){b.innerHTML='<div class="card" style="text-align:center;color:var(--gray)">✨ 暂无错词，继续保持！</div>';return;}b.innerHTML=store.wrong.slice().reverse().map((x,i)=>`<div class="card"><b>Q：</b>${x.q}<br><span style="color:var(--green)">✅ 正确答案：${x.a}</span></div>`).join('');}
+function clearWrong(){store.wrong=[];save();renderWrong();showToast('已清空','错词本已清空');}
+
+/* 面板切换 */
+function jump(p,btn){document.querySelectorAll('.panel').forEach(e=>e.classList.remove('on'));$('#p-'+p).classList.add('on');document.querySelectorAll('.tab').forEach(e=>e.classList.remove('on'));document.querySelector(`.tab[data-p="${p}"]`).classList.add('on');document.querySelectorAll('.nav button').forEach(e=>e.classList.remove('on'));if(btn)btn.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});if(p==='flip')renderFlip();if(p==='wrong')renderWrong();}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{const p=t.dataset.p;jump(p,document.querySelector('.nav button'));document.querySelector('.nav button').classList.remove('on');});
+
+/* toast */
+function showToast(title,body){$('#toastTitle').textContent=title;$('#toastBody').textContent=body;$('#toast').classList.add('on');}
+function closeToast(){$('#toast').classList.remove('on');}
+
+/* 滚动收起抬头 */
+let lastY=0;window.addEventListener('scroll',()=>{const y=window.scrollY;const tb=$('#topbar'),ts=$('#tabs');if(y>60&&y>lastY){tb.classList.add('hide');ts.classList.add('hide');}else{tb.classList.remove('hide');ts.classList.remove('hide');}lastY=y;});
+
+/* 初始化 */
+renderRoots();renderPre();renderSuf();renderBeyond();renderFlip();
+$('#mSplit').textContent=QUIZ.length;$('#mMean').textContent=MEAN_Q.length;$('#mBeyond').textContent=BEYOND_Q.length;
+renderQuiz();renderWrong();
+</script>
+</body>
+</html>

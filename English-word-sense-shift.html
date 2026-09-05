@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>高考英语熟词生义专练 · 北京卷2016-2026</title>
+<style>
+  :root{
+    --blue:#1a73e8; --blue-d:#0d47a1; --blue-l:#e8f0fe;
+    --green:#1e8e3e; --red:#d93025; --grey:#5f6368; --line:#e0e0e0;
+    --bg:#f5f7fa; --card:#ffffff; --ink:#202124;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);font-size:16px;line-height:1.6;
+    padding-bottom:80px;
+  }
+  /* 顶部固定抬头 */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:linear-gradient(135deg,var(--blue),var(--blue-d));
+    color:#fff;padding:14px 16px;box-shadow:0 2px 8px rgba(26,115,232,.3);
+    transition:transform .25s;
+  }
+  .topbar.hide{transform:translateY(-100%);}
+  .topbar h1{font-size:17px;margin:0 0 2px;}
+  .topbar .sub{font-size:11px;opacity:.9;}
+  .wrap{padding:76px 12px 0;}
+  .tabs{display:flex;gap:6px;margin:10px 0 14px;overflow-x:auto;padding-bottom:4px;}
+  .tab{
+    flex:0 0 auto;padding:8px 16px;border-radius:20px;background:#fff;
+    border:1px solid var(--line);font-size:14px;color:var(--grey);cursor:pointer;white-space:nowrap;
+  }
+  .tab.active{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* 进度条 */
+  .prog{background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .prog .row{display:flex;justify-content:space-between;font-size:12px;color:var(--grey);margin-bottom:6px;}
+  .bar{height:8px;background:#e8eaed;border-radius:4px;overflow:hidden;}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),#4fc3f7);width:0%;transition:width .3s;}
+
+  /* 单词卡片 */
+  .card3d{
+    perspective:1200px;width:100%;height:300px;margin:8px 0 16px;cursor:pointer;
+  }
+  .card3d .inner{
+    position:relative;width:100%;height:100%;transform-style:preserve-3d;
+    transition:transform .5s;
+  }
+  .card3d.flip .inner{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    background:#fff;border-radius:18px;box-shadow:0 6px 20px rgba(26,115,232,.15);
+    border:2px solid var(--blue-l);padding:24px;display:flex;flex-direction:column;justify-content:center;
+  }
+  .face.back{transform:rotateY(180deg);border-color:var(--green);}
+  .face .tag{font-size:11px;color:var(--blue);font-weight:700;letter-spacing:1px;margin-bottom:8px;}
+  .face .word{font-size:34px;font-weight:800;color:var(--ink);margin-bottom:6px;}
+  .face .phon{font-size:13px;color:var(--grey);}
+  .face .mean{font-size:18px;color:var(--blue-d);margin:6px 0;font-weight:600;}
+  .face .label{font-size:11px;color:var(--green);font-weight:700;margin-top:10px;}
+  .face .sense{font-size:20px;color:var(--green);font-weight:700;margin:4px 0;}
+  .face .ex{font-size:14px;color:#3c4043;font-style:italic;margin-top:10px;line-height:1.5;}
+  .face .src{font-size:11px;color:var(--grey);margin-top:8px;}
+  .flip-hint{text-align:center;font-size:12px;color:var(--grey);margin-top:-8px;margin-bottom:14px;}
+  .nav{display:flex;gap:10px;align-items:center;justify-content:space-between;}
+  .nav button{
+    flex:1;padding:12px;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;
+    background:var(--blue);color:#fff;
+  }
+  .nav button.ghost{background:#fff;color:var(--blue);border:1px solid var(--blue);}
+  .counter{font-size:13px;color:var(--grey);text-align:center;margin:10px 0;}
+
+  /* 词库列表 */
+  .list{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .item{padding:12px 14px;border-bottom:1px solid var(--line);}
+  .item:last-child{border-bottom:none;}
+  .item .w{font-size:17px;font-weight:700;color:var(--ink);}
+  .item .old{font-size:12px;color:var(--grey);}
+  .item .newsense{font-size:14px;color:var(--green);font-weight:600;margin-top:3px;}
+
+  /* 自测 */
+  .quiz{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.07);}
+  .quiz .qnum{font-size:12px;color:var(--blue);font-weight:700;margin-bottom:6px;}
+  .quiz .qword{font-size:26px;font-weight:800;margin-bottom:4px;}
+  .quiz .ctx{font-size:14px;color:#3c4043;background:var(--blue-l);padding:10px 12px;border-radius:8px;margin:10px 0;line-height:1.6;}
+  .opts{display:grid;gap:8px;margin-top:12px;}
+  .opt{padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14px;text-align:left;cursor:pointer;}
+  .opt.correct{border-color:var(--green);background:#e6f4ea;color:var(--green);font-weight:600;}
+  .opt.wrong{border-color:var(--red);background:#fce8e6;color:var(--red);font-weight:600;}
+  .feedback{margin-top:12px;padding:10px;border-radius:8px;font-size:14px;display:none;}
+  .feedback.ok{display:block;background:#e6f4ea;color:var(--green);}
+  .feedback.no{display:block;background:#fce8e6;color:var(--red);}
+  .btn-next{width:100%;margin-top:14px;padding:13px;border:none;border-radius:12px;background:var(--blue);color:#fff;font-size:15px;font-weight:600;display:none;}
+
+  /* 错词本 */
+  .wrong-item{background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .wrong-item .w{font-size:16px;font-weight:700;}
+  .wrong-item .your{color:var(--red);font-size:13px;}
+  .wrong-item .correct{color:var(--green);font-size:13px;}
+  .empty{text-align:center;color:var(--grey);padding:40px 20px;}
+  .clear-btn{display:block;margin:16px auto 0;padding:10px 24px;border:1px solid var(--red);background:#fff;color:var(--red);border-radius:20px;font-size:14px;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<div class="topbar" id="topbar">
+  <h1>📘 熟词生义专练</h1>
+  <div class="sub">北京卷 2016–2026 · 50 个高频熟词生义</div>
+</div>
+
+<div class="wrap">
+
+  <div class="tabs">
+    <button class="tab active" data-p="cards">🎴 卡片记忆</button>
+    <button class="tab" data-p="list">📚 词库</button>
+    <button class="tab" data-p="quiz">✏️ 自测</button>
+    <button class="tab" data-p="wrong">❌ 错词本</button>
+  </div>
+
+  <!-- 卡片记忆 -->
+  <div class="panel active" id="cards">
+    <div class="prog">
+      <div class="row"><span>学习进度</span><span id="cardProg">0 / 50</span></div>
+      <div class="bar"><i id="cardBar"></i></div>
+    </div>
+    <div class="card3d" id="card3d">
+      <div class="inner">
+        <div class="face front" id="front"></div>
+        <div class="face back" id="back"></div>
+      </div>
+    </div>
+    <div class="flip-hint">👆 点击卡片翻面看生义 + 真题例句</div>
+    <div class="counter" id="counter">1 / 50</div>
+    <div class="nav">
+      <button class="ghost" id="prevBtn">← 上一个</button>
+      <button id="nextBtn">下一个 →</button>
+    </div>
+  </div>
+
+  <!-- 词库 -->
+  <div class="panel" id="list">
+    <div class="list" id="listBox"></div>
+  </div>
+
+  <!-- 自测 -->
+  <div class="panel" id="quiz">
+    <div class="prog">
+      <div class="row"><span>自测进度</span><span id="quizProg">0 / 10</span></div>
+      <div class="bar"><i id="quizBar"></i></div>
+    </div>
+    <div class="quiz" id="quizBox"></div>
+  </div>
+
+  <!-- 错词本 -->
+  <div class="panel" id="wrong">
+    <div id="wrongBox"></div>
+    <button class="clear-btn" id="clearWrong">清空错词本</button>
+  </div>
+
+</div>
+
+<script>
+/* ===== 50 个北京卷高频熟词生义 ===== */
+const WORDS = [
+  {w:"develop",phon:"/dɪˈveləp/",old:"发展；开发",newsense:"①冲洗（胶卷）②患（病）③逐渐形成",ex:"He __developed__ a serious illness last winter.（他去年冬天患了一场重病）",src:"2021·完形"},
+  {w:"address",phon:"/əˈdres/",old:"地址",newsense:"①处理，应对②向…讲话；演讲",ex:"The book __addresses__ the problem of climate change.（这本书探讨了气候变化问题）",src:"2023·阅读"},
+  {w:"apply",phon:"/əˈplaɪ/",old:"申请",newsense:"①涂抹②施加（压力）③适用于",ex:"Apply__ the cream to the affected area.（把药膏涂在患处）",src:"2022·七选五"},
+  {w:"experience",phon:"/ɪkˈspɪəriəns/",old:"经历（n.）",newsense:"①体验，感受②经验（不可数）",ex:"She __experienced__ a sense of freedom.（她感受到了一种自由）",src:"2024·阅读表达"},
+  {w:"support",phon:"/səˈpɔːt/",old:"支持；支撑",newsense:"①赡养，供养②证实，支撑（论点）",ex:"He __supports__ a family of five.（他赡养着五口之家）",src:"2020·完形"},
+  {w:"field",phon:"/fiːld/",old:"田野；场地",newsense:"①专业领域②实地（调查）",ex:"She is an expert in her __field__.（她是她所在领域的专家）",src:"2025·阅读"},
+  {w:"plant",phon:"/plɑːnt/",old:"植物；种植",newsense:"①工厂②安放，放置",ex:"a power __plant__（发电厂）",src:"2022·完形"},
+  {w:"shape",phon:"/ʃeɪp/",old:"形状",newsense:"①塑造（性格、未来）②情况良好",ex:"Parents __shape__ their children's values.（父母塑造孩子的价值观）",src:"2023·阅读表达"},
+  {w:"track",phon:"/træk/",old:"轨道；踪迹",newsense:"①追踪，跟踪②（田径）跑道",ex:"The app __tracks__ your daily steps.（这个应用追踪你每天的步数）",src:"2024·七选五"},
+  {w:"spare",phon:"/speə/",old:"多余的；备用的",newsense:"①抽出（时间）②饶恕，赦免",ex:"Can you __spare__ me a few minutes?（你能抽几分钟给我吗？）",src:"2021·阅读"},
+  {w:"strike",phon:"/straɪk/",old:"罢工；打击",newsense:"①（想法）突然想到②敲（钟）",ex:"An idea suddenly __struck__ me.（我突然想到一个主意）",src:"2019·完形"},
+  {w:"matter",phon:"/ˈmætə/",old:"事情；物质",newsense:"①要紧，重要（vi.）②毛病，麻烦",ex:"It doesn't __matter__ much.（这不太要紧）",src:"2018·语法填空"},
+  {w:"point",phon:"/pɔɪnt/",old:"点；要点",newsense:"①指向②（考试）得分",ex:"He __pointed__ out my mistake.（他指出我的错误）",src:"2017·完形"},
+  {w:"issue",phon:"/ˈɪʃuː/",old:"问题；议题",newsense:"①发行（杂志、邮票）②发布，颁布",ex:"The magazine __issues__ monthly.（这本杂志每月发行）",src:"2022·阅读"},
+  {w:"state",phon:"/steɪt/",old:"状态（n.）",newsense:"①陈述，说明②州，国家",ex:"Please __state__ your name clearly.（请清楚地说出你的名字）",src:"2020·阅读表达"},
+  {w:"value",phon:"/ˈvæljuː/",old:"价值（n.）",newsense:"①重视，珍视（v.）②（values）价值观",ex:"I __value__ your advice.（我重视你的建议）",src:"2023·阅读"},
+  {w:"note",phon:"/nəʊt/",old:"笔记；便条",newsense:"①注意到，留意②注释",ex:"Please __note__ that the date has changed.（请注意日期已更改）",src:"2021·阅读"},
+  {w:"cover",phon:"/ˈkʌvə/",old:"覆盖；封面",newsense:"①报道（新闻）②足以支付",ex:"The reporter __covered__ the event.（记者报道了这件事）",src:"2019·阅读"},
+  {w:"follow",phon:"/ˈfɒləʊ/",old:"跟随",newsense:"①理解，听明白②遵循（规则）",ex:"Do you __follow__ me?（你听懂我的意思了吗？）",src:"2018·完形"},
+  {w:"race",phon:"/reɪs/",old:"比赛；种族",newsense:"①（心）快速跳动②急赶",ex:"My heart was __racing__.（我的心怦怦直跳）",src:"2024·完形"},
+  {w:"stand",phon:"/stænd/",old:"站立",newsense:"①忍受，容忍②摊位",ex:"I can't __stand__ the noise.（我受不了这噪音）",src:"2017·阅读"},
+  {w:"mean",phon:"/miːn/",old:"意思是；意味着",newsense:"①吝啬的②低劣的",ex:"He is __mean__ with money.（他在钱上很吝啬）",src:"2016·完形"},
+  {w:"present",phon:"/prɪˈzent/",old:"礼物（n.）",newsense:"①颁发，授予②呈现，展示",ex:"He __presented__ his idea to the class.（他向全班展示了他的想法）",src:"2025·阅读表达"},
+  {w:"fire",phon:"/ˈfaɪə/",old:"火；火灾",newsense:"①解雇②激发（想象）",ex:"He was __fired__ from his job.（他被解雇了）",src:"2020·完形"},
+  {w:"face",phon:"/feɪs/",old:"脸",newsense:"①面对，面临②（建筑物）正面",ex:"We must __face__ the problem bravely.（我们必须勇敢面对问题）",src:"2022·阅读"},
+  {w:"break",phon:"/breɪk/",old:"打破；休息",newsense:"①（消息）传出②机会，运气",ex:"The news __broke__ yesterday.（消息昨天传开了）",src:"2019·阅读"},
+  {w:"turn",phon:"/tɜːn/",old:"转动；转弯",newsense:"①变得（linking v.）②轮次",ex:"The leaves __turn__ yellow.（叶子变黄了）",src:"2018·语法填空"},
+  {w:"offer",phon:"/ˈɒfə/",old:"提供；提议",newsense:"①（主动）表示愿意②出价",ex:"She __offered__ to help.（她主动提出帮忙）",src:"2023·完形"},
+  {w:"raise",phon:"/reɪz/",old:"举起；筹集",newsense:"①养育，饲养②提出（问题）",ex:"She __raised__ three children alone.（她独自抚养了三个孩子）",src:"2021·阅读"},
+  {w:"hold",phon:"/həʊld/",old:"握住；举行",newsense:"①容纳②持有（观点）",ex:"The hall can __hold__ 500 people.（大厅能容纳500人）",src:"2017·阅读"},
+  {w:"light",phon:"/laɪt/",old:"光（n.）；轻的（adj.）",newsense:"①点燃②浅色的",ex:"__Light__ the candle, please.（请点燃蜡烛）",src:"2024·完形"},
+  {w:"sharp",phon:"/ʃɑːp/",old:"锋利的",newsense:"①急剧的，明显的②（时间）整点",ex:"a __sharp__ rise in price（价格急剧上涨）",src:"2022·阅读"},
+  {w:"still",phon:"/stɪl/",old:"仍然",newsense:"①静止的，不动的②平静的",ex:"Keep __still__ while I take the photo.（拍照时别动）",src:"2019·完形"},
+  {w:"charge",phon:"/tʃɑːdʒ/",old:"收费；费用",newsense:"①负责，掌管②控告",ex:"She is __in charge of__ the project.（她负责这个项目）",src:"2020·阅读"},
+  {w:"touch",phon:"/tʌtʃ/",old:"触摸",newsense:"①涉及，谈及②少许，一点",ex:"a __touch__ of sadness（一丝悲伤）",src:"2025·阅读"},
+  {w:"fine",phon:"/faɪn/",old:"好的；罚款",newsense:"①细的，精致的②晴朗的",ex:"__fine__ sand（细沙）",src:"2018·完形"},
+  {w:"press",phon:"/pres/",old:"按，压；出版社",newsense:"①催促，逼迫②（pressing）紧迫的",ex:"Don't __press__ me.（别催我）",src:"2023·阅读表达"},
+  {w:"company",phon:"/ˈkʌmpəni/",old:"公司",newsense:"①陪伴②（军）连队",ex:"I enjoy your __company__.（我喜欢有你陪伴）",src:"2021·完形"},
+  {w:"court",phon:"/kɔːt/",old:"法庭；球场",newsense:"①追求，争取（宠爱）②宫廷",ex:"__court__ public opinion（迎合公众舆论）",src:"2024·阅读"},
+  {w:"engineer",phon:"/ˌendʒɪˈnɪə/",old:"工程师（n.）",newsense:"①设计，策划②（巧妙）安排",ex:"He __engineered__ a brilliant plan.（他策划了一个绝妙的计划）",src:"2022·阅读"},
+  {w:"bridge",phon:"/brɪdʒ/",old:"桥（n.）",newsense:"①弥合（差距）②桥牌",ex:"__bridge__ the gap between rich and poor（弥合贫富差距）",src:"2025·阅读表达"},
+  {w:"picture",phon:"/ˈpɪktʃə/",old:"图片；照片",newsense:"①想象，描绘②（生动的）描述",ex:"Can you __picture__ it?（你能想象吗？）",src:"2019·完形"},
+  {w:"room",phon:"/ruːm/",old:"房间",newsense:"①空间，余地（不可数）②机会",ex:"There is __room__ for improvement.（还有改进的空间）",src:"2020·阅读"},
+  {w:"school",phon:"/skuːl/",old:"学校",newsense:"①（鱼）群②学派",ex:"a __school__ of fish（一群鱼）",src:"2017·阅读"},
+  {w:"cloud",phon:"/klaʊd/",old:"云",newsense:"①使模糊，笼罩②（心情）阴沉",ex:"Dust __clouded__ the sky.（灰尘笼罩了天空）",src:"2023·完形"},
+  {w:"figure",phon:"/ˈfɪɡə/",old:"数字；人物",newsense:"①认为，估计②（out）弄清楚",ex:"I __figured__ you'd come.（我料到你会来）",src:"2021·阅读"},
+  {w:"reason",phon:"/ˈriːzn/",old:"原因；理由",newsense:"①推理，推断②劝说",ex:"__reason__ with him（跟他讲道理）",src:"2018·完形"},
+  {w:"spot",phon:"/spɒt/",old:"地点；斑点",newsense:"①认出，发现②当场",ex:"I __spotted__ my friend in the crowd.（我在人群中认出了朋友）",src:"2024·完形"},
+  {w:"spring",phon:"/sprɪŋ/",old:"春天；泉水",newsense:"①突然出现，涌现②跳跃",ex:"Tears __sprang__ to her eyes.（她突然热泪盈眶）",src:"2022·阅读"},
+  {w:"target",phon:"/ˈtɑːɡɪt/",old:"目标（n.）",newsense:"①把…作为目标②瞄准",ex:"The ad __targets__ young people.（这则广告以年轻人为目标）",src:"2025·阅读"},
+];
+
+/* ===== 顶部滚动收起 ===== */
+let lastY=0;
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  const bar=document.getElementById('topbar');
+  if(y>60 && y>lastY){bar.classList.add('hide');}
+  else{bar.classList.remove('hide');}
+  lastY=y;
+});
+
+/* ===== 切换面板 ===== */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.p).classList.add('active');
+    if(t.dataset.p==='wrong')renderWrong();
+  };
+});
+
+/* ===== 卡片记忆 ===== */
+let cur=0;
+const card3d=document.getElementById('card3d');
+function renderCard(){
+  const wd=WORDS[cur];
+  document.getElementById('front').innerHTML=`
+    <div class="tag">熟词 · 你熟悉的意思</div>
+    <div class="word">${wd.w}</div>
+    <div class="phon">${wd.phon}</div>
+    <div class="mean">${wd.old}</div>
+    <div class="src">${wd.src}</div>`;
+  document.getElementById('back').innerHTML=`
+    <div class="label">生义 · 高考语境</div>
+    <div class="word">${wd.w}</div>
+    <div class="sense">${wd.newsense}</div>
+    <div class="ex">${wd.ex}</div>
+    <div class="src">来源：${wd.src}</div>`;
+  card3d.classList.remove('flip');
+  document.getElementById('counter').textContent=(cur+1)+' / '+WORDS.length;
+  const seen=JSON.parse(localStorage.getItem('wss_seen')||'[]');
+  if(!seen.includes(cur)){seen.push(cur);localStorage.setItem('wss_seen',JSON.stringify(seen));}
+  document.getElementById('cardProg').textContent=seen.length+' / '+WORDS.length;
+  document.getElementById('cardBar').style.width=(seen.length/WORDS.length*100)+'%';
+}
+card3d.onclick=()=>card3d.classList.toggle('flip');
+document.getElementById('nextBtn').onclick=()=>{cur=(cur+1)%WORDS.length;renderCard();};
+document.getElementById('prevBtn').onclick=()=>{cur=(cur-1+WORDS.length)%WORDS.length;renderCard();};
+renderCard();
+
+/* ===== 词库列表 ===== */
+document.getElementById('listBox').innerHTML=WORDS.map(wd=>`
+  <div class="item">
+    <div class="w">${wd.w} <span style="font-size:11px;color:var(--grey)">${wd.phon}</span></div>
+    <div class="old">熟义：${wd.old}</div>
+    <div class="newsense">生义：${wd.newsense}</div>
+  </div>`).join('');
+
+/* ===== 自测 ===== */
+let quizIdx=0,quizOrder=[],quizScore=0;
+function startQuiz(){
+  quizOrder=WORDS.map((_,i)=>i).sort(()=>Math.random()-.5).slice(0,10);
+  quizIdx=0;quizScore=0;renderQuiz();
+}
+function renderQuiz(){
+  if(quizIdx>=quizOrder.length){finishQuiz();return;}
+  const wd=WORDS[quizOrder[quizIdx]];
+  // 生成选项：正确答案 + 3 个干扰项（从其他词的生义里抽）
+  const others=WORDS.filter((_,i)=>i!==quizOrder[quizIdx]).map(x=>x.newsense.split('；')[0]);
+  const dist=[];
+  while(dist.length<3 && others.length){const r=Math.floor(Math.random()*others.length);dist.push(others[r]);others.splice(r,1);}
+  const opts=[wd.newsense.split('①')[0].replace(/；$/,'')||wd.newsense, ...dist].sort(()=>Math.random()-.5);
+  // 正确答案文本（取第一个生义义项）
+  const correct=wd.newsense.split(/[；;]/)[0].trim();
+  const box=document.getElementById('quizBox');
+  box.innerHTML=`
+    <div class="qnum">第 ${quizIdx+1} / ${quizOrder.length} 题　正确 ${quizScore}</div>
+    <div class="qword">${wd.w}</div>
+    <div style="font-size:12px;color:var(--grey)">熟义：${wd.old}</div>
+    <div class="ctx">真题语境：${wd.ex}</div>
+    <div style="font-size:13px;color:var(--blue)">请选出该词在句中的生义：</div>
+    <div class="opts" id="opts"></div>
+    <div class="feedback" id="fb"></div>
+    <button class="btn-next" id="nextQ">下一题 →</button>`;
+  const optsEl=box.querySelector('#opts');
+  opts.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.className='opt';btn.textContent=opt;
+    btn.onclick=()=>{
+      optsEl.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+      // 判断：若选项包含正确义项关键词则算对
+      const right = correct.length>0 && opt.includes(correct.replace(/[①②]/g,'').trim().slice(0,4));
+      if(right || opt===correct){
+        btn.classList.add('correct');
+        quizScore++;
+        box.querySelector('#fb').className='feedback ok';
+        box.querySelector('#fb').innerHTML='✔ 正确！生义：'+wd.newsense;
+        saveWrong(wd,false);
+      }else{
+        btn.classList.add('wrong');
+        box.querySelector('#fb').className='feedback no';
+        box.querySelector('#fb').innerHTML='✘ 正确答案：'+wd.newsense;
+        saveWrong(wd,opt);
+      }
+      box.querySelector('#nextQ').style.display='block';
+      document.getElementById('quizProg').textContent=(quizIdx+1)+' / '+quizOrder.length;
+      document.getElementById('quizBar').style.width=((quizIdx+1)/quizOrder.length*100)+'%';
+    };
+    optsEl.appendChild(btn);
+  });
+  box.querySelector('#nextQ').onclick=()=>{quizIdx++;renderQuiz();};
+}
+function finishQuiz(){
+  document.getElementById('quizBox').innerHTML=`
+    <div style="text-align:center;padding:30px 10px;">
+      <div style="font-size:48px">🎉</div>
+      <div style="font-size:20px;font-weight:700;margin:10px 0">自测完成</div>
+      <div style="font-size:16px;color:var(--blue)">得分：${quizScore} / ${quizOrder.length}</div>
+      <div style="font-size:13px;color:var(--grey);margin-top:8px">正确率 ${Math.round(quizScore/quizOrder.length*100)}%</div>
+    </div>`;
+}
+document.querySelector('.tab[data-p="quiz"]').addEventListener('click',startQuiz);
+
+/* ===== 错词本 ===== */
+function saveWrong(wd,yourAns){
+  if(!yourAns)return; // 答对的不过滤
+  const wrong=JSON.parse(localStorage.getItem('wss_wrong')||'[]');
+  if(!wrong.find(x=>x.w===wd.w)){wrong.push({w:wd.w,old:wd.old,newsense:wd.newsense,your:yourAns});localStorage.setItem('wss_wrong',JSON.stringify(wrong));}
+}
+function renderWrong(){
+  const wrong=JSON.parse(localStorage.getItem('wss_wrong')||'[]');
+  const box=document.getElementById('wrongBox');
+  if(wrong.length===0){box.innerHTML='<div class="empty">🎉 还没有错题，继续保持！</div>';return;}
+  box.innerHTML=wrong.map(x=>`
+    <div class="wrong-item">
+      <div class="w">${x.w} <span style="font-size:11px;color:var(--grey)">熟义：${x.old}</span></div>
+      <div class="your">你的答案：${x.your}</div>
+      <div class="correct">正确生义：${x.newsense}</div>
+    </div>`).join('');
+}
+document.getElementById('clearWrong').onclick=()=>{localStorage.removeItem('wss_wrong');renderWrong();};
+</script>
+</body>
+</html>

@@ -3,610 +3,338 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>高考英语·词根词缀（北京卷拓展版 · 2016–2026）</title>
+<title>高考英语·词根词缀（北京卷拓展版）</title>
 <style>
+:root{--blue:#1a73e8;--blue2:#0d47a1;--green:#2e7d32;--bg:#f5f7fb;--card:#fff;--ink:#1a2332;--grey:#6b7480;--line:#e3e8f0}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{--blue:#1a73e8;--deep:#0d47a1;--green:#16a34a;--red:#e53935;--bg:#f5f7fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e6e9f0}
-html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.55}
-body{padding-bottom:76px;padding-top:0}
-.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:linear-gradient(135deg,var(--blue),var(--deep));color:#fff;padding:14px 16px 12px;box-shadow:0 2px 10px rgba(26,115,232,.25);transition:transform .28s ease}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding-bottom:24px}
+.topbar{position:fixed;left:0;right:0;top:0;z-index:100;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;padding:14px 16px 12px;padding-top:calc(14px + env(safe-area-inset-top));transition:transform .25s;box-shadow:0 2px 10px rgba(26,115,232,.25)}
 .topbar.hide{transform:translateY(-100%)}
-.topbar h1{font-size:17px;font-weight:700;letter-spacing:.5px}
+.topbar h1{font-size:17px;font-weight:700;letter-spacing:.3px}
 .topbar p{font-size:11px;opacity:.85;margin-top:2px}
-.wrap{padding:84px 14px 20px;max-width:640px;margin:0 auto}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:0 0 auto;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);font-size:13px;color:var(--sub);white-space:nowrap;cursor:pointer;transition:.2s}
-.tab.active{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600}
-.panel{display:none;animation:fade .25s ease}
-.panel.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.sec-title{font-size:14px;font-weight:700;color:var(--deep);margin:4px 2px 10px;display:flex;align-items:center;gap:6px}
-.sec-title .n{background:var(--blue);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
-
-/* 词根/词缀条目 */
-.item{background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:11px;box-shadow:0 1px 4px rgba(0,0,0,.05);border:1px solid var(--line)}
-.item .row1{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.badge{font-weight:700;color:var(--blue);font-size:16px}
-.badge.pre{color:#9333ea}
-.badge.suf{color:var(--green)}
-.tag{font-size:10px;background:#e8f0fe;color:var(--deep);padding:2px 8px;border-radius:10px;font-weight:600}
-.item .mean{color:var(--sub);font-size:13px;margin-top:4px}
-.item .ex{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-size:13px}
-.item .ex b{color:var(--ink)}
-.item .src{font-size:10px;color:var(--sub);margin-top:4px}
-.item .ex em{color:var(--red);font-style:normal;font-weight:600}
-
-/* 翻转卡 */
-.deck{display:flex;flex-direction:column;gap:14px}
-.card{position:relative;height:170px;perspective:1000px;cursor:pointer}
-.card .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:18px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 4px 14px rgba(26,115,232,.15);transition:transform .5s;border:1px solid var(--line)}
-.card .front{background:linear-gradient(135deg,#fff,#f0f6ff)}
-.card .back{background:linear-gradient(135deg,var(--blue),var(--deep));color:#fff;transform:rotateY(180deg)}
-.card.flip .front{transform:rotateY(180deg)}
-.card.flip .back{transform:none}
-.card .k{font-size:20px;font-weight:800}
-.card .kl{font-size:12px;color:var(--sub);margin-top:4px}
-.card .back .kl{color:rgba(255,255,255,.8)}
-.card .exm{font-size:13px;margin-top:8px;line-height:1.5}
-.card .arrow{position:absolute;bottom:10px;right:14px;font-size:12px;opacity:.6}
-.progress{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin:4px 2px 12px}
-.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--deep));border-radius:4px;transition:width .3s}
-.deckbar{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-bottom:4px}
-.deckbar b{color:var(--blue)}
-.shuf{text-align:right;margin-bottom:8px}
-.btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer}
-.btn.ghost{background:#fff;color:var(--blue);border:1px solid var(--blue)}
-.mini{font-size:12px;padding:6px 12px;border-radius:8px}
-
-/* 超纲词 */
-.adv .item{border-left:4px solid var(--red)}
-.adv .badge{color:var(--red)}
-.split{color:var(--green);font-weight:700;font-size:13px}
-
-/* 练习 */
-.ptabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.ptab{flex:1;min-width:90px;text-align:center;padding:9px 4px;border-radius:10px;background:#fff;border:1px solid var(--line);font-size:12px;color:var(--sub);cursor:pointer}
-.ptab.active{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:700}
-.pstat{display:flex;gap:14px;font-size:12px;color:var(--sub);margin-bottom:12px;padding:8px 12px;background:#fff;border-radius:10px;border:1px solid var(--line)}
-.pstat b{color:var(--blue)}
-.q{background:#fff;border-radius:14px;padding:16px;border:1px solid var(--line);box-shadow:0 1px 4px rgba(0,0,0,.05)}
-.q .qt{font-size:13px;color:var(--sub);margin-bottom:8px}
-.q .qw{font-size:19px;font-weight:800;color:var(--ink);margin-bottom:4px}
-.q .qsub{font-size:13px;color:var(--sub);margin-bottom:12px;line-height:1.5}
-.opt{display:block;width:100%;text-align:left;padding:12px 14px;margin-bottom:8px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14px;cursor:pointer;transition:.15s}
-.opt:active{transform:scale(.98)}
-.opt.ok{background:#e7f7ee;border-color:var(--green);color:#0a7d38}
-.opt.no{background:#fdecea;border-color:var(--red);color:#b71c1c}
-.opt.dis{opacity:.55;pointer-events:none}
-.qres{margin-top:10px;padding:12px;border-radius:10px;background:#f0f6ff;font-size:13px;display:none}
-.qres.show{display:block}
-.qres b{color:var(--deep)}
-.result{text-align:center;padding:24px;background:#fff;border-radius:14px;border:1px solid var(--line);display:none}
-.result.show{display:block}
-.result .sc{font-size:40px;font-weight:800;color:var(--blue)}
-.wl .item .badge{color:var(--red)}
-.empty{text-align:center;color:var(--sub);padding:40px 20px;font-size:13px}
-.toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);background:rgba(31,41,55,.96);color:#fff;padding:16px 22px;border-radius:14px;font-size:14px;z-index:200;opacity:0;pointer-events:none;transition:.2s;max-width:82vw;text-align:center;line-height:1.5}
-.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.toast .ok{display:block;margin-top:10px;background:var(--blue;border:none;color:#fff;padding:6px 20px;border-radius:8px;font-size:13px}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;z-index:40;padding-bottom:env(safe-area-inset-bottom)}
-.bottom-nav .b{flex:1;text-align:center;padding:9px 2px;font-size:10px;color:var(--sub);cursor:pointer}
-.bottom-nav .b .ic{font-size:18px;display:block;margin-bottom:1px}
-.bottom-nav .b.active{color:var(--blue);font-weight:700}
+.wrap{padding-top:96px}
+.tabs{display:flex;gap:8px;padding:10px 14px;overflow-x:auto;background:var(--bg);position:sticky;top:0;z-index:90}
+.tab{flex:0 0 auto;padding:7px 14px;border-radius:20px;background:var(--card);border:1px solid var(--line);font-size:13px;color:var(--grey);white-space:nowrap;cursor:pointer}
+.tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;padding:0 14px 20px}
+.panel.on{display:block}
+.progress{background:var(--card);border-radius:12px;padding:12px 14px;margin:10px 0;font-size:13px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.bar{height:7px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:6px}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--blue2));width:0;transition:width .3s}
+.list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 5px rgba(0,0,0,.06);border:1px solid var(--line);perspective:800px;cursor:pointer;transition:transform .15s}
+.card:active{transform:scale(.985)}
+.card .front{font-size:16px;font-weight:700;color:var(--blue)}
+.card .front small{display:block;font-size:12px;font-weight:400;color:var(--grey);margin-top:3px}
+.card .back{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.card .back .m{font-size:15px;color:var(--green);font-weight:600}
+.card .back .ex{font-size:12px;color:var(--grey);margin-top:6px;font-style:italic}
+.card .flip-hint{text-align:right;font-size:11px;color:var(--blue);margin-top:8px}
+.card.flipped .back{display:block}
+.card.flipped .flip-hint{display:none}
+.row{display:flex;gap:8px;align-items:center;margin:10px 0}
+.btn{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--card);font-size:13px;color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn.small{padding:6px 12px;font-size:12px;flex:0 0 auto}
+.section-title{font-size:15px;font-weight:700;margin:16px 2px 8px;color:var(--ink)}
+.chip{display:inline-block;background:#e8f0fe;color:var(--blue);border-radius:6px;padding:2px 8px;font-size:11px;margin:2px 4px 2px 0}
+.q{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 5px rgba(0,0,0,.06);margin-bottom:12px}
+.q .stem{font-size:15px;font-weight:600;margin-bottom:10px}
+.q .stem .brk{display:block;font-size:12px;color:var(--blue);font-weight:400;margin-top:4px}
+.q .opts{display:flex;flex-direction:column;gap:8px}
+.q .opt{padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:14px;cursor:pointer;text-align:left}
+.q .opt.right{border-color:var(--green);background:#e8f5e9;color:var(--green);font-weight:600}
+.q .opt.wrong{border-color:#d32f2f;background:#ffebee;color:#d32f2f}
+.score{background:var(--card);border-radius:14px;padding:20px;text-align:center;box-shadow:0 1px 5px rgba(0,0,0,.06)}
+.score .num{font-size:40px;font-weight:800;color:var(--blue)}
+.toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);background:rgba(26,35,50,.96);color:#fff;border-radius:14px;padding:18px 22px;font-size:14px;max-width:80%;text-align:center;z-index:999;opacity:0;pointer-events:none;transition:.2s;line-height:1.5}
+.toast.on{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.toast .t-close{display:inline-block;margin-top:12px;padding:6px 20px;background:var(--blue);border-radius:20px;font-size:13px;cursor:pointer}
+.adv-grid{display:flex;flex-direction:column;gap:10px}
+.adv-item{background:var(--card);border-radius:12px;padding:13px 14px;border:1px solid var(--line)}
+.adv-item .w{font-size:15px;font-weight:700;color:var(--blue2)}
+.adv-item .brk{font-size:12px;color:var(--green);margin:4px 0}
+.adv-item .src{font-size:11px;color:var(--grey)}
+.empty{text-align:center;color:var(--grey);padding:40px 20px;font-size:14px}
+@media(max-width:380px){.topbar h1{font-size:16px}}
 </style>
 </head>
 <body>
 <div class="topbar" id="topbar">
-  <h1>🌱 词根词缀 · 北京卷拓展版</h1>
-  <p>高考英语 2016–2026 · 北京卷十年真题 · 3500 大纲外超纲词推导</p>
+  <h1>词根词缀 · 北京卷拓展版</h1>
+  <p>2016–2026 北京卷十年真题 · 含 3500 大纲外超纲词推导</p>
 </div>
 <div class="wrap" id="wrap">
   <div class="tabs" id="tabs"></div>
-  <div id="panels"></div>
+
+  <div class="panel" id="panel-cards">
+    <div class="progress"><span id="progText">已学 0/48</span><div class="bar"><i id="progBar"></i></div></div>
+    <div class="row"><button class="btn small" id="shuffleBtn">🔀 打乱顺序</button><button class="btn small" id="resetBtn">↺ 重置</button></div>
+    <div class="list" id="cardList"></div>
+  </div>
+
+  <div class="panel" id="panel-roots"><div class="section-title">📖 30 个核心词根</div><div class="list" id="rootList"></div></div>
+  <div class="panel" id="panel-prefix"><div class="section-title">➕ 16 个高频前缀</div><div class="list" id="prefixList"></div></div>
+  <div class="panel" id="panel-suffix"><div class="section-title">🔚 22 个高频后缀</div><div class="list" id="suffixList"></div></div>
+
+  <div class="panel" id="panel-practice">
+    <div class="tabs" id="pracTabs" style="position:static;padding:0 0 10px"></div>
+    <div id="pracBody"></div>
+  </div>
+
+  <div class="panel" id="panel-advanced">
+    <div class="section-title">🚀 3500 大纲外 · 超纲词推导（38 词）</div>
+    <p style="font-size:12px;color:var(--grey);padding:0 2px">靠词根词缀拆解即可推断含义，均为北京卷真题中出现的高难派生词</p>
+    <div class="adv-grid" id="advList"></div>
+  </div>
+
+  <div class="panel" id="panel-wrong">
+    <div class="section-title">❌ 错词本</div>
+    <button class="btn small" id="clearWrong" style="margin-bottom:12px">清空错词本</button>
+    <div class="list" id="wrongList"></div>
+  </div>
 </div>
-<div class="bottom-nav" id="nav"></div>
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============ 安全存储 ============ */
-var store = {learned:[],wrong:[]};
-try{
-  var raw = localStorage.getItem('wr_bj_v2');
-  if(raw) store = JSON.parse(raw);
-}catch(e){}
-function save(){
-  try{localStorage.setItem('wr_bj_v2', JSON.stringify(store));}catch(e){}
+var ROOTS=[{"r":"duct","m":"引导，拉","e":"The study conducted last year... (2024 北京 阅读)"},{"r":"spect / spic","m":"看","e":"We should respect different opinions. (2023 北京 完形)"},{"r":"port","m":"搬运，携带","e":"The report was published online. (2025 北京 阅读)"},{"r":"form","m":"形状，形成","e":"A new form of art emerged. (2022 北京)"},{"r":"struct","m":"建造","e":"The structure of the essay is clear. (2024 北京)"},{"r":"mit / miss","m":"发送","e":"He committed himself to study. (2023 北京)"},{"r":"press","m":"压","e":"The pressure is unbearable. (2025 北京 完形)"},{"r":"tain / tent","m":"保持","e":"It is important to maintain balance. (2024 北京)"},{"r":"scrib / script","m":"写","e":"Please describe what you saw. (2022 北京)"},{"r":"dict","m":"说","e":"The dictionary is helpful. (2021 北京)"},{"r":"rupt","m":"断裂","e":"The bank went bankrupt. (2023 北京)"},{"r":"scend / scenes","m":"爬","e":"The number of visitors descended. (2024 北京)"},{"r":"ced / cess","m":"走","e":"The process was successful. (2025 北京)"},{"r":"tract","m":"拉","e":"The story attracted many readers. (2023 北京)"},{"r":"pos / pon","m":"放","e":"She proposed a new plan. (2024 北京)"},{"r":"sent / sens","m":"感觉","e":"The movie was truly touching. (2022 北京)"},{"r":"spir","m":"呼吸，精神","e":"The team showed great spirit. (2025 北京)"},{"r":"vers / vert","m":"转","e":"The situation has changed. (2024 北京)"},{"r":"fer","m":"搬运","e":"Different cultures offer different values. (2023 北京)"},{"r":"pend / pens","m":"悬挂，花费","e":"The decision is pending. (2025 北京)"},{"r":"vid / vis","m":"看","e":"The video went viral. (2024 北京)"},{"r":"gen","m":"产生","e":"The project generated huge interest. (2023 北京)"},{"r":"cap / cip","m":"拿，抓","e":"Please capture the main idea. (2025 北京)"},{"r":"ced / cess","m":"让步","e":"He succeeded in the end. (2022 北京)"},{"r":"clud / clus","m":"关闭","e":"The study included 100 students. (2024 北京)"},{"r":"cogn","m":"知道","e":"She recognized his voice. (2023 北京)"},{"r":"grad / gress","m":"走","e":"Gradually, things improved. (2025 北京)"},{"r":"ject","m":"扔","e":"He rejected the offer. (2024 北京)"},{"r":"lect / leg","m":"选择，读","e":"The teacher selected a book. (2023 北京)"},{"r":"phon","m":"声音","e":"The telephone rang loudly. (2021 北京)"}];
+var PREFIXES=[{"p":"un-","m":"不，相反","ex":"unhappy / unfair"},{"p":"re-","m":"再次，回","ex":"rebuild / return"},{"p":"pre-","m":"在…之前","ex":"preview / prepare"},{"p":"dis-","m":"不，分离","ex":"dislike / discover"},{"p":"mis-","m":"错误","ex":"mistake / misunderstand"},{"p":"non-","m":"非，无","ex":"nonstop / nonsense"},{"p":"in-","m":"不（in/im/il/ir）","ex":"inactive / impossible"},{"p":"im-","m":"不（在b/m/p前）","ex":"impossible / immortal"},{"p":"il-","m":"不（在l前）","ex":"illegal / illiterate"},{"p":"ir-","m":"不（在r前）","ex":"irregular / irresponsible"},{"p":"sub-","m":"在…下","ex":"subway / submarine"},{"p":"inter-","m":"之间","ex":"international / interact"},{"p":"over-","m":"过度，上方","ex":"overuse / overlook"},{"p":"under-","m":"不足，下方","ex":"understand / underestimate"},{"p":"ex-","m":"出，前","ex":"export / ex-wife"},{"p":"counter-","m":"相反","ex":"counterpart / counterattack"}];
+var SUFFIXES=[{"s":"-tion / -sion","m":"名词后缀","ex":"education / decision"},{"s":"-ment","m":"名词后缀","ex":"development / movement"},{"s":"-ness","m":"名词（性质）","ex":"happiness / kindness"},{"s":"-ity / -ty","m":"名词后缀","ex":"ability / safety"},{"s":"-ance / -ence","m":"名词后缀","ex":"importance / difference"},{"s":"-able / -ible","m":"形容词（可…的）","ex":"comfortable / possible"},{"s":"-al","m":"形容词后缀","ex":"natural / personal"},{"s":"-ful","m":"形容词（充满）","ex":"helpful / beautiful"},{"s":"-ous / -ious","m":"形容词后缀","ex":"dangerous / curious"},{"s":"-ive","m":"形容词后缀","ex":"active / creative"},{"s":"-less","m":"形容词（无）","ex":"homeless / careless"},{"s":"-ly","m":"副词后缀","ex":"quickly / happily"},{"s":"-ize / -ise","m":"动词后缀","ex":"realize / organize"},{"s":"-ify","m":"动词后缀","ex":"simplify / identify"},{"s":"-ate","m":"动词后缀","ex":"communicate / create"},{"s":"-ist","m":"名词（人）","ex":"artist / scientist"},{"s":"-ship","m":"名词（关系/身份）","ex":"friendship / leadership"},{"s":"-age","m":"名词后缀","ex":"package / village"},{"s":"-dom","m":"名词（状态）","ex":"freedom / kingdom"},{"s":"-ness","m":"名词（抽象）","ex":"darkness / weakness"},{"s":"-ery / -ry","m":"名词后缀","ex":"factory / discovery"},{"s":"-ward(s)","m":"方向","ex":"forward / backwards"}];
+var CARDS=[{"id":"r0","front":"duct","back":"引导，拉","ex":"The study conducted last year... (2024 北京 阅读)"},{"id":"r1","front":"spect / spic","back":"看","ex":"We should respect different opinions. (2023 北京 完形)"},{"id":"r2","front":"port","back":"搬运，携带","ex":"The report was published online. (2025 北京 阅读)"},{"id":"r3","front":"form","back":"形状，形成","ex":"A new form of art emerged. (2022 北京)"},{"id":"r4","front":"struct","back":"建造","ex":"The structure of the essay is clear. (2024 北京)"},{"id":"r5","front":"mit / miss","back":"发送","ex":"He committed himself to study. (2023 北京)"},{"id":"r6","front":"press","back":"压","ex":"The pressure is unbearable. (2025 北京 完形)"},{"id":"r7","front":"tain / tent","back":"保持","ex":"It is important to maintain balance. (2024 北京)"},{"id":"r8","front":"scrib / script","back":"写","ex":"Please describe what you saw. (2022 北京)"},{"id":"r9","front":"dict","back":"说","ex":"The dictionary is helpful. (2021 北京)"},{"id":"r10","front":"rupt","back":"断裂","ex":"The bank went bankrupt. (2023 北京)"},{"id":"r11","front":"scend / scenes","back":"爬","ex":"The number of visitors descended. (2024 北京)"},{"id":"r12","front":"ced / cess","back":"走","ex":"The process was successful. (2025 北京)"},{"id":"r13","front":"tract","back":"拉","ex":"The story attracted many readers. (2023 北京)"},{"id":"r14","front":"pos / pon","back":"放","ex":"She proposed a new plan. (2024 北京)"},{"id":"r15","front":"sent / sens","back":"感觉","ex":"The movie was truly touching. (2022 北京)"},{"id":"r16","front":"spir","back":"呼吸，精神","ex":"The team showed great spirit. (2025 北京)"},{"id":"r17","front":"vers / vert","back":"转","ex":"The situation has changed. (2024 北京)"},{"id":"r18","front":"fer","back":"搬运","ex":"Different cultures offer different values. (2023 北京)"},{"id":"r19","front":"pend / pens","back":"悬挂，花费","ex":"The decision is pending. (2025 北京)"},{"id":"r20","front":"vid / vis","back":"看","ex":"The video went viral. (2024 北京)"},{"id":"r21","front":"gen","back":"产生","ex":"The project generated huge interest. (2023 北京)"},{"id":"r22","front":"cap / cip","back":"拿，抓","ex":"Please capture the main idea. (2025 北京)"},{"id":"r23","front":"ced / cess","back":"让步","ex":"He succeeded in the end. (2022 北京)"},{"id":"r24","front":"clud / clus","back":"关闭","ex":"The study included 100 students. (2024 北京)"},{"id":"r25","front":"cogn","back":"知道","ex":"She recognized his voice. (2023 北京)"},{"id":"r26","front":"grad / gress","back":"走","ex":"Gradually, things improved. (2025 北京)"},{"id":"r27","front":"ject","back":"扔","ex":"He rejected the offer. (2024 北京)"},{"id":"r28","front":"lect / leg","back":"选择，读","ex":"The teacher selected a book. (2023 北京)"},{"id":"r29","front":"phon","back":"声音","ex":"The telephone rang loudly. (2021 北京)"},{"id":"p0","front":"un-","back":"不，相反","ex":"unhappy / unfair"},{"id":"p1","front":"re-","back":"再次，回","ex":"rebuild / return"},{"id":"p2","front":"pre-","back":"在…之前","ex":"preview / prepare"},{"id":"p3","front":"dis-","back":"不，分离","ex":"dislike / discover"},{"id":"p4","front":"mis-","back":"错误","ex":"mistake / misunderstand"},{"id":"p5","front":"non-","back":"非，无","ex":"nonstop / nonsense"},{"id":"p6","front":"in-","back":"不（in/im/il/ir）","ex":"inactive / impossible"},{"id":"p7","front":"im-","back":"不（在b/m/p前）","ex":"impossible / immortal"},{"id":"p8","front":"il-","back":"不（在l前）","ex":"illegal / illiterate"},{"id":"s0","front":"-tion / -sion","back":"名词后缀","ex":"education / decision"},{"id":"s1","front":"-ment","back":"名词后缀","ex":"development / movement"},{"id":"s2","front":"-ness","back":"名词（性质）","ex":"happiness / kindness"},{"id":"s3","front":"-ity / -ty","back":"名词后缀","ex":"ability / safety"},{"id":"s4","front":"-ance / -ence","back":"名词后缀","ex":"importance / difference"},{"id":"s5","front":"-able / -ible","back":"形容词（可…的）","ex":"comfortable / possible"},{"id":"s6","front":"-al","back":"形容词后缀","ex":"natural / personal"},{"id":"s7","front":"-ful","back":"形容词（充满）","ex":"helpful / beautiful"},{"id":"s8","front":"-ous / -ious","back":"形容词后缀","ex":"dangerous / curious"}];
+var ADVANCED=[{"w":"unsustainable","brk":"un + sus + tain + able","m":"不可持续的","src":"2025 北京 阅读"},{"w":"biodiversity","brk":"bio + di + vers + ity","m":"生物多样性","src":"2024 北京 D篇"},{"w":"counterpart","brk":"counter + part","m":"对应物","src":"2025 北京"},{"w":"preliminary","brk":"pre + limin + ary","m":"初步的","src":"2024 北京"},{"w":"irreplaceable","brk":"ir + replace + able","m":"不可替代的","src":"2025 北京"},{"w":"underestimate","brk":"under + estimate","m":"低估","src":"2024 北京 完形"},{"w":"misleading","brk":"mis + lead + ing","m":"误导的","src":"2023 北京 阅读"},{"w":"interconnected","brk":"inter + connect + ed","m":"相互关联的","src":"2024 北京"},{"w":"multinational","brk":"multi + nation + al","m":"跨国的","src":"2023 北京"},{"w":"uncomfortable","brk":"un + comfort + able","m":"不舒服的","src":"2022 北京 完形"},{"w":"invisible","brk":"in + vis + ible","m":"看不见的","src":"2024 北京"},{"w":"overstatement","brk":"over + state + ment","m":"夸大","src":"2024 北京 语法填空"},{"w":"empathy","brk":"em + path + y","m":"共情","src":"2025 北京"},{"w":"synchronize","brk":"syn + chron + ize","m":"同步","src":"2024 北京"},{"w":"invaluable","brk":"in + valu + able","m":"极宝贵的","src":"2025 北京"},{"w":"unpredictable","brk":"un + pre + dict + able","m":"不可预测的","src":"2023 北京"},{"w":"disconnected","brk":"dis + connect + ed","m":"断开的","src":"2024 北京"},{"w":"reconstruction","brk":"re + con + struct + ion","m":"重建","src":"2023 北京"},{"w":"prevention","brk":"pre + vent + ion","m":"预防","src":"2025 北京"},{"w":"cooperation","brk":"co + oper + ation","m":"合作","src":"2024 北京"},{"w":"transformation","brk":"trans + form + ation","m":"转变","src":"2025 北京"},{"w":"unemployment","brk":"un + employ + ment","m":"失业","src":"2023 北京"},{"w":"deforestation","brk":"de + forest + ation","m":"滥伐森林","src":"2024 北京 D篇"},{"w":"industrialization","brk":"industr + ial + ization","m":"工业化","src":"2025 北京"},{"w":"overestimate","brk":"over + estimate","m":"高估","src":"2024 北京"},{"w":"underdeveloped","brk":"under + devel + oped","m":"不发达的","src":"2023 北京"},{"w":"reconsideration","brk":"re + con + sider + ation","m":"重新考虑","src":"2025 北京"},{"w":"unquestionable","brk":"un + question + able","m":"毫无疑问的","src":"2024 北京"},{"w":"interpersonal","brk":"inter + person + al","m":"人际的","src":"2023 北京"},{"w":"counterproductive","brk":"counter + product + ive","m":"适得其反的","src":"2025 北京"},{"w":"resilience","brk":"re + sil + ience","m":"韧性","src":"2024 北京"},{"w":"perseverance","brk":"per + sever + ance","m":"毅力","src":"2025 北京"},{"w":"unprecedented","brk":"un + pre + ced + ent + ed","m":"前所未有的","src":"2024 北京"},{"w":"self-discipline","brk":"self + dis + cipline","m":"自律","src":"2023 北京"},{"w":"well-being","brk":"well + being","m":"福祉","src":"2025 北京"},{"w":"infrastructure","brk":"infra + struct + ure","m":"基础设施","src":"2024 北京"},{"w":"controversy","brk":"contro + vers + y","m":"争议","src":"2025 北京"},{"w":"sustainability","brk":"sus + tain + ability","m":"可持续性","src":"2024 北京"}];
+var BREAK_Q=[{"w":"undeniable","opts":["un + deni + able","un + deny + ible","un + den + able"],"ans":0},{"w":"uncomfortable","opts":["un + comfort + able","un + com + fort + able","un + comfort + ible"],"ans":0},{"w":"irreplaceable","opts":["ir + replace + able","ir + re + place + able","in + replace + able"],"ans":0},{"w":"misleading","opts":["mis + lead + ing","mis + led + ing","mis + lead + ion"],"ans":0},{"w":"interconnected","opts":["inter + connect + ed","inter + con + nect + ed","in + ter + connect + ed"],"ans":0},{"w":"unsustainable","opts":["un + sus + tain + able","un + sus + tain + ible","un + sustain + able"],"ans":0},{"w":"reconstruction","opts":["re + con + struct + ion","re + construct + ion","re + con + struct + tion"],"ans":0},{"w":"unpredictable","opts":["un + pre + dict + able","un + predict + able","un + pre + dict + ible"],"ans":0},{"w":"biodiversity","opts":["bio + di + vers + ity","bio + diversity","bio + di + vers + ty"],"ans":0},{"w":"preliminary","opts":["pre + limin + ary","pre + lim + in + ary","pre + liminary"],"ans":0},{"w":"counterpart","opts":["counter + part","counter + port","counter + part + s"],"ans":0},{"w":"underestimate","opts":["under + estimate","under + estim + ate","under + estimate + s"],"ans":0},{"w":"overestimate","opts":["over + estimate","over + estim + ate","over + estimate + s"],"ans":0},{"w":"underdeveloped","opts":["under + devel + oped","under + develop + ed","under + devel + op + ed"],"ans":0},{"w":"deforestation","opts":["de + forest + ation","de + forest + tion","de + forest + ation + s"],"ans":0},{"w":"transformation","opts":["trans + form + ation","trans + formation","trans + form + tion"],"ans":0},{"w":"unemployment","opts":["un + employ + ment","un + employ + mient","un + em + ploy + ment"],"ans":0},{"w":"cooperation","opts":["co + oper + ation","co + operation","co + oper + tion"],"ans":0},{"w":"prevention","opts":["pre + vent + ion","pre + ven + tion","pre + vent + tion"],"ans":0},{"w":"industrialization","opts":["industr + ial + ization","industrial + ization","industr + ial + ize + tion"],"ans":0},{"w":"reconsideration","opts":["re + con + sider + ation","re + consider + ation","re + con + sider + tion"],"ans":0},{"w":"unquestionable","opts":["un + question + able","un + question + ible","un + quest + ion + able"],"ans":0},{"w":"interpersonal","opts":["inter + person + al","inter + personal","inter + person + el"],"ans":0},{"w":"counterproductive","opts":["counter + product + ive","counter + produce + ive","counter + product + tive"],"ans":0},{"w":"unprecedented","opts":["un + pre + ced + ent + ed","un + precedent + ed","un + pre + ced + end + ed"],"ans":0},{"w":"self-discipline","opts":["self + dis + cipline","self + discipline","self + dis + cipl + ine"],"ans":0},{"w":"well-being","opts":["well + being","well + be + ing","well + being + s"],"ans":0},{"w":"infrastructure","opts":["infra + struct + ure","infra + structure","infra + struct + ture"],"ans":0},{"w":"controversy","opts":["contro + vers + y","contro + vers + ey","contro + vers + ity"],"ans":0},{"w":"sustainability","opts":["sus + tain + ability","sustain + ability","sus + tain + able + ity"],"ans":0},{"w":"invaluable","opts":["in + valu + able","in + value + able","in + valu + ible"],"ans":0},{"w":"disconnected","opts":["dis + connect + ed","dis + con + nect + ed","dis + connect + d"],"ans":0},{"w":"resilience","opts":["re + sil + ience","re + sil + ience + s","resil + ience"],"ans":0},{"w":"perseverance","opts":["per + sever + ance","per + severe + ance","per + sever + ence"],"ans":0},{"w":"empathy","opts":["em + path + y","em + path + ey","em + pathy"],"ans":0},{"w":"synchronize","opts":["syn + chron + ize","syn + chron + ize + s","syn + chron + ise"],"ans":0},{"w":"impossible","opts":["im + possible","in + possible","im + poss + ible"],"ans":0},{"w":"illegal","opts":["il + legal","in + legal","il + leg + al"],"ans":0},{"w":"irregular","opts":["ir + regular","in + regular","ir + reg + ular"],"ans":0},{"w":"subway","opts":["sub + way","sub + w + ay","sub + way + s"],"ans":0},{"w":"international","opts":["inter + nation + al","intern + ational","inter + nation + el"],"ans":0},{"w":"overuse","opts":["over + use","over + u + se","over + use + s"],"ans":0},{"w":"understand","opts":["under + stand","under + st + and","under + stand + s"],"ans":0},{"w":"export","opts":["ex + port","ex + p + ort","ex + port + s"],"ans":0},{"w":"education","opts":["e + duc + ation","educ + ation","e + duc + tion"],"ans":0},{"w":"development","opts":["de + vel + op + ment","develop + ment","de + vel + op + mient"],"ans":0},{"w":"happiness","opts":["happy + ness","happi + ness","happy + nes"],"ans":0},{"w":"ability","opts":["able + ity","abil + ity","able + ty"],"ans":0},{"w":"importance","opts":["import + ance","im + port + ance","import + ence"],"ans":0},{"w":"comfortable","opts":["comfort + able","com + fort + able","comfort + ible"],"ans":0},{"w":"natural","opts":["nature + al","nat + ural","natural + l"],"ans":0},{"w":"helpful","opts":["help + ful","help + full","help + fl"],"ans":0},{"w":"dangerous","opts":["danger + ous","dange + rous","danger + ous + ly"],"ans":0},{"w":"creative","opts":["create + ive","cre + ative","create + ive + ly"],"ans":0},{"w":"homeless","opts":["home + less","hom + less","home + les"],"ans":0},{"w":"quickly","opts":["quick + ly","quic + ly","quick + y"],"ans":0},{"w":"realize","opts":["real + ize","re + al + ize","real + ise"],"ans":0},{"w":"artist","opts":["art + ist","ar + tist","artist + s"],"ans":0},{"w":"friendship","opts":["friend + ship","friends + ship","friend + shep"],"ans":0},{"w":"package","opts":["pack + age","pac + kage","package + s"],"ans":0},{"w":"freedom","opts":["free + dom","freed + om","freedom + s"],"ans":0},{"w":"factory","opts":["fact + ory","fac + tory","factory + s"],"ans":0}];
+var MATCH_Q=[{"q":"ex(出) + port(搬运) = ?","opts":["进口","出口","搬运工","港口"],"ans":1},{"q":"pre(前) + view(看) = ?","opts":["回顾","预览","视觉","观点"],"ans":1},{"q":"mis(错) + lead(引导) = ?","opts":["领导","误导","跟随","引导"],"ans":1},{"q":"un(不) + comfortable = ?","opts":["舒服的","不舒服的","舒适的","舒服地"],"ans":1},{"q":"re(再) + build = ?","opts":["建造","重建","建筑","建立"],"ans":1},{"q":"in(不) + visible = ?","opts":["可见的","看不见的","视觉的","视力"],"ans":1},{"q":"inter(之间) + national = ?","opts":["国家的","国际的","国内","民族"],"ans":1},{"q":"counter(相反) + part = ?","opts":["部分","对应物","参与","部件"],"ans":1},{"q":"under(不足) + estimate = ?","opts":["高估","低估","估计","估算"],"ans":1},{"q":"over(过度) + use = ?","opts":["使用","过度使用","有用","用户"],"ans":1},{"q":"sus(下) + tain(保持) + able = ?","opts":["可持续的","不可持续的","保持","获得"],"ans":1},{"q":"bio(生命) + diversity = ?","opts":["生物多样性","生物","生命","种类"],"ans":1},{"q":"dis(分离) + connect = ?","opts":["连接","断开","关联","联系"],"ans":1},{"q":"con(共同) + struct(建造) + ion = ?","opts":["结构","建造","建设"," destruction"],"ans":0},{"q":"trans(跨越) + form = ?","opts":["形式","转变","变形","格式"],"ans":1},{"q":"co(共同) + operate = ?","opts":["操作","合作","运行","工作"],"ans":1},{"q":"per(彻底) + severe + ance = ?","opts":["严厉","毅力","严重","严格"],"ans":1},{"q":"em(入) + pathy = ?","opts":["同情","共情","路径","感情"],"ans":1},{"q":"syn(同) + chron(时间) + ize = ?","opts":["同步","时钟","同时","时代"],"ans":0},{"q":"ir(不) + replace + able = ?","opts":["可替代的","不可替代的","替换","放置"],"ans":1},{"q":"un(不) + predict + able = ?","opts":["可预测的","不可预测的","预测","预知"],"ans":1},{"q":"pre(前) + limin(门槛) + ary = ?","opts":["初步的","有限的","门槛","开始"],"ans":0},{"q":"in(不) + valu + able = ?","opts":["无价值的","极宝贵的","价值","评价"],"ans":1},{"q":"de(去除) + forest + ation = ?","opts":["森林","滥伐森林","造林","树木"],"ans":1},{"q":"industr + ial + ization = ?","opts":["工业","工业化","产业","工厂"],"ans":1},{"q":"re(再) + consider + ation = ?","opts":["考虑","重新考虑","认为","思量"],"ans":1},{"q":"self + discipline = ?","opts":["纪律","自律","学科","训练"],"ans":1},{"q":"well + being = ?","opts":["存在","福祉","良好","生命"],"ans":1},{"q":"infra(下) + struct + ure = ?","opts":["结构","基础设施","建筑","框架"],"ans":1},{"q":"contro + vers(转) + y = ?","opts":["相反","争议","转向","版本"],"ans":1}];
+var ADV_Q=[{"w":"unsustainable","brk":"un + sus + tain + able","opts":["不可持续的","与unsustainable无关","字面相反","无法确定"],"ans":0},{"w":"biodiversity","brk":"bio + di + vers + ity","opts":["生物多样性","与biodiversity无关","字面相反","无法确定"],"ans":0},{"w":"counterpart","brk":"counter + part","opts":["对应物","与counterpart无关","字面相反","无法确定"],"ans":0},{"w":"preliminary","brk":"pre + limin + ary","opts":["初步的","与preliminary无关","字面相反","无法确定"],"ans":0},{"w":"irreplaceable","brk":"ir + replace + able","opts":["不可替代的","与irreplaceable无关","字面相反","无法确定"],"ans":0},{"w":"underestimate","brk":"under + estimate","opts":["低估","与underestimate无关","字面相反","无法确定"],"ans":0},{"w":"misleading","brk":"mis + lead + ing","opts":["误导的","与misleading无关","字面相反","无法确定"],"ans":0},{"w":"interconnected","brk":"inter + connect + ed","opts":["相互关联的","与interconnected无关","字面相反","无法确定"],"ans":0},{"w":"multinational","brk":"multi + nation + al","opts":["跨国的","与multinational无关","字面相反","无法确定"],"ans":0},{"w":"uncomfortable","brk":"un + comfort + able","opts":["不舒服的","与uncomfortable无关","字面相反","无法确定"],"ans":0},{"w":"invisible","brk":"in + vis + ible","opts":["看不见的","与invisible无关","字面相反","无法确定"],"ans":0},{"w":"overstatement","brk":"over + state + ment","opts":["夸大","与overstatement无关","字面相反","无法确定"],"ans":0},{"w":"empathy","brk":"em + path + y","opts":["共情","与empathy无关","字面相反","无法确定"],"ans":0},{"w":"synchronize","brk":"syn + chron + ize","opts":["同步","与synchronize无关","字面相反","无法确定"],"ans":0},{"w":"invaluable","brk":"in + valu + able","opts":["极宝贵的","与invaluable无关","字面相反","无法确定"],"ans":0},{"w":"unpredictable","brk":"un + pre + dict + able","opts":["不可预测的","与unpredictable无关","字面相反","无法确定"],"ans":0},{"w":"disconnected","brk":"dis + connect + ed","opts":["断开的","与disconnected无关","字面相反","无法确定"],"ans":0},{"w":"reconstruction","brk":"re + con + struct + ion","opts":["重建","与reconstruction无关","字面相反","无法确定"],"ans":0},{"w":"prevention","brk":"pre + vent + ion","opts":["预防","与prevention无关","字面相反","无法确定"],"ans":0},{"w":"cooperation","brk":"co + oper + ation","opts":["合作","与cooperation无关","字面相反","无法确定"],"ans":0},{"w":"transformation","brk":"trans + form + ation","opts":["转变","与transformation无关","字面相反","无法确定"],"ans":0},{"w":"unemployment","brk":"un + employ + ment","opts":["失业","与unemployment无关","字面相反","无法确定"],"ans":0},{"w":"deforestation","brk":"de + forest + ation","opts":["滥伐森林","与deforestation无关","字面相反","无法确定"],"ans":0},{"w":"industrialization","brk":"industr + ial + ization","opts":["工业化","与industrialization无关","字面相反","无法确定"],"ans":0},{"w":"overestimate","brk":"over + estimate","opts":["高估","与overestimate无关","字面相反","无法确定"],"ans":0},{"w":"underdeveloped","brk":"under + devel + oped","opts":["不发达的","与underdeveloped无关","字面相反","无法确定"],"ans":0},{"w":"reconsideration","brk":"re + con + sider + ation","opts":["重新考虑","与reconsideration无关","字面相反","无法确定"],"ans":0},{"w":"unquestionable","brk":"un + question + able","opts":["毫无疑问的","与unquestionable无关","字面相反","无法确定"],"ans":0},{"w":"interpersonal","brk":"inter + person + al","opts":["人际的","与interpersonal无关","字面相反","无法确定"],"ans":0},{"w":"counterproductive","brk":"counter + product + ive","opts":["适得其反的","与counterproductive无关","字面相反","无法确定"],"ans":0},{"w":"resilience","brk":"re + sil + ience","opts":["韧性","与resilience无关","字面相反","无法确定"],"ans":0},{"w":"perseverance","brk":"per + sever + ance","opts":["毅力","与perseverance无关","字面相反","无法确定"],"ans":0},{"w":"unprecedented","brk":"un + pre + ced + ent + ed","opts":["前所未有的","与unprecedented无关","字面相反","无法确定"],"ans":0},{"w":"self-discipline","brk":"self + dis + cipline","opts":["自律","与self无关","字面相反","无法确定"],"ans":0},{"w":"well-being","brk":"well + being","opts":["福祉","与well无关","字面相反","无法确定"],"ans":0},{"w":"infrastructure","brk":"infra + struct + ure","opts":["基础设施","与infrastructure无关","字面相反","无法确定"],"ans":0},{"w":"controversy","brk":"contro + vers + y","opts":["争议","与controversy无关","字面相反","无法确定"],"ans":0},{"w":"sustainability","brk":"sus + tain + ability","opts":["可持续性","与sustainability无关","字面相反","无法确定"],"ans":0}];
+
+var learned={};
+try{learned=JSON.parse(localStorage.getItem('wr_learned')||'{}')}catch(e){}
+var wrongs=[];
+try{wrongs=JSON.parse(localStorage.getItem('wr_wrongs')||'[]')}catch(e){}
+
+function saveLearned(){try{localStorage.setItem('wr_learned',JSON.stringify(learned))}catch(e){}}
+function saveWrongs(){try{localStorage.setItem('wr_wrongs',JSON.stringify(wrongs))}catch(e){}}
+
+// ===== 关键修复：动态测算抬头真实高度，给下方留安全间距 =====
+function fitTopGap(){
+  var tb=document.getElementById('topbar');
+  var wrap=document.getElementById('wrap');
+  if(!tb||!wrap)return;
+  var h=tb.getBoundingClientRect().height; // 抬头真实渲染高度
+  wrap.style.paddingTop=(h+8)+'px'; // +8px 安全间隙
 }
+window.addEventListener('load',fitTopGap);
+window.addEventListener('resize',fitTopGap);
+window.addEventListener('orientationchange',function(){setTimeout(fitTopGap,150)});
+fitTopGap(); // 首帧立即执行
+
+// 下滑收起抬头
+var lastY=0;
+window.addEventListener('scroll',function(){
+  var y=window.scrollY;
+  var tb=document.getElementById('topbar');
+  if(!tb)return;
+  if(y>60&&y>lastY){tb.classList.add('hide')}else{tb.classList.remove('hide')}
+  lastY=y;
+});
+
+// 面板切换
+var tabDefs=[
+  {id:'cards',n:'🎴词根卡'},
+  {id:'roots',n:'📖词根'},
+  {id:'prefix',n:'➕前缀'},
+  {id:'suffix',n:'🔚后缀'},
+  {id:'practice',n:'✏️练习'},
+  {id:'advanced',n:'🚀超纲词'},
+  {id:'wrong',n:'❌错词'},
+];
+var tabsEl=document.getElementById('tabs');
+tabDefs.forEach(function(t){
+  var b=document.createElement('button');
+  b.className='tab'+(t.id==='cards'?' on':'');
+  b.textContent=t.n;
+  b.onclick=function(){switchPanel(t.id)};
+  tabsEl.appendChild(b);
+});
+function switchPanel(id){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});
+  document.getElementById('panel-'+id).classList.add('on');
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});
+  // 重新校准间距（切换面板后高度可能变）
+  setTimeout(fitTopGap,0);
+}
+
+// 渲染词根卡（事件委托，避免行内 onclick 兼容问题）
+function renderCards(){
+  var box=document.getElementById('cardList');
+  box.innerHTML='';
+  CARDS.forEach(function(c){
+    var el=document.createElement('div');
+    el.className='card'+(learned[c.id]?' flipped':'');
+    el.dataset.id=c.id;
+    el.innerHTML='<div class="front">'+c.front+'<small>'+c.ex+'</small></div>'+
+                 '<div class="back"><div class="m">'+c.back+'</div>'+
+                 (c.ex?'<div class="ex">'+c.ex+'</div>':'')+'</div>'+
+                 (learned[c.id]?'':'<div class="flip-hint">点我翻转 ▾</div>');
+    box.appendChild(el);
+  });
+  updateProgress();
+}
+// 事件委托：点卡片翻转
+document.getElementById('cardList').addEventListener('click',function(ev){
+  var card=ev.target.closest('.card');
+  if(!card)return;
+  var id=card.dataset.id;
+  card.classList.toggle('flipped');
+  if(card.classList.contains('flipped')){
+    learned[id]=1;
+    var c=CARDS.find(function(x){return x.id===id});
+    if(c&&!card.querySelector('.flip-hint').style.display==='none'){
+      // 首次翻转：标记已学，去掉提示
+    }
+    saveLearned();
+    // 去掉翻转提示
+    var hint=card.querySelector('.flip-hint');
+    if(hint)hint.style.display='none';
+    updateProgress();
+  }
+});
+function updateProgress(){
+  var n=Object.keys(learned).filter(function(k){return learned[k]}).length;
+  document.getElementById('progText').textContent='已学 '+n+'/'+CARDS.length+'（'+(CARDS.length?Math.round(n/CARDS.length*100):0)+'%）';
+  document.getElementById('progBar').style.width=(CARDS.length?n/CARDS.length*100:0)+'%';
+}
+document.getElementById('shuffleBtn').onclick=function(){
+  for(var i=CARDS.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=CARDS[i];CARDS[i]=CARDS[j];CARDS[j]=t;}
+  renderCards();
+};
+document.getElementById('resetBtn').onclick=function(){
+  learned={};saveLearned();renderCards();
+};
+
+// 词根/前后缀列表
+function renderList(el,arr,key){
+  el.innerHTML='';
+  arr.forEach(function(x){
+    var d=document.createElement('div');
+    d.className='card';
+    var front=x.r||x.p||x.s;
+    var ex=x.e||x.ex||'';
+    d.innerHTML='<div class="front">'+front+'<small>'+ex+'</small></div>'+
+                '<div class="back"><div class="m">'+x.m+'</div></div>';
+    d.addEventListener('click',function(){d.classList.toggle('flipped')});
+    el.appendChild(d);
+  });
+}
+renderCards();
+renderList(document.getElementById('rootList'),ROOTS);
+renderList(document.getElementById('prefixList'),PREFIXES);
+renderList(document.getElementById('suffixList'),SUFFIXES);
+
+// 超纲词列表
+function renderAdvanced(){
+  var box=document.getElementById('advList');
+  box.innerHTML='';
+  ADVANCED.forEach(function(x){
+    var d=document.createElement('div');
+    d.className='adv-item';
+    d.innerHTML='<div class="w">'+x.w+'</div><div class="brk">'+x.brk+'</div>'+
+                '<div>'+x.m+' <span class="chip">大纲外 · '+x.src+'</span></div>';
+    box.appendChild(d);
+  });
+}
+renderAdvanced();
+
+// ===== 练习专区（三题型）=====
+var pracModes=[
+  {id:'break',n:'🔧拆解（'+BREAK_Q.length+'）'},
+  {id:'match',n:'🧩含义配对（'+MATCH_Q.length+'）'},
+  {id:'adv',n:'🚀超纲推导（'+ADV_Q.length+'）'},
+];
+var curMode='break',pracIdx=0,pracScore=0,pracDone=0;
+var pracTabsEl=document.getElementById('pracTabs');
+pracModes.forEach(function(m){
+  var b=document.createElement('button');
+  b.className='tab'+(m.id==='break'?' on':'');
+  b.textContent=m.n;
+  b.onclick=function(){curMode=m.id;pracIdx=0;pracScore=0;pracDone=0;renderPracTabs();doPrac();};
+  pracTabsEl.appendChild(b);
+});
+function renderPracTabs(){
+  pracTabsEl.querySelectorAll('.tab').forEach(function(t,i){
+    t.classList.toggle('on',pracModes[i].id===curMode);
+  });
+}
+function curPool(){return curMode==='break'?BREAK_Q:curMode==='match'?MATCH_Q:ADV_Q;}
+function doPrac(){
+  var pool=curPool();
+  var body=document.getElementById('pracBody');
+  if(pracIdx>=pool.length){
+    body.innerHTML='<div class="score"><div class="num">'+pracScore+' / '+pool.length+'</div>'+
+      '<div style="color:var(--grey);margin:8px 0">正确率：'+(pool.length?Math.round(pracScore/pool.length*100):0)+'%</div>'+
+      '<button class="btn primary" id="restartPrac">🔄 再来一组</button></div>';
+    document.getElementById('restartPrac').onclick=function(){pracIdx=0;pracScore=0;pracDone=0;doPrac();};
+    return;
+  }
+  var q=pool[pracIdx];
+  var html='<div class="q"><div class="stem">'+q.w+(q.brk?'<span class="brk">'+q.brk+'</span>':'')+'</div><div class="opts">';
+  q.opts.forEach(function(o,i){
+    html+='<button class="opt" data-i="'+i+'">'+o+'</button>';
+  });
+  html+='</div></div>';
+  body.innerHTML=html;
+  var answered=false;
+  body.querySelectorAll('.opt').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      if(answered)return;answered=true;
+      var i=+btn.dataset.i;
+      if(i===q.ans){
+        btn.classList.add('right');pracScore++;
+      }else{
+        btn.classList.add('wrong');
+        var opts=body.querySelectorAll('.opt');
+        if(opts[q.ans])opts[q.ans].classList.add('right');
+        // 记录错词
+        var key=curMode+':'+q.w;
+        if(!wrongs.find(function(w){return w.key===key})){
+          wrongs.push({key:key,w:q.w,brk:q.brk||'',m:q.opts[q.ans]});
+          saveWrongs();
+        }
+      }
+      pracDone++;
+      setTimeout(function(){pracIdx++;doPrac();},500);
+    });
+  });
+}
+renderPracTabs();
+doPrac();
+
+// 错词本
+function renderWrong(){
+  var box=document.getElementById('wrongList');
+  if(!wrongs.length){box.innerHTML='<div class="empty">🎉 还没有错题，继续加油！</div>';return;}
+  box.innerHTML='';
+  wrongs.forEach(function(w){
+    var d=document.createElement('div');
+    d.className='card';
+    d.innerHTML='<div class="front">'+w.w+'<small>'+(w.brk||'')+'</small></div>'+
+                '<div class="back"><div class="m">'+w.m+'</div></div>';
+    d.addEventListener('click',function(){d.classList.toggle('flipped')});
+    box.appendChild(d);
+  });
+}
+document.getElementById('clearWrong').onclick=function(){wrongs=[];saveWrongs();renderWrong();};
+
+// toast
 function toast(msg){
   var t=document.getElementById('toast');
-  t.innerHTML=msg+'<button class="ok" onclick="this.parentNode.classList.remove(\'show\')">我知道了</button>';
-  t.classList.add('show');
-  clearTimeout(t._t);
-  t._t=setTimeout(function(){t.classList.remove('show');},3500);
+  t.innerHTML=msg+'<div class="t-close">我知道了</div>';
+  t.classList.add('on');
+  t.querySelector('.t-close').onclick=function(){t.classList.remove('on')};
 }
 
-/* ============ 数据 ============ */
-/* 北京卷十年（2016–2026）高频词根 —— 例句出处均为北京卷 */
-var ROOTS = [
- {r:'duct',m:'引导，拉',ex:'She was <em>conducting</em> an experiment on plant growth. (2021·北京 阅读D)',e:'conduct → con(共同)+duct(引导)=引导/实施'},
- {r:'spect / spic',m:'看',ex:'The students <em>inspected</em> the data carefully. (2020·北京 完形)',e:'inspect → in(向内)+spect(看)=检查'},
- {r:'port',m:'搬运，携带',ex:'The magazine is <em>exported</em> to many countries. (2022·北京 语法填空)',e:'export → ex(出)+port(搬运)=出口'},
- {r:'form',m:'形状，形成',ex:'This <em>transforms</em> the way we learn languages. (2023·北京 阅读)',e:'transform → trans(跨越)+form(形状)=改变'},
- {r:'struct',m:'建造',ex:'The students <em>constructed</em> a model bridge. (2021·北京 完形)',e:'construct → con(共同)+struct(建造)=建造'},
- {r:'mit / miss',m:'发送',ex:'He was <em>admitted</em> to his dream university. (2024·北京 阅读表达)',e:'admit → ad(向)+mit(发送)=容许/承认'},
- {r:'press',m:'压',ex:'The media put a lot of <em>pressure</em> on the team. (2022·北京 完形)',e:'pressure → press(压)+ure(名词)=压力'},
- {r:'tain / ten',m:'保持，握住',ex:'It is hard to <em>maintain</em> a healthy lifestyle. (2023·北京 阅读)',e:'maintain → main(手)+tain(握)=维持'},
- {r:'scrib / script',m:'写',ex:'Please <em>describe</em> your favourite place. (2025·北京 书面表达)',e:'describe → de(下)+scribe(写)=描述'},
- {r:'dict',m:'说',ex:'The teacher gave a clear <em>prediction</em>. (2022·北京 阅读)',e:'predict → pre(前)+dict(说)=预言'},
- {r:'rupt',m:'断裂',ex:'The water pipe <em>erupted</em> suddenly. (2019·北京 完形)',e:'erupt → e(出)+rupt(断裂)=喷发'},
- {r:'scend / scens',m:'爬，攀',ex:'The price of housing has been <em>ascending</em>. (2018·北京 阅读)',e:'ascend → a(向)+scend(爬)=上升'},
- {r:'ced / cess',m:'走，去',ex:'The project is still in <em>progress</em>. (2021·北京 语法填空)',e:'progress → pro(向前)+gress(走)=进展'},
- {r:'tract',m:'拉，引',ex:'The new method <em>attracted</em> wide attention. (2024·北京 阅读)',e:'attract → at(向)+tract(引)=吸引'},
- {r:'pos / pon',m:'放，置',ex:'The speaker <em>proposed</em> a new idea. (2020·北京 阅读)',e:'propose → pro(前)+pose(放)=提出'},
- {r:'sent / sens',m:'感觉',ex:'She was very <em>sensitive</em> to criticism. (2023·北京 完形)',e:'sensitive → sens(感觉)+itive=敏感的'},
- {r:'spir',m:'呼吸',ex:'The team worked with great <em>inspiration</em>. (2022·北京 阅读表达)',e:'inspire → in(入)+spire(呼吸)=鼓舞'},
- {r:'vers / vert',m:'转',ex:'The story is very <em>diverse</em> in style. (2024·北京 阅读D)',e:'diverse → di(分)+vers(转)=多样的'},
- {r:'fer',m:'拿，带',ex:'He <em>preferred</em> to study alone. (2019·北京 完形)',e:'prefer → pre(先)+fer(拿)=宁愿'},
- {r:'pend / pens',m:'悬挂；花费',ex:'The decision is <em>pending</em> further review. (2021·北京 阅读)',e:'pending → pend(悬挂)=悬而未决'},
- {r:'vis / vid',m:'看',ex:'The documentary was very <em>vivid</em>. (2023·北京 完形)',e:'vivid → viv(生命/看)+id=生动的'},
- {r:'ced / cid',m:'落下，降临',ex:'A good opportunity will <em>accident</em>ally appear. (2017·北京 完形)',e:'accident → ac(向)+cid(落)+ent=事故'},
- {r:'gen',m:'产生，出生',ex:'This is a <em>genuine</em> piece of art. (2022·北京 阅读)',e:'genuine → gen(生)+uine=真正的'},
- {r:'leg / lect',m:'选，读',ex:'The students <em>collected</em> data from surveys. (2024·北京 阅读)',e:'collect → col(一起)+lect(选)=收集'},
- {r:'mov / mot',m:'移动',ex:'The film is very <em>motive</em>ing. (2020·北京 完形)',e:'emotion → e(出)+mot(动)+ion=情感'},
- {r:'nat',m:'出生',ex:'The <em>native</em> language is important. (2018·北京 阅读)',e:'native → nat(生)+ive=本地的'},
- {r:'nov',m:'新',ex:'The company has a very <em>innovation</em>. (2025·北京 阅读D)',e:'innovation → in(入)+nov(新)+ation=创新'},
- {r:'phon',m:'声音',ex:'The phone made a strange <em>syphon</em> sound. (2016·北京 完形)',e:'telephone → tele(远)+phon(声音)=电话'},
- {r:'graph / gram',m:'写，图',ex:'The diagram clearly shows the <em>paragraph</em>. (2022·北京 阅读)',e:'autograph → auto(自己)+graph(写)=亲笔签名'},
- {r:'log / ology',m:'学科，说话',ex:'He is studying <em>biology</em>. (2019·北京 阅读)',e:'biology → bio(生命)+logy(学科)=生物学'}
-];
-
-var PREFIXES = [
- {p:'un-',m:'不，相反',ex:'unhappy = 不快乐 (2024·北京 完形)',e:'un + happy'},
- {p:'re-',m:'再次，回',ex:'review = 复习 (2020·北京 阅读)',e:'re + view(看)'},
- {p:'pre-',m:'在…之前',ex:'predict = 预言 (2022·北京 阅读)',e:'pre + dict(说)'},
- {p:'dis-',m:'不，分离',ex:'discover = 发现 (2018·北京 阅读)',e:'dis + cover'},
- {p:'mis-',m:'错误地',ex:'misunderstand = 误解 (2023·北京 完形)',e:'mis + understand'},
- {p:'non-',m:'非，不',ex:'nonsense = 胡说 (2021·北京 阅读)',e:'non + sense'},
- {p:'in-/im-/il-/ir-',m:'不（同化变体）',ex:'impossible = 不可能的 (2019·北京)',e:'im + possible / ir + regular'},
- {p:'sub-',m:'在…之下',ex:'subway = 地铁 (2016·北京)',e:'sub + way'},
- {p:'inter-',m:'之间，相互',ex:'international = 国际的 (2022·北京)',e:'inter + national'},
- {p:'over-',m:'过度，在上',ex:'overcome = 克服 (2020·北京 阅读)',e:'over + come'},
- {p:'under-',m:'不足，在下',ex:'understand = 理解 (2017·北京)',e:'under + stand'},
- {p:'trans-',m:'跨越，转移',ex:'transport = 运输 (2023·北京 阅读)',e:'trans + port(搬运)'},
- {p:'anti-',m:'反对',ex:'anti-pollution = 防污染 (2024·北京)',e:'anti + pollution'},
- {p:'co-/com-/con-',m:'共同',ex:'connect = 连接 (2021·北京 完形)',e:'con + nect(绑)'},
- {p:'ex-/e-',m:'出，前任',ex:'export = 出口 (2022·北京 语法填空)',e:'ex + port'},
- {p:'de-',m:'向下，去除',ex:'describe = 描述 (2025·北京 书面表达)',e:'de + scribe(写)'}
-];
-
-var SUFFIXES = [
- {s:'-tion / -sion',m:'名词后缀（动作/状态）',ex:'education / decision (2020·北京)',e:'educate + tion'},
- {s:'-ment',m:'名词后缀',ex:'development = 发展 (2022·北京 阅读)',e:'develop + ment'},
- {s:'-ness',m:'名词后缀（性质）',ex:'happiness = 幸福 (2019·北京)',e:'happy + ness'},
- {s:'-ity / -ty',m:'名词后缀（性质）',ex:'diversity = 多样性 (2024·北京 阅读D)',e:'diverse + ity'},
- {s:'-ance / -ence',m:'名词后缀',ex:'patience = 耐心 (2018·北京 完形)',e:'patient + ce'},
- {s:'-able / -ible',m:'形容词：可…的',ex:'comfortable = 舒适的 (2021·北京)',e:'comfort + able'},
- {s:'-ous / -ious',m:'形容词后缀',ex:'dangerous = 危险的 (2017·北京)',e:'danger + ous'},
- {s:'-ive',m:'形容词后缀',ex:'active = 积极的 (2020·北京 完形)',e:'act + ive'},
- {s:'-al / -ial',m:'形容词后缀',ex:'natural = 自然的 (2019·北京)',e:'nature + al'},
- {s:'-ful',m:'形容词：充满…的',ex:'helpful = 有帮助的 (2016·北京)',e:'help + ful'},
- {s:'-less',m:'形容词：无…的',ex:'endless = 无尽的 (2022·北京 阅读)',e:'end + less'},
- {s:'-ly',m:'副词后缀',ex:'quickly = 快速地 (2018·北京)',e:'quick + ly'},
- {s:'-ize / -ise',m:'动词后缀',ex:'realize = 实现 (2021·北京 阅读)',e:'real + ize'},
- {s:'-ify',m:'动词后缀（使…化）',ex:'simplify = 简化 (2023·北京)',e:'simple + ify'},
- {s:'-ate',m:'动词后缀',ex:'communicate = 交流 (2020·北京)',e:'commun + icate'},
- {s:'-ist',m:'名词：从事…的人',ex:'scientist = 科学家 (2019·北京)',e:'science + ist'},
- {s:'-ship',m:'名词（状态/身份）',ex:'friendship = 友谊 (2017·北京)',e:'friend + ship'},
- {s:'-dom',m:'名词（领域/状态）',ex:'freedom = 自由 (2016·北京 阅读)',e:'free + dom'},
- {s:'-ward(s)',m:'方向',ex:'forward = 向前 (2018·北京 完形)',e:'fore + ward'},
- {s:'-en',m:'动词/形容词后缀',ex:'widen = 加宽 (2022·北京)',e:'wid + en'},
- {s:'-ic / -ical',m:'形容词后缀',ex:'historical = 历史的 (2024·北京 阅读)',e:'history + ical'},
- {s:'-age',m:'名词后缀（集合/结果）',ex:'shortage = 短缺 (2019·北京 完形)',e:'short + age'}
-];
-
-/* 北京卷 3500 大纲外超纲词 —— 出处均为北京卷真题 */
-var ADVANCED = [
- {w:'unsustainable',split:'un + sus + tain + able',m:'不可持续的',ex:'北京卷高频主题词（环保类阅读，2024·北京 阅读D）',e:'un(不)+sustain(维持)+able'},
- {w:'biodiversity',split:'bio + di + vers + ity',m:'生物多样性',ex:'The rainforest has rich <em>biodiversity</em>. (2023·北京 阅读D)',e:'bio(生命)+di(分)+vers(转)+ity'},
- {w:'counterpart',split:'counter + part',m:'对应物；对等者',ex:'Each has its <em>counterpart</em> abroad. (2022·北京 阅读C)',e:'counter(相反)+part'},
- {w:'preliminary',split:'pre + limin + ary',m:'初步的，预备的',ex:'The <em>preliminary</em> results look promising. (2024·北京 语法填空)',e:'pre(前)+limin(门槛)+ary'},
- {w:'irreplaceable',split:'ir + re + place + able',m:'不可替代的',ex:'These old trees are <em>irreplaceable</em>. (2025·北京 完形)',e:'ir(不)+replace(替代)+able'},
- {w:'underestimate',split:'under + estimate',m:'低估',ex:'Don\'t <em>underestimate</em> the power of small steps. (2023·北京 阅读)',e:'under(不足)+estimate(估计)'},
- {w:'multinational',split:'multi + nation + al',m:'跨国的',ex:'A <em>multinational</em> team worked on it. (2022·北京 阅读)',e:'multi(多)+nation(国家)+al'},
- {w:'interconnected',split:'inter + connect + ed',m:'相互关联的',ex:'All living things are <em>interconnected</em>. (2024·北京 阅读D)',e:'inter(之间)+connect(连接)'},
- {w:'misleading',split:'mis + lead + ing',m:'误导的',ex:'The chart is somewhat <em>misleading</em>. (2023·北京 阅读C)',e:'mis(错误)+lead(引导)+ing'},
- {w:'overstatement',split:'over + state + ment',m:'夸大，夸张',ex:'That is an <em>overstatement</em> of the facts. (2021·北京 阅读)',e:'over(过度)+state(陈述)+ment'},
- {w:'invaluable',split:'in + valu + able',m:'极宝贵的（注意：不是"无价值"）',ex:'His advice was <em>invaluable</em> to us. (2025·北京 完形)',e:'in(不，表强调)+value(价值)+able → 价值无法估量'},
- {w:'undeniable',split:'un + deni + able',m:'不可否认的',ex:'There is an <em>undeniable</em> link. (2022·北京 阅读D)',e:'un(不)+deny(否认)+able'},
- {w:'unprecedented',split:'un + pre + ced + ent + ed',m:'前所未有的',ex:'The change is <em>unprecedented</em> in scale. (2024·北京 阅读D)',e:'un(不)+pre(前)+ced(走)+ent+ed'},
- {w:'illiterate',split:'il + liter + ate',m:'文盲的，不识字的',ex:'<em>Illiterate</em> adults were offered classes. (2018·北京 完形)',e:'il(不)+liter(文字)+ate'},
- {w:'overpopulated',split:'over + populate + ed',m:'人口过密的',ex:'The city is heavily <em>overpopulated</em>. (2019·北京 阅读)',e:'over(过度)+populate(居住)+ed'},
- {w:'coexistence',split:'co + ex + ist + ence',m:'共存',ex:'Peaceful <em>coexistence</em> is possible. (2020·北京 阅读)',e:'co(共同)+exist(存在)+ence'},
- {w:'foreseeable',split:'fore + see + able',m:'可预见的',ex:'in the <em>foreseeable</em> future (2023·北京 阅读)',e:'fore(前)+see(看)+able'},
- {w:'misconception',split:'mis + concept + ion',m:'误解，错误观念',ex:'a common <em>misconception</em> (2022·北京 完形)',e:'mis(错)+concept(概念)+ion'},
- {w:'subconscious',split:'sub + con + sci + ous',m:'潜意识的',ex:'a <em>subconscious</em> habit (2021·北京 阅读)',e:'sub(下)+conscious(意识)'},
- {w:'self-discipline',split:'self + dis + cip + line',m:'自律',ex:'<em>Self-discipline</em> is the key to success. (2025·北京 书面表达)',e:'self(自我)+discipline(训练)'},
- {w:'well-being',split:'well + be + ing',m:'幸福，安康',ex:'physical and mental <em>well-being</em> (2024·北京 阅读)',e:'well(好)+being(存在)'},
- {w:'ever-changing',split:'ever + change + ing',m:'不断变化的',ex:'in this <em>ever-changing</em> world (2023·北京 阅读)',e:'ever(永远)+changing(变化)'},
- {w:'thought-provoking',split:'thought + provok + ing',m:'发人深省的',ex:'a <em>thought-provoking</em> question (2022·北京 阅读)',e:'thought(思想)+provoke(激起)+ing'},
- {w:'long-standing',split:'long + stand + ing',m:'长期存在的',ex:'a <em>long-standing</em> tradition (2019·北京 完形)',e:'long(长)+standing(持续)'},
- {w:'far-reaching',split:'far + reach + ing',m:'影响深远的',ex:'a <em>far-reaching</em> influence (2024·北京 阅读D)',e:'far(远)+reaching(到达)'},
- {w:'short-lived',split:'short + live + ed',m:'短暂的',ex:'a <em>short-lived</em> victory (2017·北京 阅读)',e:'short(短)+lived(生命)'},
- {w:'time-consuming',split:'time + consume + ing',m:'耗时的',ex:'The task is rather <em>time-consuming</em>. (2021·北京 完形)',e:'time(时间)+consume(消耗)+ing'},
- {w:'energy-efficient',split:'energy + ef + fic + ient',m:'节能的',ex:'an <em>energy-efficient</em> design (2025·北京 阅读D)',e:'energy(能量)+efficient(高效的)'},
- {w:'user-friendly',split:'user + friend + ly',m:'用户友好的',ex:'a <em>user-friendly</em> app (2023·北京 阅读)',e:'user(用户)+friendly(友好)'},
- {w:'air-conditioned',split:'air + con + dit + ion + ed',m:'有空调的',ex:'an <em>air-conditioned</em> room (2016·北京 完形)',e:'air(空气)+conditioned(调节的)'},
- {w:'world-renowned',split:'world + re + nown + ed',m:'世界知名的',ex:'a <em>world-renowned</em> scientist (2022·北京 阅读)',e:'world(世界)+renowned(闻名)'},
- {w:'record-breaking',split:'record + break + ing',m:'破纪录的',ex:'a <em>record-breaking</em> score (2024·北京 完形)',e:'record(纪录)+breaking(打破)'},
- {w:'heartwarming',split:'heart + warm + ing',m:'暖心的',ex:'a <em>heartwarming</em> story (2020·北京 阅读)',e:'heart(心)+warming(温暖)'},
- {w:'easy-going',split:'easy + go + ing',m:'随和的',ex:'an <em>easy-going</em> teacher (2018·北京 完形)',e:'easy(轻松)+going(行事)'},
- {w:'hardworking',split:'hard + work + ing',m:'勤奋的',ex:'a <em>hardworking</em> student (2019·北京 书面表达)',e:'hard(努力)+working(工作)'},
- {w:'self-confident',split:'self + con + fid + ent',m:'自信的',ex:'a <em>self-confident</em> speaker (2021·北京 阅读)',e:'self(自我)+confident(确信)'},
- {w:'well-known',split:'well + known',m:'著名的',ex:'a <em>well-known</em> author (2017·北京 阅读)',e:'well(好)+known(知名)'},
- {w:'old-fashioned',split:'old + fashion + ed',m:'过时的',ex:'an <em>old-fashioned</em> idea (2016·北京 完形)',e:'old(旧)+fashioned(时髦的过去式)'}
-];
-
-/* 翻转卡：词根 30 + 精选后缀 12 + 精选前缀 6 = 48 */
-var CARDS = ROOTS.map(function(r){return {k:r.r,kl:'词根',face:r.m,back:r.ex+'<div class="exm">'+r.e+'</div>'};})
-.concat([
- {k:'un-',kl:'前缀',face:'不，相反',back:'unhappy = 不快乐<br><em>un + happy</em>'},
- {k:'re-',kl:'前缀',face:'再次，回',back:'review = 复习<br><em>re + view</em>'},
- {k:'pre-',kl:'前缀',face:'在…之前',back:'predict = 预言<br><em>pre + dict(说)</em>'},
- {k:'mis-',kl:'前缀',face:'错误地',back:'misunderstand = 误解<br><em>mis + understand</em>'},
- {k:'inter-',kl:'前缀',face:'之间，相互',back:'international = 国际的<br><em>inter + national</em>'},
- {k:'trans-',kl:'前缀',face:'跨越，转移',back:'transport = 运输<br><em>trans + port</em>'}
-])
-.concat([
- {k:'-tion',kl:'后缀',face:'名词（动作/状态）',back:'education<br><em>educate + tion</em>'},
- {k:'-able',kl:'后缀',face:'形容词：可…的',back:'comfortable<br><em>comfort + able</em>'},
- {k:'-ous',kl:'后缀',face:'形容词后缀',back:'dangerous<br><em>danger + ous</em>'},
- {k:'-ly',kl:'后缀',face:'副词后缀',back:'quickly<br><em>quick + ly</em>'},
- {k:'-ize',kl:'后缀',face:'动词后缀',back:'realize<br><em>real + ize</em>'},
- {k:'-ment',kl:'后缀',face:'名词后缀',back:'development<br><em>develop + ment</em>'},
- {k:'-ity',kl:'后缀',face:'名词（性质）',back:'diversity<br><em>diverse + ity</em>'},
- {k:'-ive',kl:'后缀',face:'形容词后缀',back:'active<br><em>act + ive</em>'},
- {k:'-ful',kl:'后缀',face:'充满…的',back:'helpful<br><em>help + ful</em>'},
- {k:'-ist',kl:'后缀',face:'从事…的人',back:'scientist<br><em>science + ist</em>'},
- {k:'-ship',kl:'后缀',face:'状态/身份',back:'friendship<br><em>friend + ship</em>'},
- {k:'-en',kl:'后缀',face:'使…/形容词',back:'widen<br><em>wid + en</em>'}
-]);
-
-/* ============ 练习 ============ */
-/* 拆解题 62 */
-var Q_BREAK = [
- {w:'undeniable',opts:['un + deni + able','un + deny + able','un + den + iable'],ans:1,ex:'un(不)+deny(否认)+able'},
- {w:'unsustainable',opts:['un + sus + tain + able','un + sustain + able','uns + sustainable'],ans:0,ex:'un + sus(tain) + able'},
- {w:'misunderstanding',opts:['mis + understand + ing','mis + under + standing','miss + understand'],ans:0,ex:'mis + understand + ing'},
- {w:'irreplaceable',opts:['ir + re + place + able','i + rreplaceable','ir + replace + able'],ans:0,ex:'ir(不)+replace+able'},
- {w:'underestimate',opts:['under + estimate','under + esteem + ate','unde + rest + imate'],ans:0,ex:'under(不足)+estimate'},
- {w:'preliminary',opts:['pre + limin + ary','prel + iminary','pre + limit + ary'],ans:0,ex:'pre + limin + ary'},
- {w:'interconnected',opts:['inter + connect + ed','inte + rconnected','inter + con + nected'],ans:0,ex:'inter + connect + ed'},
- {w:'biodiversity',opts:['bio + di + vers + ity','bi + odi + versity','bio + diversity'],ans:0,ex:'bio + di + vers + ity'},
- {w:'multinational',opts:['multi + nation + al','mult + inational','multi + nat + ional'],ans:0,ex:'multi + nation + al'},
- {w:'overstatement',opts:['over + state + ment','over + stat + ement','overs + tatement'],ans:0,ex:'over + state + ment'},
- {w:'invaluable',opts:['in + valu + able','in + value + able','inv + aluable'],ans:0,ex:'in(表强调)+value+able'},
- {w:'unprecedented',opts:['un + pre + ced + ent + ed','un + preced + ented','un + pre + cedent + ed'],ans:0,ex:'un + pre + ced + ent + ed'},
- {w:'illiterate',opts:['il + liter + ate','ill + iterate','il + lit + erate'],ans:0,ex:'il(不)+liter+ate'},
- {w:'coexistence',opts:['co + ex + ist + ence','coex + istence','co + exist + ence'],ans:0,ex:'co + exist + ence'},
- {w:'self-discipline',opts:['self + dis + cip + line','self + discipline','sel + fdiscipline'],ans:0,ex:'self + discipline'},
- {w:'thought-provoking',opts:['thought + provok + ing','thought + pro + voking','though + tprovoking'],ans:0,ex:'thought + provoke + ing'},
- {w:'long-standing',opts:['long + stand + ing','long + s + tanding','lon + gstanding'],ans:0,ex:'long + standing'},
- {w:'time-consuming',opts:['time + consume + ing','time + con + suming','tim + econsuming'],ans:0,ex:'time + consume + ing'},
- {w:'energy-efficient',opts:['energy + ef + fic + ient','energy + efficient','ener + gyefficient'],ans:0,ex:'energy + efficient'},
- {w:'record-breaking',opts:['record + break + ing','record + breaking','rec + ordbreaking'],ans:0,ex:'record + break + ing'},
- {w:'self-confident',opts:['self + con + fid + ent','self + confident','sel + fconfident'],ans:0,ex:'self + confident'},
- {w:'hardworking',opts:['hard + work + ing','har + dworking','hard + w + orking'],ans:0,ex:'hard + working'},
- {w:'foreseeable',opts:['fore + see + able','for + seeable','fore + se + eable'],ans:0,ex:'fore + see + able'},
- {w:'misconception',opts:['mis + concept + ion','mis + con + ception','miss + conception'],ans:0,ex:'mis + concept + ion'},
- {w:'subconscious',opts:['sub + con + sci + ous','sub + conscious','su + bconscious'],ans:0,ex:'sub + conscious'},
- {w:'well-being',opts:['well + be + ing','wel + lbeing','well + being'],ans:0,ex:'well + being'},
- {w:'ever-changing',opts:['ever + change + ing','eve + rchanging','ever + chang + ing'],ans:0,ex:'ever + changing'},
- {w:'far-reaching',opts:['far + reach + ing','far + re + aching','fa + rreaching'],ans:0,ex:'far + reaching'},
- {w:'short-lived',opts:['short + live + ed','shor + tlived','short + l + ived'],ans:0,ex:'short + lived'},
- {w:'user-friendly',opts:['user + friend + ly','use + rfriendly','user + friendly'],ans:0,ex:'user + friendly'},
- {w:'air-conditioned',opts:['air + con + dit + ion + ed','air + conditioned','ai + rconditioned'],ans:0,ex:'air + conditioned'},
- {w:'world-renowned',opts:['world + re + nown + ed','world + renowned','wor + ldrenowned'],ans:0,ex:'world + renowned'},
- {w:'heartwarming',opts:['heart + warm + ing','hear + twarming','heart + warming'],ans:0,ex:'heart + warming'},
- {w:'easy-going',opts:['easy + go + ing','eas + ygoing','easy + going'],ans:0,ex:'easy + going'},
- {w:'old-fashioned',opts:['old + fashion + ed','ol + dfashioned','old + fash + ioned'],ans:0,ex:'old + fashioned'},
- {w:'well-known',opts:['well + known','wel + lknown','well + k + nown'],ans:0,ex:'well + known'},
- {w:'comfortable',opts:['com + fort + able','comfort + able','com + for + table'],ans:1,ex:'comfort + able'},
- {w:'uncomfortable',opts:['un + com + fort + able','un + comfortable','un + comfort + able'],ans:1,ex:'un + comfortable'},
- {w:'development',opts:['develop + ment','de + velop + ment','dev + elopment'],ans:0,ex:'develop + ment'},
- {w:'prediction',opts:['pre + dict + ion','predict + ion','pre + dic + tion'],ans:1,ex:'predict + ion'},
- {w:'construction',opts:['construct + ion','con + struct + ion','cons + truction'],ans:0,ex:'construct + ion'},
- {w:'inspection',opts:['inspect + ion','in + spect + ion','ins + pection'],ans:0,ex:'inspect + ion'},
- {w:'attractive',opts:['attract + ive','at + tract + ive','att + ractive'],ans:0,ex:'attract + ive'},
- {w:'sensitive',opts:['sens + itive','sense + itive','sen + sitive'],ans:0,ex:'sense + itive'},
- {w:'inspiration',opts:['inspire + ation','in + spir + ation','ins + piration'],ans:0,ex:'inspire + ation'},
- {w:'diverse',opts:['di + vers + e','diver + se','div + erse'],ans:0,ex:'di + vers + e'},
- {w:'preferred',opts:['prefer + red','pre + fer + red','pref + erred'],ans:0,ex:'prefer + red (fer→ferred)'},
- {w:'description',opts:['describe + tion','de + scribe + tion','desc + ription'],ans:1,ex:'describe + tion'},
- {w:'eruption',opts:['erupt + ion','e + rupt + ion','er + uption'],ans:0,ex:'erupt + ion'},
- {w:'ascending',opts:['ascend + ing','a + scend + ing','asc + ending'],ans:0,ex:'ascend + ing'},
- {w:'maintenance',opts:['maintain + ance','main + ten + ance','maint + enance'],ans:0,ex:'maintain + ance'},
- {w:'pressure',opts:['press + ure','pre + ssure','pres + sure'],ans:0,ex:'press + ure'},
- {w:'exported',opts:['ex + port + ed','export + ed','ex + por + ted'],ans:0,ex:'ex + port + ed'},
- {w:'transformed',opts:['transform + ed','trans + form + ed','tran + sformed'],ans:0,ex:'transform + ed'},
- {w:'proposed',opts:['pro + pose + d','propose + d','prop + osed'],ans:0,ex:'propose + d'},
- {w:'discovered',opts:['dis + cover + ed','dis + cove + red','disc + overed'],ans:0,ex:'dis(不/分离)+cover=发现'},
- {w:'unbelievable',opts:['un + believe + able','un + bel + ievable','unb + elievable'],ans:0,ex:'un + believe + able'},
- {w:'irregular',opts:['ir + reg + ular','i + rregular','ir + regular'],ans:2,ex:'ir(不)+regular'},
- {w:'impossible',opts:['im + possible','i + mpossible','imp + ossible'],ans:0,ex:'im(不)+possible'},
- {w:'misleading',opts:['mis + lead + ing','mis + lea + ding','miss + leading'],ans:0,ex:'mis + lead + ing'},
- {w:'overestimate',opts:['over + estimate','over + esteem + ate','ove + restimate'],ans:0,ex:'over(过度)+estimate'},
- {w:'reconstruction',opts:['re + construct + ion','recon + struction','re + con + struct + ion'],ans:0,ex:'re(再)+construct+ion'}
-];
-
-/* 含义配对 30 */
-var Q_MATCH = [
- {q:'ex(出) + port(搬运) = ?',opts:['进口','出口','运输'],ans:1,ex:'export = 出口'},
- {q:'pre(前) + dict(说) = ?',opts:['预言','命令','回答'],ans:0,ex:'predict = 预言'},
- {q:'mis(错) + lead(引导) = ?',opts:['引导','误导','领导'],ans:1,ex:'mislead = 误导'},
- {q:'un(不) + happy = ?',opts:['快乐','不快乐','很快乐'],ans:1,ex:'unhappy = 不快乐'},
- {q:'re(再) + view(看) = ?',opts:['预习','复习','观看'],ans:1,ex:'review = 复习'},
- {q:'inter(之间) + national = ?',opts:['国家的','国际的','民族的'],ans:1,ex:'international = 国际的'},
- {q:'trans(跨越) + port(搬运) = ?',opts:['运输','报告','支持'],ans:0,ex:'transport = 运输'},
- {q:'di(分) + vers(转) + ity = ?',opts:['多样性','方向','反转'],ans:0,ex:'diversity = 多样性'},
- {q:'in(不) + visible = ?',opts:['可见的','不可见的','视觉'],ans:1,ex:'invisible = 不可见的'},
- {q:'over(过度) + come = ?',opts:['来到','克服','过度'],ans:1,ex:'overcome = 克服'},
- {q:'under(不足) + stand = ?',opts:['站立','理解','低估'],ans:1,ex:'understand = 理解'},
- {q:'con(共同) + nect(绑) = ?',opts:['连接','收集','忽略'],ans:0,ex:'connect = 连接'},
- {q:'de(下) + scribe(写) = ?',opts:['描述','订阅','缩写'],ans:0,ex:'describe = 描述'},
- {q:'ad(向) + mit(送) = ?',opts:['承认','发送','允许'],ans:0,ex:'admit = 承认'},
- {q:'sus(下) + tain(握) + able = ?',opts:['可维持的','可丢弃的','可持续的'],ans:2,ex:'sustainable = 可持续的'},
- {q:'bio(生命) + logy(学科) = ?',opts:['生物学','生物','生命'],ans:0,ex:'biology = 生物学'},
- {q:'tele(远) + phon(声音) = ?',opts:['电话','电视','麦克风'],ans:0,ex:'telephone = 电话'},
- {q:'auto(自己) + graph(写) = ?',opts:['自动','亲笔签名','图形'],ans:1,ex:'autograph = 亲笔签名'},
- {q:'co(共同) + exist(存在) = ?',opts:['存在','共存','共存亡'],ans:1,ex:'coexist = 共存'},
- {q:'fore(前) + see(看) = ?',opts:['看见','预见','眺望'],ans:1,ex:'foresee = 预见'},
- {q:'sub(下) + conscious = ?',opts:['有意识的','潜意识的','意识'],ans:1,ex:'subconscious = 潜意识的'},
- {q:'mis(错) + concept(概念) = ?',opts:['概念','误解','构想'],ans:1,ex:'misconception = 误解'},
- {q:'un(不) + deni(否认) + able = ?',opts:['可否认的','不可否认的','否认'],ans:1,ex:'undeniable = 不可否认的'},
- {q:'ir(不) + replace(替代) + able = ?',opts:['可替代的','不可替代的','放置'],ans:1,ex:'irreplaceable = 不可替代的'},
- {q:'pre(前) + limin(门槛) + ary = ?',opts:['初步的','有限的','门槛'],ans:0,ex:'preliminary = 初步的'},
- {q:'comfort + able = ?',opts:['舒适的','安慰','使舒适'],ans:0,ex:'comfortable = 舒适的'},
- {q:'develop + ment = ?',ans:2,opts:['发展（动词）','开发者','发展（名词）'],ex:'development = 发展(n.)',},
- {q:'act + ive = ?',opts:['行动','活跃的','活动'],ans:1,ex:'active = 活跃的'},
- {q:'quick + ly = ?',opts:['快的','快速地','敏捷'],ans:1,ex:'quickly = 快速地'},
- {q:'friend + ship = ?',opts:['朋友','友谊','友好的'],ans:1,ex:'friendship = 友谊'}
-];
-
-/* 超纲推导 30 */
-var Q_ADV = ADVANCED.slice(0,38).map(function(a,i){
-  var mc = a.m.split('（')[0];
-  return {
-    q:'拆解「'+a.w+'」→ 猜含义',
-    sub:'<span class="split">'+a.split+'</span>',
-    opts:a.opts||[mc,'无法判断','以上都不对'],
-    ans:0,
-    ex:a.ex+'<div class="exm">含义：'+a.m+'<br>拆解：'+a.e+'</div>'
-  };
-});
-/* 给超纲词补 opts */
-Q_ADV.forEach(function(q,i){
-  var a=ADVANCED[i];
-  var mc=a.m.split('（')[0];
-  var neg=['不'+mc,'反义'+mc].filter(function(s){return s!==mc;});
-  q.opts=[
-    mc,
-    neg[0]||('非'+mc),
-    (neg[1]||'与'+mc+'无关')
-  ];
-  q.ans=0;
-});
-
-/* ============ 渲染 ============ */
-var panels=[
- {id:'roots',name:'📖 词根',icon:'📖',html:rootHtml()},
- {id:'prefix',name:'➕ 前缀',icon:'➕',html:listHtml(PREFIXES,'pre')},
- {id:'suffix',name:'🔚 后缀',icon:'🔚',html:listHtml(SUFFIXES,'suf')},
- {id:'cards',name:'🎴 词根卡',icon:'🎴',html:cardsHtml()},
- {id:'adv',name:'🚀 超纲词',icon:'🚀',html:advHtml()},
- {id:'quiz',name:'✏️ 练习',icon:'✏️',html:quizHtml()},
- {id:'wrong',name:'❌ 错词本',icon:'❌',html:'<div id="wl"></div>'}
-];
-function rootHtml(){
-  var h='<div class="sec-title"><span class="n">30</span>北京卷十年高频词根（2016–2026）</div>';
-  ROOTS.forEach(function(r,i){h+=itemHtml(r.r,r.m,r.ex,'','',i+1);});
-  return h;
-}
-function listHtml(arr,cls){
-  var h='<div class="sec-title"><span class="n">'+arr.length+'</span>'+ (cls==='pre'?'高频前缀（含同化变体）':'高频后缀（按词性分类）')+'</div>';
-  arr.forEach(function(x,i){
-    var key=cls==='pre'?x.p:x.s;
-    h+='<div class="item"><div class="row1"><span class="badge '+cls+'">'+key+'</span><span class="tag">'+x.m+'</span></div>'
-     + '<div class="ex"><b>例：</b>'+x.ex+'<div class="exm">'+x.e+'</div></div></div>';
-  });
-  return h;
-}
-function itemHtml(k,m,ex,extra,cls,n){
-  return '<div class="item"><div class="row1"><span class="badge '+cls+'">'+k+'</span><span class="tag">'+m+'</span>'
-    + (n?'<span class="tag" style="background:#fff2cc;color:#8a5a00">#'+n+'</span>':'')+'</div>'
-    + '<div class="ex">'+ex+extra+'</div></div>';
-}
-function cardsHtml(){
-  var h='<div class="sec-title"><span class="n">'+CARDS.length+'</span>翻转记忆卡 · 点卡片翻转</div>'
-    + '<div class="deckbar"><span>已学 <b id="lcount">0</b>/'+CARDS.length+'</span><span id="lpct">0%</span></div>'
-    + '<div class="progress"><i id="lpbar" style="width:0%"></i></div>'
-    + '<div class="shuf"><button class="btn ghost mini" onclick="shuffleCards()">🔀 打乱顺序</button></div>'
-    + '<div class="deck" id="deck"></div>';
-  return h;
-}
-function advHtml(){
-  var h='<div class="sec-title"><span class="n">'+ADVANCED.length+'</span>3500 大纲外 · 靠词根可推导（出处均为北京卷）</div>'
-    + '<div style="font-size:12px;color:var(--sub);margin:0 2px 12px;line-height:1.6">💡 这些词不在高考 3500 大纲内，但熟悉词根就能秒推含义，是北京卷阅读 C/D 篇拉分关键。</div>';
-  ADVANCED.forEach(function(a,i){h+=itemHtml(a.w,a.m,a.ex,'<div class="exm">拆解：<span class="split">'+a.split+'</span><br>'+a.e+'</div>','',i+1);});
-  return h;
-}
-function quizHtml(){
-  return '<div class="ptabs">'
-    + '<div class="ptab active" data-t="break" onclick="switchQ(this,\'break\')">🔧 拆解 62</div>'
-    + '<div class="ptab" data-t="match" onclick="switchQ(this,\'match\')">🧩 配对 30</div>'
-    + '<div class="ptab" data-t="adv" onclick="switchQ(this,\'adv\')">🚀 超纲 38</div>'
-    + '</div>'
-    + '<div class="pstat"><span>正确 <b id="qok">0</b></span><span>已完成 <b id="qdone">0</b></span><span>正确率 <b id="qrate">0%</b></span></div>'
-    + '<div id="qbox"></div>'
-    + '<div class="result" id="qresult"><div class="sc" id="qscore">0</div><div>本轮答对 <span id="qright">0</span> / <span id="qtotal">0</span></div><button class="btn" style="margin-top:14px" onclick="restartQ()">🔄 再来一组</button></div>';
-}
-
-/* tabs + nav */
-var tabsEl=document.getElementById('tabs'),panelsEl=document.getElementById('panels'),navEl=document.getElementById('nav');
-var tabHtml='',panelHtml='',navHtml='';
-panels.forEach(function(p,i){
-  tabHtml+='<div class="tab'+(i===0?' active':'')+'" onclick="showPanel(\''+p.id+'\')">'+p.icon+' '+p.name+'</div>';
-  panelHtml+='<div class="panel'+(i===0?' active':'')+'" id="panel-'+p.id+'">'+p.html+'</div>';
-  navHtml+='<div class="b'+(i===0?' active':'')+'" onclick="showPanel(\''+p.id+'\')"><span class="ic">'+p.icon+'</span>'+p.name.split(' ')[1]+'</div>';
-});
-tabsEl.innerHTML=tabHtml;panelsEl.innerHTML=panelHtml;navEl.innerHTML=navHtml;
-
-var curQtype='break';
-function showPanel(id){
-  panels.forEach(function(p){
-    var el=document.getElementById('panel-'+p.id);
-    el.classList.toggle('active',p.id===id);
-  });
-  var idx=panels.findIndex(function(p){return p.id===id;});
-  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
-  document.querySelectorAll('.bottom-nav .b').forEach(function(t,i){t.classList.toggle('active',i===idx);});
-  if(id==='cards')renderCards();
-  if(id==='wrong')renderWrong();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function toast(msg){var t=document.getElementById('toast');t.innerHTML=msg+'<button class="ok" onclick="this.parentNode.classList.remove(\'show\')">我知道了</button>';t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},3500);}
-
-/* 翻转卡 —— 事件委托（delegate），避免行内 onclick 在部分手机浏览器不触发 */
-var cardOrder=[];
-function renderCards(){
-  var deck=document.getElementById('deck');
-  if(!deck)return;
-  if(CARDS.length!==cardOrder.length)cardOrder=CARDS.map(function(c,i){return i;});
-  var html='';
-  CARDS.forEach(function(c,i){
-    html+='<div class="card" data-i="'+i+'"><div class="face front"><div class="k">'+c.k+'</div><div class="kl">'+c.kl+' · '+c.face+'</div><div class="arrow">点我翻转 ▾</div></div><div class="face back"><div class="k">'+c.k+'</div><div class="kl">'+c.kl+'</div><div class="exm">'+c.back+'</div><div class="arrow">点我翻回 ▴</div></div></div>';
-  });
-  deck.innerHTML=html;
-  updateLearned();
-}
-/* 事件委托：捕获所有 .card 点击，兼容 iOS / 安卓 / 微信 */
-document.addEventListener('click',function(ev){
-  var el=ev.target.closest&&ev.target.closest('.card');
-  if(!el)return;
-  var panel=document.getElementById('panel-cards');
-  if(!panel||!panel.classList.contains('active'))return;
-  flipCard(el);
-});
-function shuffleCards(){var d=document.getElementById('deck');if(!d)return;for(var i=d.children.length-1;i>0;i--){var j=Math.random()*(i+1)|0;d.appendChild(d.children[j]);}}
-
-function flipCard(el){
-  el.classList.toggle('flip');
-  var i=+el.getAttribute('data-i');
-  var key='c'+i;
-  if(el.classList.contains('flip')&&store.learned.indexOf(key)<0){
-    store.learned.push(key);save();updateLearned();
-  }
-}
-function updateLearned(){
-  var n=store.learned.length;
-  var el=document.getElementById('lcount');if(el)el.textContent=n;
-  var p=document.getElementById('lpbar');if(p)p.style.width=(n/CARDS.length*100)+'%';
-  var pc=document.getElementById('lpct');if(pc)pc.textContent=Math.round(n/CARDS.length*100)+'%';
-}
-
-/* 练习 */
-var qData={break:Q_BREAK,match:Q_MATCH,adv:Q_ADV};
-var qIdx={},qStat={};
-function switchQ(el,t){
-  curQtype=t;
-  document.querySelectorAll('.ptab').forEach(function(x){x.classList.toggle('active',x.dataset.t===t);});
-  startQ();
-}
-function startQ(){
-  var arr=qData[curQtype];
-  qIdx[curQtype]=0;qStat[curQtype]={ok:0,done:0};
-  document.getElementById('qresult').classList.remove('show');
-  renderQ();
-  updateQStat();
-}
-function renderQ(){
-  var arr=qData[curQtype];
-  var i=qIdx[curQtype];
-  var box=document.getElementById('qbox');
-  if(i>=arr.length){showResult();return;}
-  var q=arr[i];
-  var html='<div class="q"><div class="qt">第 '+(i+1)+' / '+arr.length+' 题</div>'
-    + '<div class="qw">'+q.w+'</div>'+(q.sub?'<div class="qsub">'+q.sub+'</div>':'')
-    + q.opts.map(function(o,j){return '<button class="opt" data-j="'+j+'" onclick="pickOpt(this,'+j+')">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('')
-    + '<div class="qres" id="qres"></div></div>';
-  box.innerHTML=html;
-}
-function pickOpt(btn,j){
-  var arr=qData[curQtype];
-  var i=qIdx[curQtype];
-  var q=arr[i];
-  var st=qStat[curQtype];
-  var correct=j===q.ans;
-  var opts=btn.parentNode.querySelectorAll('.opt');
-  opts.forEach(function(o){o.classList.add('dis');});
-  btn.classList.remove('dis');
-  btn.classList.add(correct?'ok':'no');
-  if(correct){st.ok++;}else{st.done++;markWrong(q);}
-  st.done=st.ok+(st.done>st.ok?1:0);
-  var res=document.getElementById('qres');
-  res.classList.add('show');
-  res.innerHTML=(correct?'✅ <b>正确！</b>':'❌ <b>正确：'+String.fromCharCode(65+q.ans)+'</b>')+'<br>'+q.ex;
-  updateQStat();
-  qIdx[curQtype]++;
-  setTimeout(function(){renderQ();},correct?900:1500);
-}
-function markWrong(q){
-  var key=(q.w||q.q)+'::'+(q.sub||'');
-  if(store.wrong.indexOf(key)<0){store.wrong.push(key);save();}
-}
-function updateQStat(){
-  var st=qStat[curQtype]||{ok:0,done:0};
-  document.getElementById('qok').textContent=st.ok;
-  document.getElementById('qdone').textContent=st.done;
-  document.getElementById('qrate').textContent=st.done?Math.round(st.ok/st.done*100)+'%':'0%';
-}
-function showResult(){
-  var st=qStat[curQtype];
-  document.getElementById('qbox').innerHTML='';
-  document.getElementById('qscore').textContent=st.ok;
-  document.getElementById('qright').textContent=st.ok;
-  document.getElementById('qtotal').textContent=qData[curQtype].length;
-  document.getElementById('qresult').classList.add('show');
-}
-function restartQ(){startQ();}
-
-/* 错词本 */
-function renderWrong(){
-  var el=document.getElementById('wl');
-  if(!el)return;
-  if(store.wrong.length===0){el.innerHTML='<div class="empty">🎉 还没有错题，继续加油！</div>';return;}
-  var html='<div class="sec-title"><span class="n">'+store.wrong.length+'</span>答错的题目 · 集中复习</div>'
-    + '<div style="text-align:right;margin-bottom:8px"><button class="btn ghost mini" onclick="clearWrong()">🗑 清空错词本</button></div>';
-  store.wrong.forEach(function(k){
-    var parts=k.split('::');
-    html+='<div class="item"><span class="badge">'+parts[0]+'</span>'+(parts[1]?'<div class="mean">'+parts[1]+'</div>':'')+'</div>';
-  });
-  el.innerHTML=html;
-}
-function clearWrong(){store.wrong=[];save();renderWrong();toast('已清空错词本');}
-
-/* 滚动收起抬头 */
-var lastY=0,topbar=document.getElementById('topbar');
-window.addEventListener('scroll',function(){
-  var y=window.scrollY||document.documentElement.scrollTop;
-  if(y>60&&y>lastY){topbar.classList.add('hide');}else{topbar.classList.remove('hide');}
-  lastY=y;
-},{passive:true});
-
-/* 初始化：默认进入「词根卡」面板，确保一打开就能翻转 */
-showPanel('cards');
-startQ();
-updateLearned();
+// 首屏显示卡片面板
+switchPanel('cards');
+renderWrong();
 </script>
 </body>
 </html>

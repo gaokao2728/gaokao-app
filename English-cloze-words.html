@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高考完形填空高频词专项</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6f8;color:#1a1a1a;line-height:1.6;max-width:860px;margin:0 auto;padding:0 12px 60px}
+header{padding:20px 4px 12px}
+header h1{font-size:20px;font-weight:700}
+header p{font-size:13px;color:#666;margin-top:4px}
+nav{position:sticky;top:0;background:#f5f6f8;z-index:10;display:flex;gap:8px;padding:10px 0;border-bottom:1px solid #e3e5e8}
+nav button{flex:1;padding:9px 4px;border:1px solid #e3e5e8;background:#fff;border-radius:10px;font-size:14px;cursor:pointer;color:#333}
+nav button.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a;font-weight:600}
+section{display:none}
+section.on{display:block}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 12px}
+.chip{padding:6px 14px;border-radius:999px;border:1px solid #ddd;background:#fff;font-size:13px;cursor:pointer}
+.chip.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+input[type=search]{flex:1;min-width:160px;padding:8px 12px;border:1px solid #ddd;border-radius:10px;font-size:14px}
+.card{background:#fff;border:1px solid #e7e8ea;border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.card h3{font-size:15px;margin-bottom:6px}
+.card h3 .tag{display:inline-block;font-size:11px;font-weight:400;color:#2f6fed;background:#eaf1fe;border-radius:6px;padding:1px 7px;margin-right:8px;vertical-align:1px}
+.card p{font-size:14px;color:#444}
+.card .ex{font-size:13px;color:#888;margin-top:6px;border-top:1px dashed #eee;padding-top:6px}
+.panel{background:#fff;border:1px solid #e7e8ea;border-radius:12px;padding:16px;margin:14px 0}
+.panel h2{font-size:16px;margin-bottom:4px}
+.panel .tip{font-size:12px;color:#999;margin-bottom:10px}
+.bank{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+.bank span{font-size:13px;background:#f2f3f5;border-radius:6px;padding:2px 9px;color:#333}
+.q{padding:10px 0;border-top:1px solid #f0f0f0;font-size:14px}
+.q .no{color:#999;font-size:12px;margin-right:6px}
+.q select{font-size:14px;padding:5px 8px;border:1px solid #ccc;border-radius:8px;background:#fff;max-width:100%;margin:0 3px}
+.q.ok select{border-color:#2ba471;color:#2ba471;font-weight:600}
+.q.bad select{border-color:#d5483f;color:#d5483f}
+.ans{display:none;font-size:13px;color:#666;background:#fafafa;border-radius:8px;padding:8px 10px;margin-top:6px}
+.ans b{color:#1a1a1a}
+.btn{display:inline-block;padding:9px 22px;background:#1a1a1a;color:#fff;border:none;border-radius:10px;font-size:14px;cursor:pointer;margin-top:10px}
+.btn.ghost{background:#fff;color:#333;border:1px solid #ccc}
+.score{font-size:14px;font-weight:600;margin-top:10px}
+.score.good{color:#2ba471}.score.mid{color:#d97706}.score.poor{color:#d5483f}
+.passage{font-size:15px;line-height:2;margin-bottom:12px}
+table.opt{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px}
+table.opt td{border:1px solid #eee;padding:6px 8px;text-align:center;cursor:pointer}
+table.opt td.sel{background:#1a1a1a;color:#fff}
+table.opt td.right{background:#e6f6ee;color:#2ba471;font-weight:600}
+table.opt td.wrong{background:#fdeceb;color:#d5483f}
+.expline{font-size:13px;color:#555;padding:8px 0;border-top:1px dashed #eee}
+.expline b{color:#1a1a1a}
+.wrong-card .qtext{font-size:14px;margin-bottom:6px}
+.empty{color:#999;font-size:14px;text-align:center;padding:40px 0}
+.stat{font-size:13px;color:#666;margin:8px 0}
+footer{font-size:12px;color:#aaa;text-align:center;margin-top:30px}
+mark{background:#fff3c4;padding:0 2px;border-radius:3px}
+</style>
+</head>
+<body>
+<header>
+<h1>高考完形填空高频词专项</h1>
+<p>近10年北京卷+全国卷 · 54组易混词辨析 · 选词填空+语境判断 · 自动收错题</p>
+</header>
+<nav>
+<button class="on" data-tab="study">学习卡</button>
+<button data-tab="fill">选词填空</button>
+<button data-tab="cloze">完形实战</button>
+<button data-tab="wrong">错题本<span id="wrongCount"></span></button>
+</nav>
+
+<section id="study" class="on">
+<div class="toolbar">
+<button class="chip on" data-cat="all">全部</button>
+<button class="chip" data-cat="v">动词</button>
+<button class="chip" data-cat="n">名词</button>
+<button class="chip" data-cat="a">形容词</button>
+<input type="search" id="search" placeholder="搜索单词，如 manage">
+</div>
+<div class="stat" id="groupStat"></div>
+<div id="groups"></div>
+</section>
+
+<section id="fill"><div id="fillWrap"></div></section>
+<section id="cloze"><div id="clozeWrap"></div></section>
+<section id="wrong"><div id="wrongWrap"></div></section>
+
+<footer>完形解题三步：定词性 → 看搭配 → 验逻辑（转折/因果/情感色彩）</footer>
+
+<script>
+/* ============ 数据：54组高频词辨析 ============ */
+var GROUPS=[
+{c:"v",w:"attempt / try / manage",n:"attempt 只强调「试过」，不保证成功；manage = 设法做成 = succeed in doing。完形里前文困难重重→manage；后文失败→attempt。",e:"She managed to finish the paper before the bell. / He attempted to escape but was caught."},
+{c:"v",w:"demand / require / request / urge",n:"demand 强硬要求；require 客观需要（require doing = require to be done）；request 礼貌请求；urge 敦促（urge sb to do）。",e:"The situation requires that immediate action be taken."},
+{c:"v",w:"ignore / neglect / overlook",n:"ignore 故意不理睬；neglect 疏忽、疏于照顾；overlook 无意漏看，也可表宽容不计较。",e:"He ignored the sign. / She overlooked a typo in the title."},
+{c:"v",w:"refuse / reject / decline / deny",n:"refuse 拒绝请求邀请（最通用）；reject 驳回、拒收（语气最强）；decline 婉言谢绝；deny 否认事实（deny doing）。",e:"She declined the invitation politely."},
+{c:"v",w:"admit / acknowledge / confess",n:"admit 承认错误事实（最常用，doing）；acknowledge 公开承认、确认收到；confess 坦白罪行（语气最重）。",e:"He admitted taking the money."},
+{c:"v",w:"involve / include / contain",n:"involve 涉及、使卷入（involve doing / be involved in）；include 包括（部分）；contain 含有（成分）。",e:"The job involves dealing with customers."},
+{c:"v",w:"remind / remember / recall / memorize",n:"remind 使想起（主语是物，remind sb of）；remember 记得（to do/doing）；recall 回想起；memorize 刻意背下。",e:"The song reminds me of my childhood."},
+{c:"v",w:"resist / insist / persist / consist / assist",n:"resist 抵抗（can't resist doing 忍不住）；insist 坚持（on doing）；persist 坚持不懈（in doing）；consist of 由…组成；assist 协助。",e:"The committee consists of twelve members."},
+{c:"v",w:"persuade / convince / advise / suggest",n:"persuade 说服成功（sb to do）；convince 使信服（sb of/that）——让他信≠让他做；advise/suggest 建议，✗suggest sb to do。",e:"I convinced him of its value but failed to persuade him to join."},
+{c:"v",w:"raise / rise / arise / arouse",n:"raise 及物：举起、筹集、养育；rise 不及物上升；arise （问题）出现（arise from）；arouse 引起情感兴趣。",e:"Problems arising from the new policy; arouse interest."},
+{c:"v",w:"damage / destroy / ruin / spoil",n:"damage 部分损坏（可修复）；destroy 彻底摧毁；ruin 毁掉健康/声誉/兴致；spoil 宠坏、搞糟兴致。",e:"The rain ruined our picnic."},
+{c:"v",w:"spend / cost / take / pay",n:"spend 人作主语（on/doing）；cost 物作主语；take 用 it takes sb time to do；pay 人作主语（for）。",e:"The repair cost him 200 yuan."},
+{c:"v",w:"lie / lay",n:"lie-lay-lain 躺/位于；lie-lied-lied 说谎；lay-laid-laid 放置、下蛋。",e:"The city lies in a valley. / She laid the baby on the bed."},
+{c:"v",w:"escape / avoid / flee / withdraw",n:"escape 逃脱（escape doing）；avoid 避开（avoid doing）；flee 仓皇逃离（fled）；withdraw 撤回、退出、取钱。",e:"He narrowly escaped being fined."},
+{c:"v",w:"claim / announce / declare / state",n:"claim 声称（未必属实）、索要；announce 宣布消息；declare 郑重宣布、申报；state 陈述观点事实。",e:"He claimed to have seen a UFO."},
+{c:"v",w:"forbid / prevent / prohibit / ban",n:"forbid sb to do / forbid doing；prevent sb (from) doing；prohibit（法规）sb from doing；ban（官方）sb from doing。",e:"The law prohibits hiring children under 16."},
+{c:"v",w:"interrupt / disturb / bother / annoy",n:"interrupt 打断说话；disturb 扰乱安宁秩序；bother 麻烦、费心（bother to do）；annoy 使恼火。",e:"Sorry to bother you. / Mosquitoes annoyed him all night."},
+{c:"v",w:"discover / invent / create / produce",n:"discover 发现已存在；invent 发明新事物；create 创造作品/机会；produce 生产、出示证据。",e:"Scientists discovered a new species in the cave."},
+{c:"n",w:"effect / influence / impact / consequence / result / outcome",n:"effect 影响（have an effect on）；influence 潜移默化；impact 巨大冲击；consequence 不良后果；result 通用结果；outcome 最终结局。",e:"The new tax had a significant impact on small businesses."},
+{c:"n",w:"chance / opportunity / occasion",n:"chance 碰巧的机会、可能性（by chance）；opportunity 难得的良机（to do）；occasion 场合、时机。",e:"This is a golden opportunity you can't afford to miss."},
+{c:"n",w:"scene / scenery / sight / view / landscape",n:"scene 场景、现场；scenery 风景总称（不可数）；sight 景象/名胜（sights）；view 从某处看到的景色、观点；landscape 乡村风景。",e:"The view from the hill took my breath away."},
+{c:"n",w:"award / reward / prize",n:"award 官方颁发的奖；reward 因付出而得的酬谢（reward sb for）；prize 竞赛赢得的奖品。",e:"She received an award for her volunteer service."},
+{c:"n",w:"cause / reason / excuse",n:"cause（不良事件的）起因（of）；reason 解释行为的理由（for/why）；excuse 借口。",e:"Carelessness is the main cause of the accident."},
+{c:"n",w:"character / personality / feature / characteristic",n:"character 品格、角色；personality 个性；feature 特色、面部特征；characteristic 区别于他人的特点。",e:"She has a strong character and never gives up."},
+{c:"n",w:"custom / habit / tradition / practice",n:"custom 社会民族风俗；habit 个人习惯；tradition 世代传统；practice 惯例、做法。",e:"It's a local custom to greet guests with tea."},
+{c:"n",w:"damage / injury / wound / hurt / harm",n:"damage 物的损坏（不可数）；injury 意外受伤；wound 刀枪战伤；harm 抽象危害（do harm to）。",e:"The storm caused serious damage to crops."},
+{c:"n",w:"energy / force / power / strength",n:"energy 精力能量；force 武力、效力（in force 生效）；power 权力动力（in power 执政）；strength 力气、优势。",e:"The new law will come into force next month."},
+{c:"n",w:"fault / mistake / error / shortcoming",n:"fault 应负责的过错（It's my fault / find fault with）；mistake 通用错误（mistake A for B）；error 技术差错；shortcoming 缺点。",e:"The delay was nobody's fault."},
+{c:"n",w:"journey / trip / travel / tour / voyage",n:"journey 长途旅程；trip 短途往返；travel 总称；tour 观光巡回；voyage 海上/太空航行。",e:"The journey to Lhasa takes 40 hours by train."},
+{c:"n",w:"means / method / way / approach / measure",n:"means 手段（by no means）；method 系统方法；way 最通用；approach 途径（an approach to doing）；measure 措施（take measures to do）。",e:"We must take effective measures to reduce pollution."},
+{c:"n",w:"message / information / news / notice",n:"message 口信；information 信息资料（不可数）；news 新闻（不可数）；notice 通知公告。",e:"Could you give him a message?"},
+{c:"n",w:"problem / question / issue / matter",n:"problem 需解决的难题（solve）；question 需回答的问题（answer）；issue 社会争议议题；matter 事情（a matter of time）。",e:"Global warming is an issue that concerns us all."},
+{c:"n",w:"purpose / aim / goal / target / intention",n:"purpose 目的（on purpose 故意）；aim 目标（aim to do）；goal 长期奋斗目标；target 量化指标；intention 打算（have no intention of doing）。",e:"He missed the target by two inches."},
+{c:"n",w:"sign / signal / symbol / mark",n:"sign 迹象、招牌；signal 声光信号；symbol 象征；mark 痕迹、记号、分数。",e:"The dove is a symbol of peace."},
+{c:"n",w:"state / condition / situation / circumstance / occasion",n:"state 状态；condition 条件、状况；situation 形势处境；circumstances 境况（under no circumstances 倒装）；occasion 场合。",e:"The house is in a terrible state."},
+{c:"n",w:"value / worth / price / cost / expense",n:"value 价值、价值观；worth 值得（be worth doing，主动表被动）；price 价格代价；cost 成本代价；expense 费用（at the expense of）。",e:"The book is worth reading twice."},
+{c:"a",w:"actual / real / true / genuine",n:"actual 实际发生的（非传闻计划）；real 客观存在（不是假的）；true 符合事实；genuine 货真价实、真诚。",e:"The actual cost was twice the estimate."},
+{c:"a",w:"alive / living / live / lively",n:"alive 活着（后置定语）；living 活着（前置）/生计；live 活的、现场直播的；lively 活泼生动（与「活」无关）。",e:"He is the greatest writer alive."},
+{c:"a",w:"alone / lonely / single / sole",n:"alone 客观上独自；lonely 主观上孤独/偏僻；single 单一、单身；sole 唯一的（正式）。经典：独住≠孤独。",e:"She lives alone but never feels lonely."},
+{c:"a",w:"available / accessible / convenient",n:"available 可获得、有空；accessible 可进入、易懂；convenient 方便（多物作主语）。",e:"Tickets are available online. Are you available?"},
+{c:"a",w:"beneficial / profitable / favourable",n:"beneficial 有益健康（be beneficial to）；profitable 有利可图；favourable 条件有利、赞许。",e:"Regular exercise is beneficial to health."},
+{c:"a",w:"considerable / considerate",n:"considerable 相当大的、可观的；considerate 体贴周到的。只差两个字母，完形最爱考。",e:"The project cost a considerable sum."},
+{c:"a",w:"continuous / continual / constant / consistent",n:"continuous 连续不断（无间断）；continual 反复发生（令人烦）；constant 恒定、经常；consistent 一致（with）。",e:"The brain needs a continuous supply of oxygen."},
+{c:"a",w:"economic / economical",n:"economic 经济的、经济学的（宏观）；economical 节约的、实惠的。",e:"This car is very economical（省油）."},
+{c:"a",w:"effective / efficient",n:"effective 有效（能达成目的）；efficient 高效（省时省力）。",e:"The medicine is effective; the system is efficient."},
+{c:"a",w:"special / particular / peculiar / specific",n:"special 特殊专门；particular 特定、挑剔（about）；peculiar 古怪、特有（to）；specific 具体明确。",e:"This style is peculiar to the region."},
+{c:"a",w:"famous / well-known / distinguished / outstanding",n:"famous 著名（for 原因/as 身份）；well-known 众所周知（较弱）；distinguished 卓越（学术正式）；outstanding 杰出。",e:"She is famous as a writer and famous for her novels."},
+{c:"a",w:"historic / historical",n:"historic 有历史意义的；historical 有关历史的（records/novel）。",e:"July 20, 1969 was a historic day."},
+{c:"a",w:"last / latest / late / lately",n:"last 最后/上一个；latest 最新的；late 迟的、已故的；lately 最近（副词）。",e:"Have you heard the latest news?"},
+{c:"a",w:"likely / possible / probable",n:"likely 可人或物作主语（be likely to do）；possible 较弱（It is possible for/to）；probable 很可能（只 it 作主语）。✗He is probable to win.",e:"He is likely to win the election."},
+{c:"a",w:"pleasant / pleased / pleasing",n:"pleasant 物令人愉快；pleased 人感到高兴（with）；pleasing 令人愉悦。",e:"We had a pleasant journey. I am pleased with the result."},
+{c:"a",w:"primary / primitive / preliminary / previous / prior",n:"primary 首要、初级；primitive 原始简陋；preliminary 预备初步；previous 先前的；prior 在先（prior to=before）。",e:"Prior to 1980, few families owned cars."},
+{c:"a",w:"respectable / respectful / respective",n:"respectable 体面、值得尊敬；respectful 恭敬的；respective 各自的。",e:"They went back to their respective homes."},
+{c:"a",w:"significant / vital / essential / necessary / important",n:"significant 重大；vital 至关重要（to）；essential 必不可少（缺一不行）；necessary 客观必要；important 通用。",e:"Water is vital to all living things."}
+];
+
+/* ============ 数据：6套选词填空 ============ */
+var FILLS=[
+{t:"Exercise 1 · 动词篇（一）",tip:"根据句意与搭配，从词库中选词",
+bank:["managed","attempted","demanded","required","ignored","overlooked","refused","declined","denied","resisted","insisted","involved","reminded","spoil","aroused","declared"],
+items:[
+{s:"The doctor ___ that the patient (should) be transferred to a larger hospital at once.",a:"demanded",n:"demand 强硬要求，接 that 从句用 (should) do。"},
+{s:"The little boy ___ to reach the cookie jar on the top shelf, but it was too high.",a:"attempted",n:"后文 but 提示失败→attempt 只表「试过」。"},
+{s:"Thanks to her calm voice, she ___ to talk the angry customer into accepting a replacement.",a:"managed",n:"克服困难做成了→manage to do。"},
+{s:"The hotel rules ___ that guests check out before noon.",a:"required",n:"规章制度客观需要→require。"},
+{s:"Don't ___ the importance of sleep; a tired brain remembers little.",a:"ignore",n:"祈使句用动词原形；故意不理睬→ignore。"},
+{s:"The secretary was in such a hurry that she ___ a typo in the first paragraph.",a:"overlooked",n:"in a hurry 提示无意漏看→overlook，用过去式。"},
+{s:"___ by her friends' warning, she still went swimming alone in the lake.",a:"Ignored",n:"「不理会警告」且位于句首用过去分词 Ignored。"},
+{s:"He first ___ taking the money, but the camera footage proved him wrong.",a:"denied",n:"deny doing 否认做过某事。"},
+{s:"The film was so moving that the audience couldn't ___ crying.",a:"resist",n:"can't resist doing 忍不住做某事。"},
+{s:"She ___ that she had locked the door, though nobody had seen her do it.",a:"insisted",n:"insist that… 坚持认为。"}
+]},
+{t:"Exercise 2 · 动词篇（二）",tip:"形近词与易混动词",
+bank:["persuaded","convinced","advised","suggested","forbade","prevented","prohibited","banned","raised","rose","arose","interrupted","disturbed","bothered","annoyed","claimed","announced","destroyed","ruined","avoided","escaped","laid"],
+items:[
+{s:"I finally ___ him of the plan's value, but couldn't persuade him to invest a penny.",a:"convinced",n:"convince sb of sth 使信服；让他信≠让他做（persuade）。"},
+{s:"The guide ___ taking a raincoat, saying the weather changes fast in the mountains.",a:"advised",n:"advise doing 建议做某事。"},
+{s:"Drivers are strictly ___ from using phones while driving, yet many still do.",a:"banned",n:"ban sb from doing（官方）禁止；prohibited 也通，此处语态为被动。"},
+{s:"A quarrel ___ between the two brothers over the old house.",a:"arose",n:"问题矛盾「出现」用 arise（不及物），过去式 arose。"},
+{s:"He ___ a difficult question at the end of the lecture.",a:"raised",n:"raise 及物：提出问题；rise 不及物不能接宾语。"},
+{s:"Sorry to ___ you, but your car is blocking the exit.",a:"bother",n:"bother sb 麻烦某人，Sorry to 后接原形。"},
+{s:"The mosquito net was too thin to ___ the mosquitoes from getting in.",a:"prevent",n:"prevent sb/sth (from) doing 阻止。"},
+{s:"The heavy fog ___ our view of the harbour completely.",a:"ruined",n:"ruin 彻底破坏（景致、兴致）；destroy 偏实体摧毁。"},
+{s:"The old sailor ___ to have sailed round the world three times.",a:"claimed",n:"claim to have done 声称做过（未必属实）。"},
+{s:"Exhausted after the match, the goalkeeper just ___ on the grass for ten minutes.",a:"lay",n:"lie「躺」的过去式 lay（lie-lay-lain）。"}
+]},
+{t:"Exercise 3 · 名词篇（一）",tip:"名词词义+固定搭配",
+bank:["consequence","result","opportunity","occasion","scene","view","award","reward","cause","excuse","habit","custom","injury","wound","force","strength","means","method","mark","sign","issue","matter","intention","purpose","expense","value"],
+items:[
+{s:"He missed the bus and, as a ___, was late for the interview.",a:"result",n:"as a result (of) 结果，最通用。"},
+{s:"Losing his passport abroad had serious ___.",a:"consequences",n:"不良后果用 consequence（复数）。"},
+{s:"Winning the scholarship gave her the ___ to study abroad.",a:"opportunity",n:"难得的良机→opportunity（to do）。"},
+{s:"On this ___, everyone wore traditional clothes to the ceremony.",a:"occasion",n:"on this occasion 在这个场合。"},
+{s:"The police arrived within minutes and sealed off the ___ of the accident.",a:"scene",n:"事故现场→scene。"},
+{s:"The hotel room had a wonderful ___ of the sea.",a:"view",n:"从某处看到的景色→view。"},
+{s:"She received an ___ for fifty years of volunteer service.",a:"award",n:"官方颁发的荣誉→award。"},
+{s:"A $500 ___ was offered for the return of the lost dog.",a:"reward",n:"悬赏酬谢→reward。"},
+{s:"What was the ___ of the fire? An overloaded power strip, investigators said.",a:"cause",n:"the cause of… ……的起因。"},
+{s:"He was fined for speeding, and his only ___ was that he was late for work.",a:"excuse",n:"借口→excuse。"}
+]},
+{t:"Exercise 4 · 名词篇（二）",tip:"抽象名词辨析",
+bank:["custom","habit","tradition","condition","situation","state","circumstances","message","information","notice","issue","problem","goal","target","intention","purpose","approach","means","measure","worth","cost","price","expense"],
+items:[
+{s:"It's a local ___ to eat dumplings on the first day of winter.",a:"custom",n:"社会风俗→custom。"},
+{s:"Reading before bed is a ___ he formed in childhood.",a:"habit",n:"个人习惯→habit。"},
+{s:"The violin was declared to be a genuine Stradivarius and of great ___.",a:"worth",n:"of great worth = of great value，worth 作名词。"},
+{s:"The soldiers fought bravely in impossible ___.",a:"circumstances",n:"境况环境用 circumstances（常用复数）。"},
+{s:"The building is in a dangerous ___ and may collapse.",a:"state",n:"be in a…state 处于……状态。"},
+{s:"There is a ___ on the door: Closed for renovation.",a:"notice",n:"门上贴的是「公告」→notice。"},
+{s:"Forgetting a friend's birthday is one thing; forgetting your own child's is quite another ___.",a:"matter",n:"another matter 另一回事。"},
+{s:"Reducing carbon emissions remains a global ___.",a:"issue",n:"全球性争议议题→issue。"},
+{s:"The company set a sales ___ of one million units for next year.",a:"target",n:"量化指标→target；goal 偏长期目标。"},
+{s:"As a safety ___, all doors are locked at midnight.",a:"measure",n:"take/adopt a safety measure 安全措施。"}
+]},
+{t:"Exercise 5 · 形容词篇（一）",tip:"易混形容词",
+bank:["actual","real","true","alive","living","lonely","available","accessible","beneficial","profitable","considerable","considerate","continuous","economic","economical","efficient","effective","historic","historical","latest","likely","probable","particular","peculiar","specific","previous","prior","respectful","respective","vital","essential"],
+items:[
+{s:"The ___ reason for his success was ten years of hard work, not luck.",a:"true",n:"true reason 真正的理由（符合事实）。"},
+{s:"Who is the greatest poet ___ today?",a:"alive",n:"alive 作后置定语：在世的。"},
+{s:"Though she lives with her children, the old lady often feels ___.",a:"lonely",n:"主观感到孤独→lonely。"},
+{s:"Free Wi-Fi is ___ throughout the museum.",a:"available",n:"可获得、可使用→available。"},
+{s:"The stadium is fully ___ to wheelchair users.",a:"accessible",n:"可进入的→accessible to。"},
+{s:"Cycling to work is both ___ and good for your health.",a:"beneficial",n:"be beneficial to 有益于。"},
+{s:"He showed ___ concern for my feelings, always calling before visiting.",a:"considerate",n:"体贴的关心→considerate（≠considerable 可观的）。"},
+{s:"The project was completed at ___ cost—nearly twice the budget.",a:"considerable",n:"at considerable cost 以可观的花费。"},
+{s:"The machine needs ___ oiling, or it will wear out.",a:"continuous",n:"连续不断的保养→continuous。"},
+{s:"This car is very ___, doing 60 miles per gallon.",a:"economical",n:"economical 省油的、经济的（≠economic 经济学的）。"}
+]},
+{t:"Exercise 6 · 形容词/副词篇（二）",tip:"形近词+主语限制",
+bank:["effectively","efficiently","likely","possibly","probably","pleasant","pleased","particular","peculiar","specific","historic","historical","prior","previous","respectful","respective","significant","vital","essential"],
+items:[
+{s:"The new drug works ___ against the virus, reducing symptoms within hours.",a:"effectively",n:"work effectively 有效起作用。"},
+{s:"The factory now runs far more ___ after the new machines arrived.",a:"efficiently",n:"运行更高效→efficiently（省时省力）。"},
+{s:"The delayed flight is ___ to arrive before midnight.",a:"likely",n:"be likely to do 可接「物」作主语；probable 只用于 It is probable that…"},
+{s:"We are ___ to announce the winner of this year's competition.",a:"pleased",n:"人作主语「感到高兴」→pleased。"},
+{s:"What a ___ surprise! Thank you all so much.",a:"pleasant",n:"物「令人愉快」→pleasant。"},
+{s:"She is very ___ about what she eats—no sugar, no oil, nothing fried.",a:"particular",n:"be particular about 对……挑剔。"},
+{s:"The custom is ___ to this island and found nowhere else.",a:"peculiar",n:"be peculiar to 是……特有的。"},
+{s:"Please give ___ reasons for your absence—'not feeling well' is not enough.",a:"specific",n:"具体的、明确的理由→specific。"},
+{s:"The two leaders signed the ___ agreement in the same hall where the war ended.",a:"historic",n:"有历史意义的→historic（≠historical 有关历史的）。"},
+{s:"___ to the match, both teams had won five games in a row.",a:"Prior",n:"prior to = before，句首大写。"}
+]}
+];
+
+/* ============ 数据：2篇完形实战 ============ */
+var CLOZES=[
+{t:"Cloze 1 · 一个「错误」如何变成机会（记叙文）",tip:"每空4个选项均为本专项辨析过的易混词",
+text:"When I was in Grade 10, I signed up to be a volunteer at the city library. On my first day, I was asked to arrange the new books. Eager to prove myself, I finished quickly and left an hour early, feeling {{1}}. A week later, the librarian called me in. A whole shelf of books had been placed in the wrong section. 'Didn't you read the labels?' she asked. I wanted to {{2}} that I had, but my face turned red. It was my {{3}}, nobody else's. I expected her to fire me. Instead, she handed me a new list. 'Every single book must be {{4}} checked. I know you can do it properly.' Her trust had an unexpected {{5}} on me: I stopped rushing. Three days later, the job was done. The librarian smiled and said, 'Mistakes are the best teachers.' That summer, I was given more {{6}}—helping children with their reading. I learned that a mistake, once {{7}}, can open doors. The experience was so {{8}} that I still volunteer there every holiday. I have no {{9}} of quitting. The library has become a {{10}} part of my life.",
+blanks:[
+{o:["alive","lonely","proud","single"],a:"proud",e:"急于证明自己+快速完成→自豪；lonely/single 色彩不合。"},
+{o:["admit","declare","announce","claim"],a:"admit",e:"后文羞愧→想「承认」；claim 声称（未必属实）色彩不对。"},
+{o:["mistake","error","fault","shortcoming"],a:"fault",e:"It's my fault 固定句型；fault 强调「应负责」。"},
+{o:["actually","continuously","previously","careful"],a:"continuously",e:"逐本连续核对；只有 continuously 语法+语义双通。"},
+{o:["effect","affect","impact","award"],a:"effect",e:"have an effect on 固定搭配；affect 是动词。"},
+{o:["chances","opportunities","occasions","scenes"],a:"opportunities",e:"被给予「难得的」机会；chance 偏碰巧。"},
+{o:["ignored","overlooked","admitted","refused"],a:"admitted",e:"错误一旦被承认→与前文呼应；ignore 故意不理破坏逻辑。"},
+{o:["beneficial","profitable","favourable","available"],a:"beneficial",e:"经历「有益」；profitable 指赚钱。"},
+{o:["intention","purpose","goal","aim"],a:"intention",e:"have no intention of doing 固定搭配。"},
+{o:["vital","alive","living","lively"],a:"vital",e:"必不可少的一部分；alive 不能作前置定语。"}
+]},
+{t:"Cloze 2 · 数字时代的深度阅读（议论文）",tip:"关注上下文逻辑与搭配",
+text:"In an age of short videos, deep reading is becoming a rare skill. Some argue that reading long articles is a {{1}} of time, since information can be gained faster from summaries. This view, {{2}}, ignores how the brain actually learns. Reading is not just receiving information; it is a {{3}} between the reader and the text. When we struggle with a difficult paragraph, the effort itself builds understanding. Skipping this process is like {{4}} exercise and expecting to grow stronger. Schools must take {{5}} to protect deep reading. Simply banning phones is not enough; students need to see the {{6}} of slow reading. A student who finishes a long novel gains not only knowledge but also patience and empathy—qualities no summary can {{7}}. Of course, technology itself is not the {{8}} of the problem; rather, it is how we use it. E-books, when used {{9}}, can support deep reading with dictionaries and notes. The real question is whether we can {{10}} the will to focus in a world designed to distract us.",
+blanks:[
+{o:["waste","cost","price","expense"],a:"waste",e:"a waste of time 固定搭配。"},
+{o:["however","therefore","otherwise","moreover"],a:"however",e:"前后转折：有人这么认为，然而……"},
+{o:["scene","sign","journey","mark"],a:"journey",e:"比喻：阅读是读者与文本之间的「旅程」。"},
+{o:["avoiding","escaping","fleeing","preventing"],a:"avoiding",e:"avoid doing；逃避锻炼的比喻。"},
+{o:["measures","means","methods","approaches"],a:"measures",e:"take measures to do 固定搭配。"},
+{o:["value","worth","price","cost"],a:"worth",e:"see the worth of… 看到……的价值。"},
+{o:["produce","create","contain","hold"],a:"create",e:"概括无法「创造」出耐心与共情。"},
+{o:["cause","reason","excuse","result"],a:"cause",e:"the cause of the problem 问题根源。"},
+{o:["economically","effectively","efficiently","continuously"],a:"effectively",e:"被「有效」使用；efficiently 偏省时。"},
+{o:["keep","resist","exist","quit"],a:"keep",e:"keep the will to focus 保持专注的意志。"}
+]}
+];
+
+/* ============ 逻辑 ============ */
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+var wrongs=JSON.parse(localStorage.getItem("cloze_wrong")||"[]");
+function saveWrongs(){localStorage.setItem("cloze_wrong",JSON.stringify(wrongs));updateWrongBadge();renderWrong();}
+function addWrong(q,yours,right,note){
+if(wrongs.some(function(w){return w.q===q}))return;
+wrongs.push({q:q,yours:yours,right:right,note:note});saveWrongs();
+}
+function removeWrong(i){wrongs.splice(i,1);saveWrongs();}
+function updateWrongBadge(){document.getElementById("wrongCount").textContent=wrongs.length?"("+wrongs.length+")":"";}
+
+/* 导航 */
+var tabs=document.querySelectorAll("nav button");
+tabs.forEach(function(b){
+b.onclick=function(){
+tabs.forEach(function(x){x.classList.remove("on")});
+b.classList.add("on");
+document.querySelectorAll("section").forEach(function(s){s.classList.remove("on")});
+document.getElementById(b.dataset.tab).classList.add("on");
+if(b.dataset.tab==="wrong")renderWrong();
+};
+});
+
+/* 学习卡 */
+var cat="all",kw="";
+function renderGroups(){
+var list=GROUPS.filter(function(g){
+var okCat=(cat==="all"||g.c===cat);
+var okKw=!kw||(g.w+g.n+g.e).toLowerCase().indexOf(kw.toLowerCase())>=0;
+return okCat&&okKw;
+});
+var tagName={v:"动词",n:"名词",a:"形容词"};
+var html=list.map(function(g){
+return '<div class="card"><h3><span class="tag">'+tagName[g.c]+'</span>'+esc(g.w)+'</h3><p>'+esc(g.n)+'</p><div class="ex">'+esc(g.e)+'</div></div>';
+}).join("");
+document.getElementById("groups").innerHTML=html||'<div class="empty">没有匹配的词条</div>';
+document.getElementById("groupStat").textContent="共 "+list.length+" 组 · 全部 "+GROUPS.length+" 组";
+}
+document.querySelectorAll("#study .chip").forEach(function(c){
+c.onclick=function(){
+document.querySelectorAll("#study .chip").forEach(function(x){x.classList.remove("on")});
+c.classList.add("on");cat=c.dataset.cat;renderGroups();
+};
+});
+document.getElementById("search").oninput=function(){kw=this.value;renderGroups();};
+renderGroups();
+
+/* 选词填空 */
+function renderFills(){
+document.getElementById("fillWrap").innerHTML=FILLS.map(function(ex,ei){
+var bankHtml=ex.bank.map(function(w){return "<span>"+esc(w)+"</span>"}).join("");
+var items=ex.items.map(function(it,ii){
+var id="f"+ei+"_"+ii;
+var opts='<option value="">—选词—</option>'+ex.bank.map(function(w){return '<option value="'+esc(w)+'">'+esc(w)+'</option>'}).join("");
+return '<div class="q" id="q_'+id+'"><span class="no">'+(ii+1)+'.</span>'+esc(it.s).replace("___",'<select id="'+id+'">'+opts+'</select>')+'<div class="ans" id="a_'+id+'"></div></div>';
+}).join("");
+return '<div class="panel"><h2>'+esc(ex.t)+'</h2><div class="tip">'+esc(ex.tip)+' · 点击词库记忆，在下拉框中选词</div><div class="bank">'+bankHtml+'</div>'+items+'<button class="btn" onclick="checkFill('+ei+')">检查答案</button><div class="score" id="fs_'+ei+'"></div></div>';
+}).join("");
+}
+function checkFill(ei){
+var ex=FILLS[ei],ok=0,done=0;
+ex.items.forEach(function(it,ii){
+var id="f"+ei+"_"+ii;
+var sel=document.getElementById(id);
+var row=document.getElementById("q_"+id);
+var ans=document.getElementById("a_"+id);
+var v=sel.value;
+row.classList.remove("ok","bad");
+ans.style.display="none";
+if(!v)return;
+done++;
+if(v===it.a){ok++;row.classList.add("ok");}
+else{
+row.classList.add("bad");
+ans.innerHTML='<b>正确答案：'+esc(it.a)+'</b>　'+esc(it.n);
+ans.style.display="block";
+addWrong(it.s.replace("___","____"),v,it.a,it.n);
+}
+});
+var s=document.getElementById("fs_"+ei);
+s.textContent="得分 "+ok+"/"+ex.items.length+(done<ex.items.length?"（还有"+(ex.items.length-done)+"空未选）":"");
+s.className="score "+(ok>=9?"good":ok>=7?"mid":"poor");
+}
+renderFills();
+
+/* 完形实战 */
+function renderClozes(){
+document.getElementById("clozeWrap").innerHTML=CLOZES.map(function(cz,ci){
+var parts=cz.text.split(/\{\{(\d+)\}\}/);
+var html="";
+for(var i=0;i<parts.length;i++){
+if(i%2===1){
+var n=parseInt(parts[i])-1;
+var opts='<option value="">（'+(n+1)+'）</option>'+cz.blanks[n].o.map(function(w){return '<option value="'+esc(w)+'">'+esc(w)+'</option>'}).join("");
+html+='<select id="c'+ci+'_'+n+'">'+opts+'</select>';
+}else html+=esc(parts[i]);
+}
+var expl=cz.blanks.map(function(b,n){
+return '<div class="expline" id="ce'+ci+'_'+n+'" style="display:none"><b>'+(n+1)+'. </b>'+esc(b.e)+'</div>';
+}).join("");
+return '<div class="panel"><h2>'+esc(cz.t)+'</h2><div class="tip">'+esc(cz.tip)+'</div><div class="passage">'+html+'</div><button class="btn" onclick="checkCloze('+ci+')">检查答案</button><div class="score" id="cs_'+ci+'"></div><div id="ce_'+ci+'" style="margin-top:10px">'+expl+'</div></div>';
+}).join("");
+}
+function checkCloze(ci){
+var cz=CLOZES[ci],ok=0;
+cz.blanks.forEach(function(b,n){
+var sel=document.getElementById("c"+ci+"_"+n);
+var v=sel.value;
+sel.style.borderColor="";sel.style.color="";
+document.getElementById("ce"+ci+"_"+n).style.display="none";
+if(!v)return;
+if(v===b.a){ok++;sel.style.borderColor="#2ba471";sel.style.color="#2ba471";}
+else{
+sel.style.borderColor="#d5483f";sel.style.color="#d5483f";
+var e=document.getElementById("ce"+ci+"_"+n);
+e.innerHTML='<b>'+(n+1)+". "+esc(b.a)+"</b>　"+esc(b.e);
+e.style.display="block";
+addWrong("完形"+(ci+1)+" 第"+(n+1)+"空",v,b.a,b.e);
+}
+});
+var s=document.getElementById("cs_"+ci);
+s.textContent="得分 "+ok+"/"+cz.blanks.length;
+s.className="score "+(ok>=9?"good":ok>=7?"mid":"poor");
+}
+renderClozes();
+
+/* 错题本 */
+function renderWrong(){
+var w=document.getElementById("wrongWrap");
+if(!wrongs.length){w.innerHTML='<div class="empty">暂无错题——做完练习并检查答案后，错题会自动收进来。</div>';return;}
+w.innerHTML='<div class="stat">共 '+wrongs.length+' 道错题</div>'+wrongs.map(function(x,i){
+return '<div class="card wrong-card"><div class="qtext">'+esc(x.q)+'</div><p>你的答案：<span style="color:#d5483f;font-weight:600">'+esc(x.yours)+'</span>　正确答案：<span style="color:#2ba471;font-weight:600">'+esc(x.right)+'</span></p><div class="ex">'+esc(x.note)+'</div><button class="btn ghost" style="margin-top:8px;padding:5px 14px;font-size:13px" onclick="removeWrong('+i+')">移出错题本</button></div>';
+}).join("")+'<button class="btn ghost" onclick="wrongs.length=0;saveWrongs();">清空错题本</button>';
+}
+updateWrongBadge();
+</script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Practical Writing · 应用文写作</title>
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --blue: #3b5cff;
+    --purple: #6a3dff;
+    --text: #222;
+    --card: #fff;
+    --gray: #888;
+    --shadow: 0 6px 18px rgba(60, 80, 200, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+  /* 头部 */
+  .header {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff; padding: 24px 16px 16px;
+    padding-top: calc(24px + env(safe-area-inset-top));
+    position: sticky; top: 0; z-index: 50;
+    transition: padding .25s;
+  }
+  .header.shrink { padding-top: 12px; padding-bottom: 10px; }
+  .header h1 { font-size: 24px; display: flex; align-items: center; gap: 8px; }
+  .header p { opacity: .95; margin-top: 6px; font-size: 14px; }
+  .stats { display: flex; gap: 10px; margin-top: 14px; background: rgba(255,255,255,.15); padding: 10px; border-radius: 12px; }
+  .stat { flex: 1; text-align: center; background: #fff; color: var(--text); border-radius: 10px; padding: 8px 0; box-shadow: var(--shadow); }
+  .stat b { display: block; font-size: 18px; color: var(--blue); }
+  .stat span { font-size: 11px; color: var(--gray); }
+  /* 标签栏 */
+  .tabs { position: sticky; top: 92px; z-index: 49; background: var(--bg); padding: 10px 16px; display: flex; gap: 10px; border-bottom: 1px solid #e5e8ef; }
+  .tab { padding: 8px 16px; border-radius: 20px; font-size: 14px; background: #fff; color: var(--text); border: 1px solid #ddd; cursor: pointer; }
+  .tab.active { background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; border: none; font-weight: bold; }
+  /* 搜索筛选 */
+  .search { padding: 10px 16px; background: var(--bg); position: sticky; top: 142px; z-index: 48; }
+  .search input { width: 100%; padding: 10px 14px 10px 36px; border-radius: 20px; border: 1px solid #ddd; background: #fff; outline: none; font-size: 14px; }
+  .filters { display: flex; gap: 8px; padding: 8px 16px; background: var(--bg); overflow-x: auto; }
+  .filter { padding: 6px 14px; border-radius: 16px; font-size: 13px; background: #fff; border: 1px solid #ddd; color: var(--gray); cursor: pointer; white-space: nowrap; }
+  .filter.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .progress-wrap { padding: 6px 16px; background: var(--bg); }
+  .progress-bar { height: 6px; background: #e5e8ef; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--blue), var(--purple)); transition: width .3s; }
+  /* 内容 */
+  .content { padding: 10px 16px 20px; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .card { background: var(--card); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 16px; }
+  .meta { display: flex; justify-content: space-between; color: var(--gray); font-size: 13px; margin-bottom: 10px; }
+  .meta .type { color: var(--purple); font-weight: bold; }
+  .prompt { line-height: 1.8; font-size: 15px; margin-bottom: 14px; }
+  .prompt b { color: var(--blue); }
+  .points { margin-bottom: 14px; }
+  .point { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1px solid #e0e3ea; border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: .2s; }
+  .point.done { background: #e6f7ec; border-color: #2ecc71; }
+  .point .check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--gray); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; }
+  .point.done .check { background: #2ecc71; border-color: #2ecc71; }
+  .point .ptext { font-size: 15px; }
+  .actions { display: flex; gap: 10px; margin-top: 14px; }
+  .btn { flex: 1; padding: 12px; border-radius: 10px; border: none; cursor: pointer; background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; font-size: 15px; }
+  .btn.sec { background: #fff; color: var(--blue); border: 1px solid var(--blue); }
+  .sample { margin-top: 14px; padding: 12px; background: #f8f9ff; border-radius: 10px; border-left: 4px solid var(--blue); font-size: 14px; line-height: 1.7; display: none; }
+  .sample.show { display: block; }
+  .sample h4 { color: var(--blue); margin-bottom: 6px; }
+  .sample .vocab { color: #2ecc71; }
+  .sample .sentence { color: var(--purple); font-style: italic; }
+  /* 技巧页 */
+  .tips-card { background: var(--card); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 14px; }
+  .tips-card h3 { color: var(--blue); margin-bottom: 10px; }
+  .step { margin-bottom: 10px; padding-left: 8px; border-left: 3px solid var(--blue); line-height: 1.6; }
+  .clue { background: #f0f3ff; padding: 10px; border-radius: 10px; margin: 8px 0; border-left: 4px solid var(--purple); line-height: 1.6; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 13px; }
+  .bar-label { width: 80px; color: var(--gray); }
+  .bar-track { flex: 1; height: 14px; background: #eef; border-radius: 7px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--purple)); }
+  .bar-val { width: 40px; text-align: right; font-weight: bold; color: var(--blue); }
+  .mantra { background: linear-gradient(135deg, #eef2ff, #f8f0ff); padding: 16px; border-radius: 12px; text-align: center; font-weight: bold; color: var(--purple); margin: 12px 0; line-height: 1.8; }
+  .test-q { margin-top: 10px; }
+  .test-opt { padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin: 6px 0; cursor: pointer; font-size: 14px; }
+  .test-opt.sel { background: #eef2ff; border-color: var(--blue); }
+  .done-toast { position: fixed; left: 50%; bottom: 100px; transform: translateX(-50%); background: #2ecc71; color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 14px; opacity: 0; transition: opacity .3s; z-index: 100; }
+  .done-toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="header" id="header">
+  <h1>✍️ Practical Writing</h1>
+  <p>应用文写作 · 北京卷 2017–2026 十年真题模拟 · 共 10 篇</p>
+  <div class="stats">
+    <div class="stat"><b id="s-total">10</b><span>篇目</span></div>
+    <div class="stat"><b id="s-done">0</b><span>已研读</span></div>
+    <div class="stat"><b id="s-rate">0%</b><span>要点覆盖</span></div>
+    <div class="stat"><b id="s-score">0</b><span>累计分</span></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" data-page="practice">🎯 练习</div>
+  <div class="tab" data-page="tips">💡 写作技巧</div>
+</div>
+
+<div class="search">
+  <input id="searchInput" placeholder="搜索文体 / 场景 / 年份...">
+</div>
+<div class="filters">
+  <div class="filter active" data-f="all">全部</div>
+  <div class="filter" data-f="undone">未研读</div>
+  <div class="filter" data-f="done">已研读</div>
+</div>
+<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progFill"></div></div></div>
+
+<div class="content">
+  <div class="page active" id="page-practice"></div>
+  <div class="page" id="page-tips"></div>
+</div>
+
+<div class="done-toast" id="toast"></div>
+
+<script>
+/* ===== 数据层：北京卷应用文 2017-2026 十年（9种文体） ===== */
+const ARTICLES = [
+  { year: 2017, genre: "投诉信", scene: "网购词典质量问题",
+    prompt: "假设你是李华，你在某网店购买了一本英语词典，发现有质量问题（缺页、印刷模糊）。请你给店主写一封投诉信，内容包括：1. 说明问题；2. 提出你的要求（退款或更换）。",
+    points: ["自我介绍 + 写信目的（投诉）", "具体描述质量问题（缺页/印刷模糊）", "表达不满情绪", "提出明确要求（退款或更换）", "期待对方尽快回复"],
+    sample: "Dear Sir/Madam,\n  I am Li Hua, a customer who recently bought an English dictionary from your online store. I am writing to complain about its poor quality.\n  When I received the dictionary, I found that some pages were missing and the print was so blurry that many words were hard to read. This is far from what was described on your website.\n  I would appreciate it if you could either refund my money or send me a new copy as soon as possible. I really hope this problem can be settled satisfactorily.\n  Looking forward to your early reply.\nYours,\nLi Hua",
+    vocab: ["complain about 投诉", "poor quality 质量差", "missing pages 缺页", "refund 退款", "satisfactorily 满意地"],
+    sentences: ["I am writing to complain about... 我写信是为了投诉……", "I would appreciate it if you could... 如果您能……我将不胜感激"],
+    mistakes: "漏写要点②（具体问题）；complain 后接 about；退款用 refund（n./v.），勿写成 return money" },
+  { year: 2018, genre: "祝贺信", scene: "朋友汉语演讲比赛获奖",
+    prompt: "你的外国朋友 Chris 在汉语演讲比赛中获得一等奖。请你给他写一封祝贺信，内容包括：1. 表示祝贺；2. 肯定他的努力；3. 鼓励他继续学习汉语。",
+    points: ["直接表达祝贺", "肯定其长期努力与付出", "提及比赛表现（流利/自信）", "鼓励坚持学汉语", "祝福未来"],
+    sample: "Dear Chris,\n  I was thrilled to learn that you won the first prize in the Chinese Speech Contest. Congratulations!\n  Your success did not come by chance. I know how hard you have practised speaking Chinese every day, and your fluent and confident performance fully deserves this award.\n  I sincerely hope you will keep learning Chinese and achieve even greater success in the future.\n  Best wishes!\nYours,\nLi Hua",
+    vocab: ["congratulations 祝贺", "thrilled 激动的", "deserve 值得", "fluent 流利的", "achieve success 取得成功"],
+    sentences: ["I was thrilled to learn that... 得知……我十分激动", "Your success did not come by chance. 你的成功绝非偶然"],
+    mistakes: "祝贺信时态以现在/现在完成时为主；deserve 不用进行时；勿把 encourage sb to do 写成 encourage sb doing" },
+  { year: 2019, genre: "道歉信", scene: "无法参加学习小组",
+    prompt: "你原计划本周六参加英语学习小组活动，但因故不能参加。请给组长写一封道歉信，内容包括：1. 表示歉意；2. 说明原因；3. 提出弥补办法。",
+    points: ["开门道歉", "说明具体原因（生病/突发事件）", "表达遗憾", "提出弥补（下次参加/帮忙准备材料）", "再次致歉"],
+    sample: "Dear Tom,\n  I am terribly sorry to tell you that I will not be able to attend the English study group this Saturday.\n  Unfortunately, I have caught a bad cold and the doctor advised me to stay in bed for a few days. I feel really sorry to miss such a valuable activity.\n  To make up for it, I would like to help prepare the materials for the next meeting in advance. Hopefully, I can join you soon.\n  Once again, please accept my sincere apology.\nYours,\nLi Hua",
+    vocab: ["apologize 道歉", "terribly sorry 非常抱歉", "attend 参加", "make up for 弥补", "sincere apology 诚挚歉意"],
+    sentences: ["I am terribly sorry to tell you that... 我非常抱歉地告诉你……", "To make up for it,... 为了弥补……"],
+    mistakes: "道歉需真诚，勿过度解释；make up for（弥补）固定搭配；apology 是名词，apologize 是动词" },
+  { year: 2020, genre: "推荐信", scene: "推荐中国经典英文版",
+    prompt: "你的英国笔友 Peter 想读一本介绍中国文化的书。请你给他写一封推荐信，推荐《论语》（The Analects）的英文版，内容包括：1. 推荐这本书；2. 简介内容；3. 说明推荐理由。",
+    points: ["引出推荐", "简介书的内容/作者", "说明推荐理由（智慧/文化）", "鼓励对方阅读", "表达祝愿"],
+    sample: "Dear Peter,\n  Knowing that you want to read a book about Chinese culture, I am writing to recommend The Analects, the English version of Lunyu.\n  Written by Confucius's followers, it records the wise sayings of the great thinker. It covers topics such as learning, friendship and virtue.\n  I strongly recommend it because it offers deep insights into Chinese philosophy and will surely broaden your horizons.\n  I hope you will enjoy it. Looking forward to your reply.\nYours,\nLi Hua",
+    vocab: ["recommend 推荐", "wise sayings 至理名言", "Confucius 孔子", "insight 洞见", "broaden one's horizons 开阔眼界"],
+    sentences: ["I am writing to recommend... 我写信推荐……", "It offers deep insights into... 它对……有深刻见解"],
+    mistakes: "recommend 后接 sb to do 或 doing，不加 that sb should（避免中式）；broaden horizons 固定搭配" },
+  { year: 2021, genre: "求助信", scene: "提升英语写作",
+    prompt: "你在英语写作方面遇到一些困难，想请外教 Mr. Smith 帮忙。请给他写一封求助信，内容包括：1. 说明困难（词汇少、语法错误多）；2. 请他提建议；3. 希望得到回复。",
+    points: ["自我介绍 + 求助目的", "具体说明困难（词汇/语法）", "请求对方给建议", "表示感激", "期待回复"],
+    sample: "Dear Mr. Smith,\n  I am Li Hua, one of your students. I am writing to ask for your help with my English writing.\n  I find it hard to choose proper words, and I often make grammatical mistakes. As a result, my compositions are always poorly written.\n  Could you please give me some practical advice on how to improve? Any suggestions would be greatly appreciated.\n  Thank you in advance and I look forward to your reply.\nYours,\nLi Hua",
+    vocab: ["ask for help 求助", "proper words 合适的词汇", "grammatical mistakes 语法错误", "practical advice 实用建议", "in advance 提前"],
+    sentences: ["I am writing to ask for your help with... 我写信就……求助", "Could you please give me some advice on...? 能否给我关于……的建议？"],
+    mistakes: "求助信语气要礼貌；Could you please... 后接动词原形；in advance 放句末；composition 拼写易错" },
+  { year: 2022, genre: "告知信", scene: "中华传统文化周",
+    prompt: "你校将举办\"中华传统文化周\"活动。请你给英国交换生 Chris 写一封告知信，内容包括：1. 活动时间和地点；2. 活动内容（书法、京剧、茶艺）；3. 邀请他参加。",
+    points: ["告知活动", "说明时间地点", "介绍活动内容", "说明意义", "发出邀请"],
+    sample: "Dear Chris,\n  I am writing to tell you about a school event called \"Chinese Traditional Culture Week\".\n  It will be held in the school hall from June 10th to 14th. During the week, there will be various activities, such as Chinese calligraphy, Peking Opera and tea art performances.\n  I believe it will give you a deeper understanding of Chinese culture. I sincerely invite you to join us.\n  Looking forward to seeing you there.\nYours,\nLi Hua",
+    vocab: ["traditional culture 传统文化", "calligraphy 书法", "Peking Opera 京剧", "tea art 茶艺", "give a deeper understanding 加深理解"],
+    sentences: ["I am writing to tell you about... 我写信告诉你……", "There will be various activities, such as... 将有各种活动，如……"],
+    mistakes: "告知信常用一般将来时；such as 后接名词/动名词；culture week 注意大小写；地点用 in the school hall" },
+  { year: 2023, genre: "申请信", scene: "国际文化节志愿者",
+    prompt: "你校将举办国际文化节，现招募志愿者。请你写一封申请信，内容包括：1. 申请成为志愿者；2. 说明你的优势（英语好、善于沟通）；3. 表达期待。",
+    points: ["开门申请", "介绍自身优势（英语/沟通）", "相关经历", "说明能胜任", "表达期待"],
+    sample: "Dear Sir/Madam,\n  I am writing to apply for the position of volunteer for the International Culture Festival.\n  I have a good command of English and I am good at communicating with others. Besides, I once worked as a volunteer during a similar event, so I am quite experienced.\n  I am convinced that I am qualified for the job and I would be grateful if I could be given this opportunity.\n  Looking forward to your reply.\nYours sincerely,\nLi Hua",
+    vocab: ["apply for 申请", "volunteer 志愿者", "have a good command of 精通", "communicate 沟通", "qualified 胜任的"],
+    sentences: ["I am writing to apply for... 我写信申请……", "I am convinced that I am qualified for... 我确信我能胜任……"],
+    mistakes: "申请信突出优势，用现在时；have a good command of（精通）后接名词；qualify 是动词，qualified 是形容词" },
+  { year: 2024, genre: "感谢信", scene: "英语演讲比赛指导",
+    prompt: "你在外教 Mr. Brown 的指导下获得了英语演讲比赛一等奖。请给他写一封感谢信，内容包括：1. 表达感谢；2. 说明他的帮助（修改稿子、纠正发音）；3. 你的收获。",
+    points: ["直接感谢", "回忆具体帮助", "说明你的收获", "再次致谢", "祝福对方"],
+    sample: "Dear Mr. Brown,\n  I am writing to express my sincere gratitude for your help with my English speech.\n  Thanks to your patient guidance, I corrected many pronunciation mistakes and improved my draft a lot. Without your help, I could never have won the first prize.\n  I have not only improved my spoken English but also gained confidence. Thank you again for everything you did.\n  Best wishes!\nYours,\nLi Hua",
+    vocab: ["gratitude 感激", "patient guidance 耐心指导", "correct 纠正", "draft 草稿", "gain confidence 获得自信"],
+    sentences: ["I am writing to express my sincere gratitude for... 我写信对……表示衷心感谢", "Without your help, I could never have... 没有你的帮助，我绝不可能……"],
+    mistakes: "感谢信用现在完成时/过去时回忆；express gratitude for（对……感激）；could never have won 是虚拟语气" },
+  { year: 2025, genre: "邀请信", scene: "北京中轴线文化展",
+    prompt: "你校将举办\"北京中轴线\"文化展览。请你给英国交换生 Chris 写一封邀请信，内容包括：1. 展览的时间地点；2. 展览内容（历史、建筑、申遗）；3. 邀请他参观。",
+    points: ["发出邀请", "说明展览信息", "介绍展览内容", "说明意义", "期待对方参加"],
+    sample: "Dear Chris,\n  I am writing to invite you to visit an exhibition about the Beijing Central Axis, which will be held in the City Museum next weekend.\n  The exhibition presents the history, architecture and the recent UNESCO World Heritage listing of this cultural treasure. You will see many precious photos and models.\n  I believe it will help you better understand Beijing's traditional culture. I would be delighted if you could come with me.\n  Looking forward to your reply.\nYours,\nLi Hua",
+    vocab: ["invite 邀请", "exhibition 展览", "architecture 建筑", "World Heritage 世界遗产", "precious 珍贵的"],
+    sentences: ["I am writing to invite you to... 我写信邀请你……", "I would be delighted if you could... 如果你能……我将很高兴"],
+    mistakes: "邀请信语气热情；which 引导非限定从句修饰 exhibition；UNESCO World Heritage 专有名词大写" },
+  { year: 2026, genre: "建议信", scene: "AI辅助学习投稿",
+    prompt: "学校英文报正在征集\"如何利用 AI 辅助英语学习\"的建议。请你写一封建议信投稿，内容包括：1. 肯定 AI 的作用；2. 具体建议（查词、改错、练口语）；3. 提醒注意事项。",
+    points: ["引出话题", "肯定 AI 作用", "建议一（查词/解释）", "建议二（改错/练口语）", "提醒注意事项（勿依赖）"],
+    sample: "Dear Editor,\n  I am writing to share my suggestions on how to use AI to assist our English learning.\n  AI is indeed a powerful tool. First, it can explain difficult grammar points and look up new words instantly. Second, it can help correct our writing mistakes and even practise spoken English with us.\n  However, we should never rely on it too much. After all, real learning still depends on our own effort.\n  I hope my suggestions will be helpful.\nYours,\nLi Hua",
+    vocab: ["assist 辅助", "powerful tool 强大工具", "instantly 即时地", "correct mistakes 改正错误", "rely on 依赖"],
+    sentences: ["I am writing to share my suggestions on... 我写信分享关于……的建议", "we should never rely on it too much 我们绝不该过度依赖它"],
+    mistakes: "建议信用 should/may/could 提建议；assist sb with sth（用 with）；rely on 固定搭配；too much 修饰不可数" }
+];
+
+/* ===== 状态 ===== */
+let cur = 0, doneMap = {}, score = 0, filter = "all", searchQ = "";
+
+/* ===== 渲染练习页 ===== */
+function renderPractice() {
+  const box = document.getElementById('page-practice');
+  const list = ARTICLES.filter(a => {
+    const ok = a.genre.includes(searchQ) || a.scene.includes(searchQ) || String(a.year).includes(searchQ);
+    if (filter === 'done') return ok && doneMap[cur];
+    if (filter === 'undone') return ok && !doneMap[cur];
+    return ok;
+  });
+  const a = ARTICLES[cur];
+  let html = `
+    <div class="card">
+      <div class="meta"><span>第 ${cur+1} / ${ARTICLES.length} · ${a.year}年 · ${a.scene}</span><span class="type">${a.genre}</span></div>
+      <div class="prompt">${a.prompt.replace(/(\d\.)/g, '<b>$1</b>')}</div>
+      <div class="points">
+        ${a.points.map((p,i)=>`<div class="point ${doneMap[cur]?'done':''}" data-i="${i}"><span class="check">${doneMap[cur]?'✓':'${i+1}'}</span><span class="ptext">${p}</span></div>`).join('')}
+      </div>
+      <div class="actions">
+        <button class="btn sec" id="prevBtn">上一篇</button>
+        <button class="btn sec" id="showSample">👁 范文与解析</button>
+        <button class="btn" id="nextBtn">下一篇</button>
+      </div>
+      <div class="sample" id="sampleBox">
+        <h4>📝 参考范文</h4><pre style="white-space:pre-wrap;font-family:inherit;margin:6px 0;">${a.sample}</pre>
+        <h4>⭐ 高分词汇</h4><p class="vocab">${a.vocab.join('；')}</p>
+        <h4>💎 黄金句型</h4><p class="sentence">${a.sentences.join('<br>')}</p>
+        <h4>⚠️ 易错点</h4><p>${a.mistakes}</p>
+      </div>
+    </div>`;
+  box.innerHTML = html;
+  // 要点勾选
+  box.querySelectorAll('.point').forEach(el => el.onclick = () => {
+    if (doneMap[cur]) return;
+    doneMap[cur] = 1;
+    score += 10;
+    updateStats();
+    renderPractice();
+    showToast('✅ 要点已覆盖 +10');
+  });
+  document.getElementById('showSample').onclick = () => document.getElementById('sampleBox').classList.toggle('show');
+  document.getElementById('nextBtn').onclick = () => { if (cur < ARTICLES.length-1) { cur++; renderPractice(); } };
+  document.getElementById('prevBtn').onclick = () => { if (cur > 0) { cur--; renderPractice(); } };
+}
+
+/* ===== 写作技巧页 ===== */
+function renderTips() {
+  const t = document.getElementById('page-tips');
+  t.innerHTML = `
+    <div class="tips-card">
+      <h3>① 审题四步法</h3>
+      <div class="step"><b>定文体</b>：先判断是书信（投诉/祝贺/道歉…）还是通知/报道</div>
+      <div class="step"><b>定时态</b>：回忆过去用过去时，现状用现在时，将来用 will / be to</div>
+      <div class="step"><b>拆要点</b>：题干数字 1/2/3 逐个对应段落，缺一不可</div>
+      <div class="step"><b>连成文</b>：用过渡词（First, Besides, What's more, In conclusion）</div>
+    </div>
+    <div class="tips-card">
+      <h3>② 高频结构分布（北京卷）</h3>
+      ${[['书信开头',90],['正文要点',100],['过渡衔接',85],['结尾套话',90],['高级句型',70]].map(([k,v])=>`<div class="bar-row"><span class="bar-label">${k}</span><span class="bar-track"><span class="bar-fill" style="width:${v}%"></span></span><span class="bar-val">${v}%</span></div>`).join('')}
+    </div>
+    <div class="tips-card">
+      <h3>③ 5大致命失分点</h3>
+      <div class="clue"><b>漏要点</b>：题干每个数字都要对应，宁可多写不漏</div>
+      <div class="clue"><b>格式错</b>：书信要有称呼、落款（Yours, Li Hua）</div>
+      <div class="clue"><b>时态乱</b>：回忆用过去时，现状用现在时</div>
+      <div class="clue"><b>中式英语</b>：多用 It is + adj. + to do / There be 句型</div>
+      <div class="clue"><b>字数失控</b>：80-100 词为宜，开头结尾各 1-2 句</div>
+    </div>
+    <div class="tips-card">
+      <h3>④ 十年命题趋势</h3>
+      <div>· 书信类占 90%，场景贴近校园与跨文化交际</div>
+      <div>· 主题时代化（2025 中轴线、2026 AI 学习）</div>
+      <div>· 强调"要点覆盖 + 交际功能"，不追求华丽辞藻</div>
+    </div>
+    <div class="mantra">
+      🎵 速记口诀<br>
+      一审文体二定时，要点逐个不能忘；<br>
+      开头结尾套话齐，过渡连接文更畅；<br>
+      中式英语要避开，时态一致记心上；<br>
+      十年趋势重交际，中轴 AI 有新样。
+    </div>
+    <div class="tips-card test-q">
+      <h3>🎯 技巧速测</h3>
+      <div id="testQ">投诉信的开头通常首先做什么？</div>
+      <div class="test-opt" data-ans="A">A. 直接表达歉意并说明问题</div>
+      <div class="test-opt" data-ans="B">B. 自我介绍并说明写信目的</div>
+      <div class="test-opt" data-ans="C">C. 提出要求并威胁对方</div>
+      <div id="testRes" style="margin-top:8px;font-size:14px;"></div>
+      <button class="btn sec" id="nextTest" style="margin-top:10px;">下一题</button>
+    </div>`;
+  // 速测
+  const tests = [
+    { q: "投诉信的开头通常首先做什么？", ans: "B", res: "✅ 自我介绍 + 说明写信目的（投诉）" },
+    { q: "建议信中提建议，最得体的表达是？", ans: "A", res: "✅ You'd better / It would be helpful to..." },
+    { q: "应用文写作字数一般控制在？", ans: "B", res: "✅ 80-100 词为宜" }
+  ];
+  let ti = 0;
+  const opts = t.querySelectorAll('.test-opt');
+  opts.forEach(o => o.onclick = () => {
+    opts.forEach(x => x.classList.remove('sel')); o.classList.add('sel');
+    const right = o.dataset.ans === tests[ti].ans;
+    document.getElementById('testRes').innerHTML = (right ? '✅ 正确 - ' : '❌ 错误 - ') + tests[ti].res;
+  });
+  document.getElementById('nextTest').onclick = () => {
+    ti = (ti + 1) % tests.length;
+    document.getElementById('testQ').textContent = tests[ti].q;
+    document.getElementById('testRes').textContent = '';
+    opts.forEach(x => x.classList.remove('sel'));
+  };
+}
+
+/* ===== 统计 & UI ===== */
+function updateStats() {
+  const doneCount = Object.keys(doneMap).length;
+  document.getElementById('s-done').textContent = doneCount;
+  document.getElementById('s-rate').textContent = doneCount ? Math.round(doneCount / ARTICLES.length * 100) + '%' : '0%';
+  document.getElementById('s-score').textContent = score;
+  document.getElementById('progFill').style.width = (doneCount / ARTICLES.length * 100) + '%';
+}
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1500);
+}
+
+/* ===== 事件绑定 ===== */
+document.querySelectorAll('.tab').forEach(tab => tab.onclick = () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  tab.classList.add('active');
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-' + tab.dataset.page).classList.add('active');
+});
+document.querySelectorAll('.filter').forEach(f => f.onclick = () => {
+  document.querySelectorAll('.filter').forEach(x => x.classList.remove('active'));
+  f.classList.add('active'); filter = f.dataset.f; renderPractice();
+});
+document.getElementById('searchInput').oninput = (e) => { searchQ = e.target.value.trim(); renderPractice(); };
+window.addEventListener('scroll', () => { document.getElementById('header').classList.toggle('shrink', window.scrollY > 20); });
+
+/* ===== 初始化 ===== */
+renderPractice();
+renderTips();
+updateStats();
+</script>
+</body>
+</html>

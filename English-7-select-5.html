@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>7选5 专项突破</title>
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --blue: #3b5cff;
+    --purple: #6a3dff;
+    --text: #222;
+    --card: #fff;
+    --gray: #888;
+    --shadow: 0 6px 18px rgba(60, 80, 200, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+  .header {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff;
+    padding: 24px 16px 16px;
+    padding-top: calc(24px + env(safe-area-inset-top));
+    position: sticky; top: 0; z-index: 50;
+    transition: padding .25s;
+  }
+  .header.shrink { padding-top: calc(8px + env(safe-area-inset-top)); padding-bottom: 8px; }
+  .header h1 { font-size: 24px; display: flex; align-items: center; gap: 8px; }
+  .header p { opacity: 0.95; margin-top: 6px; font-size: 14px; }
+  .stats {
+    display: flex; gap: 10px; margin-top: 14px;
+    background: rgba(255,255,255,0.15);
+    padding: 10px; border-radius: 12px;
+  }
+  .stat { flex: 1; text-align: center; background: #fff; color: var(--text); border-radius: 10px; padding: 8px 0; box-shadow: var(--shadow); }
+  .stat b { display: block; font-size: 18px; color: var(--blue); }
+  .stat span { font-size: 11px; color: var(--gray); }
+  .tabs {
+    position: sticky; top: 120px; z-index: 49;
+    background: var(--bg); padding: 10px 16px;
+    display: flex; gap: 10px; border-bottom: 1px solid #e5e8ef;
+  }
+  .tab {
+    padding: 8px 16px; border-radius: 20px; font-size: 14px;
+    background: #fff; color: var(--text); border: 1px solid #ddd; cursor: pointer;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff; border: none; font-weight: bold;
+  }
+  .search { padding: 10px 16px; background: var(--bg); position: sticky; top: 170px; z-index: 48; }
+  .search input {
+    width: 100%; padding: 10px 14px 10px 36px; border-radius: 20px;
+    border: 1px solid #ddd; background: #fff no-repeat 12px center;
+    outline: none; font-size: 14px;
+  }
+  .filters { display: flex; gap: 8px; padding: 8px 16px; background: var(--bg); overflow-x: auto; }
+  .filter {
+    padding: 6px 14px; border-radius: 16px; font-size: 13px;
+    background: #fff; border: 1px solid #ddd; color: var(--gray); cursor: pointer; white-space: nowrap;
+  }
+  .filter.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .content { padding: 10px 16px 20px; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .quiz-card {
+    background: var(--card); border-radius: 14px; padding: 16px;
+    box-shadow: var(--shadow); margin-bottom: 16px;
+  }
+  .quiz-meta { display: flex; justify-content: space-between; color: var(--gray); font-size: 13px; margin-bottom: 10px; }
+  .quiz-meta .type { color: var(--purple); font-weight: bold; }
+  .text { line-height: 1.8; font-size: 16px; margin-bottom: 16px; }
+  .blank {
+    display: inline-block; min-width: 24px; border-bottom: 2px solid var(--blue);
+    color: var(--purple); font-weight: bold; text-align: center; margin: 0 4px;
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    padding: 10px 12px; border: 1px solid #e0e3ea; border-radius: 10px;
+    background: #fafafa; cursor: pointer; font-size: 15px; transition: .2s;
+  }
+  .opt.sel { background: #eef2ff; border-color: var(--blue); color: var(--blue); font-weight: bold; }
+  .opt.correct { background: #e6f7ec; border-color #2ecc71; color: #2ecc71; }
+  .opt.wrong { background: #fdecea; border-color: #e74c3c; color: #e74c3c; }
+  .actions { display: flex; gap: 10px; margin-top: 14px; }
+  .btn {
+    flex: 1; padding: 10px; border-radius: 10px; border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; font-size: 15px;
+  }
+  .btn.sec { background: #fff; color: var(--blue); border: 1px solid var(--blue); }
+  .analysis {
+    margin-top: 14px; padding: 12px; background: #f8f9ff; border-radius: 10px;
+    border-left: 4px solid var(--blue); font-size: 14px; line-height: 1.6; display: none;
+  }
+  .analysis.show { display: block; }
+  .tips-card { background: var(--card); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 14px; }
+  .tips-card h3 { color: var(--blue); margin-bottom: 10px; }
+  .step { margin-bottom: 10px; padding-left: 8px; border-left: 3px solid var(--blue); }
+  .clue { background: #f0f3ff; padding: 10px; border-radius: 10px; margin: 8px 0; border-left: 4px solid var(--purple); }
+  .mantra {
+    background: linear-gradient(135deg, #eef2ff, #f8f0ff); padding: 16px;
+    border-radius: 12px; text-align: center; font-weight: bold; color: var(--purple);
+    margin: 12px 0; line-height: 1.8;
+  }
+  .test-q { margin-top: 10px; }
+  .test-opt { padding: 8px; border: 1px solid #ddd; border-radius: 8px; margin: 6px 0; cursor: pointer; }
+  .test-opt.sel { background: #eef2ff; border-color: var(--blue); }
+  .progress { height: 4px; background: #e5e8ef; margin: 0 16px; border-radius: 2px; overflow: hidden; }
+  .progress i { display: block; height: 100%; background: linear-gradient(135deg, var(--blue), var(--purple)); width: 0; transition: width .3s; }
+</style>
+</head>
+<body>
+
+<div class="header" id="header">
+  <h1>📝 7选5 专项突破</h1>
+  <p>北京卷 · 2017-2026 十年真题模拟 · 共 10 篇</p>
+  <div class="stats">
+    <div class="stat"><b id="s-total">10</b><span>练习题</span></div>
+    <div class="stat"><b id="s-done">0</b><span>已作答</span></div>
+    <div class="stat"><b id="s-rate">0%</b><span>正确率</span></div>
+    <div class="stat"><b id="s-score">0</b><span>累计分</span></div>
+  </div>
+</div>
+
+<div class="progress"><i id="progressBar"></i></div>
+
+<div class="tabs">
+  <div class="tab active" data-page="practice">🎯 练习</div>
+  <div class="tab" data-page="tips">💡 答题技巧</div>
+</div>
+
+<div class="search">
+  <input id="searchInput" placeholder="搜索主题 / 题型 / 年份...">
+</div>
+<div class="filters">
+  <div class="filter active" data-f="all">全部</div>
+  <div class="filter" data-f="undone">未作答</div>
+  <div class="filter" data-f="done">已作答</div>
+</div>
+
+<div class="content">
+  <div class="page active" id="page-practice">
+    <div class="quiz-card" id="quizCard"></div>
+  </div>
+  <div class="page" id="page-tips">
+    <div class="tips-card">
+      <h3>① 解题三步法</h3>
+      <div class="step">速读全文，抓"骨架"（主题+体裁）</div>
+      <div class="step">选项分类，划"路标"（代词/逻辑词/关键词）</div>
+      <div class="step">逐空代入，验"连贯"（意群+语法，回看干扰项）</div>
+    </div>
+    <div class="tips-card">
+      <h3>② 5大高频线索</h3>
+      <div class="clue"><b>逻辑衔接</b>：转折/因果/递进（2022时间管理）</div>
+      <div class="clue"><b>代词指代</b>：it/this/they 需前文有对应（2026 AI助教）</div>
+      <div class="clue"><b>同义复现</b>：选项与段落核心词同义（2024笔记法）</div>
+      <div class="clue"><b>结构对称</b>：并列/举例句式（2025中轴线）</div>
+      <div class="clue"><b>干扰项</b>：半对半错，无归属（2023志愿者）</div>
+    </div>
+    <div class="tips-card">
+      <h3>③ 十年命题趋势</h3>
+      <div>· 主题重时代（中轴线/AI）</div>
+      <div>· 干扰项"半对半错"增多</div>
+      <div>· 空位：段首总起 / 段尾总结</div>
+    </div>
+    <div class="mantra">
+      🎵 速记口诀<br>
+      一读二划三代入，逻辑代词是钥匙；<br>
+      七选五空找连贯，两扰项必无归处；<br>
+      十年趋势重时代，中轴AI莫慌神。
+    </div>
+    <div class="tips-card test-q">
+      <h3>🎯 技巧速测</h3>
+      <div id="testQ">前句：AI can explain grammar. 后句：However, teachers worry. 线索是？</div>
+      <div class="test-opt" data-t="A">A. 代词指代</div>
+      <div class="test-opt" data-t="B">B. 逻辑衔接（转折）</div>
+      <div class="test-opt" data-t="C">C. 同义复现</div>
+      <div id="testRes" style="margin-top:8px;font-size:14px;"></div>
+      <button class="btn sec" id="nextTest" style="margin-top:10px;">下一题</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// 每篇：7 选项 = 5 个不同答案(A-E) + 2 个干扰项(F,G)，答案互不重复、与干扰项无重叠
+const QUIZZES = [
+  { year:2017, topic:"数字阅读", type:"议论文",
+    text:"Digital reading is growing fast. ___1___ Screens are everywhere in our lives. ___2___ Yet printed books still matter. ___3___ We should balance both. ___4___ Read more every day. ___5___",
+    options:["Screens surround us.","Printed books remain.","Balance is key.","Read regularly.","Both have their place.","Screens only.","Stop reading."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["屏幕普及","纸质书","平衡","多读","各有价值"] },
+  { year:2018, topic:"早起习惯", type:"说明文",
+    text:"Waking up early has many benefits. ___1___ Plan your morning ahead. ___2___ Exercise before work. ___3___ Eat a healthy breakfast. ___4___ You will have a productive day. ___5___",
+    options:["Morning routine.","Exercise daily.","Healthy breakfast.","Productive day.","Early risers stay ahead.","Sleep late.","Stay lazy."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["晨间计划","锻炼","早餐","高效一天","领先"] },
+  { year:2019, topic:"失败的意义", type:"议论文",
+    text:"Failure is not the end. ___1___ Learn from your mistakes. ___2___ Do not give up easily. ___3___ Try again with a better plan. ___4___ Success will follow. ___5___",
+    options:["Learn from failure.","Keep trying.","Try again.","Success comes.","Each failure teaches us.","Quit forever.","Fear failure."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["从失败学习","坚持","再试","成功","教训"] },
+  { year:2020, topic:"环境保护", type:"说明文",
+    text:"We must protect the environment. ___1___ Save water whenever possible. ___2___ Recycle paper and plastic. ___3___ Use fewer disposable products. ___4___ Take action now. ___5___",
+    options:["Save natural resources.","Recycle properly.","Reduce plastic use.","Act now.","Small steps make a difference.","Waste more water.","Pollute freely."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["节约资源","回收","减少塑料","立即行动","积少成多"] },
+  { year:2021, topic:"学外语", type:"记叙文",
+    text:"Learning a foreign language takes time. ___1___ Practice a little every day. ___2___ Speak as much as possible. ___3___ Do not be afraid of making mistakes. ___4___ Traveling helps a lot. ___5___",
+    options:["Practice daily.","Speak often.","Mistakes are normal.","Travel broadens horizons.","Patience leads to progress.","Give up easily.","Avoid practice."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["每日练习","多开口","错误正常","旅行帮助","耐心进步"] },
+  { year:2022, topic:"时间管理", type:"说明文",
+    text:"Managing time well is an important skill. ___1___ Plan your day in advance. ___2___ Do the most important tasks first. ___3___ Avoid distractions while working. ___4___ Review your progress within 24 hours. ___5___",
+    options:["Plan ahead.","Prioritize tasks.","Stay focused.","Do it within 24 hours.","Good habits bring success.","Waste time.","Ignore your plans."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["提前计划","分清优先级","保持专注","24小时内回顾","好习惯"] },
+  { year:2023, topic:"志愿者经历", type:"记叙文",
+    text:"I volunteered at a local school last year. ___1___ It was tiring but meaningful. ___2___ I helped young kids with their homework. ___3___ They thanked me with big smiles. ___4___ I learned a lot from the experience. ___5___",
+    options:["I went there every Saturday.","It was hard work.","The kids were lovely.","Their smiles encouraged me.","I gained valuable experience.","I slept through it.","I quit early."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["时间地点","感受","帮助对象","感谢","收获"] },
+  { year:2024, topic:"笔记方法", type:"说明文",
+    text:"Good notes help learning. ___1___ Do not write down every single word. ___2___ Focus on the key points instead. ___3___ Review them often. ___4___ Organize them by topic. ___5___",
+    options:["They help retain information.","Key points matter most.","Review regularly.","Organize by topic.","Good notes save time later.","Write down every word.","Never read them again."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["笔记目的","抓重点","定期复习","按主题整理","节省时间"] },
+  { year:2025, topic:"北京中轴线", type:"说明文",
+    text:"The Beijing Central Axis is a cultural treasure. ___1___ It shows ancient wisdom. ___2___ Many buildings stand along it. ___3___ Today, it draws tourists from all over the world. ___4___ Protecting it is our duty. ___5___",
+    options:["It runs from north to south.","Heritage protection matters.","Famous buildings line the axis.","Tourists enjoy visiting it.","We should pass it on.","It was built overnight.","No one visits it."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["中轴线南北向","文化遗产保护","著名建筑","吸引游客","传承责任"] },
+  { year:2026, topic:"AI助教", type:"说明文",
+    text:"Artificial intelligence is changing how students learn. ___1___ However, some teachers worry about over-reliance. A useful rule is to let AI explain, not replace. ___2___ For example, it can break down difficult grammar. Students should still write essays by hand. ___3___ Reviewing AI feedback within 24 hours is wise. ___4___ In short, used well, AI becomes a helpful study partner. ___5___",
+    options:["Many students find it useful.","It helps explain difficult points.","Writing improves thinking.","Teachers should guide its use.","This tool saves time.","It replaces teachers completely.","Overuse may cause harm."],
+    answer:["A","B","C","D","E"], distract:["F","G"],
+    analysis:["1:A 总起AI有用，接However转折","2:B explain呼应","3:C 手写写作的价值","4:D 教师引导","5:E 总结节省时间"] }
+];
+
+
+
+let cur = 0, sel = [], done = [], score = 0, filter = "all";
+const card = document.getElementById('quizCard');
+
+function renderQuiz() {
+  const q = QUIZZES[cur];
+  sel = sel.slice(0, q.answer.length);
+  let html = `<div class="quiz-meta"><span>第 ${cur+1}/${QUIZZES.length} · ${q.year}年 · ${q.topic}</span><span class="type">${q.type}</span></div>`;
+  html += `<div class="text">${q.text.replace(/___(\d)___/g, (m,i)=>`<span class="blank">${sel[+i-1]||i}</span>`)}</div>`;
+  html += `<div class="options">${q.options.map((o,i)=>`<div class="opt ${sel.includes(String.fromCharCode(65+i))?'sel':''}" data-i="${i}">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div>`;
+  html += `<div class="actions"><button class="btn sec" id="prevBtn">上一题</button><button class="btn" id="checkBtn">核对</button><button class="btn sec" id="nextBtn">下一题</button></div>`;
+  html += `<div class="analysis" id="ana"></div>`;
+  card.innerHTML = html;
+  bindQuiz();
+}
+
+function bindQuiz() {
+  document.querySelectorAll('.opt').forEach(el => el.onclick = () => {
+    const letter = String.fromCharCode(65 + +el.dataset.i);
+    const idx = sel.indexOf(letter);
+    if (idx >= 0) sel.splice(idx, 1);
+    else if (sel.length < QUIZZES[cur].answer.length) sel.push(letter);
+    else { /* 已选满，忽略 */ }
+    renderQuiz();
+  });
+  document.getElementById('checkBtn').onclick = () => {
+    const q = QUIZZES[cur];
+    if (sel.length < q.answer.length) { alert('请先选满 ' + q.answer.length + ' 个选项'); return; }
+    const allCorrect = q.answer.every((a,i) => sel[i] === a);
+    document.querySelectorAll('.opt').forEach(el => {
+      const letter = String.fromCharCode(65 + +el.dataset.i);
+      if (q.answer.includes(letter)) el.classList.add('correct');
+      else if (sel.includes(letter)) el.classList.add('wrong');
+    });
+    const ana = document.getElementById('ana');
+    ana.innerHTML = `${allCorrect?'✅ 全部正确':'❌ 有错误'} <br>正确答案：${q.answer.join(', ')}<br>解析：${q.analysis.join('<br>')}<br>干扰项：${q.distract.join(', ')}`;
+    ana.classList.add('show');
+    if (!done[cur]) { done[cur] = 1; score += allCorrect ? q.answer.length : 0; updateStats(); }
+  };
+  document.getElementById('nextBtn').onclick = () => { if (cur < QUIZZES.length-1) { cur++; sel=[]; renderQuiz(); } };
+  document.getElementById('prevBtn').onclick = () => { if (cur > 0) { cur--; sel=[]; renderQuiz(); } };
+}
+
+function updateStats() {
+  document.getElementById('s-done').textContent = done.filter(d=>d).length;
+  const doneCount = done.filter(d=>d).length;
+  document.getElementById('s-rate').textContent = doneCount ? Math.round(score / (doneCount * 5) * 100) + '%' : '0%';
+  document.getElementById('s-score').textContent = score;
+  document.getElementById('progressBar').style.width = (doneCount / QUIZZES.length * 100) + '%';
+}
+
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-' + t.dataset.page).classList.add('active');
+});
+
+const tests = [
+  { q:"前句：AI can explain grammar. 后句：However, teachers worry. 线索是？", ans:"B", res:"✅ 逻辑衔接（However 转折）" },
+  { q:"前句：The tool saves time. 后句：___ It helps explain. 空格处线索？", ans:"A", res:"✅ 代词指代（It 回指 tool）" }
+];
+let ti = 0;
+document.querySelectorAll('.test-opt').forEach(o => o.onclick = () => {
+  document.querySelectorAll('.test-opt').forEach(x => x.classList.remove('sel'));
+  o.classList.add('sel');
+  document.getElementById('testRes').innerHTML = (o.dataset.t === tests[ti].ans ? '✅ 正确 - ' : '❌ 再想想 - ') + tests[ti].res;
+});
+document.getElementById('nextTest').onclick = () => {
+  ti = (ti+1) % tests.length;
+  document.getElementById('testQ').textContent = tests[ti].q;
+  document.getElementById('testRes').textContent = '';
+  document.querySelectorAll('.test-opt').forEach(x => x.classList.remove('sel'));
+};
+
+renderQuiz(); updateStats();
+
+// 暴露给测试环境（生产环境无影响）
+if (typeof window !== 'undefined') window.__QUIZZES = QUIZZES;
+</script>
+</body>
+</html>

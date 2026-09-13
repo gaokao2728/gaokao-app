@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Micro Writing · 微写作</title>
+<style>
+:root{
+  --bg:#f4f6fb; --blue:#3b5cff; --purple:#6a3dff; --text:#222; --card:#fff; --gray:#888;
+  --shadow:0 6px 18px rgba(60,80,200,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+.header{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;padding:24px 16px 16px;position:sticky;top:0;z-index:50}
+.header h1{font-size:22px}
+.header p{opacity:.95;margin-top:6px;font-size:13px}
+.stats{display:flex;gap:10px;margin-top:14px;background:rgba(255,255,255,.15);padding:10px;border-radius:12px}
+.stat{flex:1;text-align:center;background:#fff;color:var(--text);border-radius:10px;padding:8px 0;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:18px;color:var(--blue)}
+.stat span{font-size:11px;color:var(--gray)}
+.tabs{position:sticky;top:88px;z-index:49;background:var(--bg);padding:10px 16px;display:flex;gap:10px;border-bottom:1px solid #e5e8ef}
+.tab{padding:8px 16px;border-radius:20px;font-size:14px;background:#fff;color:var(--text);border:1px solid #ddd;cursor:pointer}
+.tab.active{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border:none;font-weight:bold}
+.search{padding:10px 16px;background:var(--bg);position:sticky;top:138px;z-index:48)}
+.search input{width:100%;padding:10px 14px;border-radius:20px;border:1px solid #ddd;background:#fff;outline:none;font-size:14px}
+.filters{display:flex;gap:8px;padding:8px 16px;background:var(--bg)}
+.filter{padding:6px 14px;border-radius:16px;font-size:13px;background:#fff;border:1px solid #ddd;color:var(--gray);cursor:pointer}
+.filter.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.content{padding:10px 16px 20px}
+.page{display:none}
+.page.active{display:block}
+.progress{height:4px;background:#e0e3ea;margin:0 16px;border-radius:2px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));width:0}
+.prompt-card{background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);margin-bottom:16px}
+.prompt-meta{display:flex;justify-content:space-between;color:var(--gray);font-size:13px;margin-bottom:10px}
+.prompt-meta .type{color:var(--purple);font-weight:bold}
+.prompt-text{line-height:1.8;font-size:15px;margin-bottom:14px;padding:12px;background:#f8f9ff;border-radius:10px}
+.points{margin-bottom:14px}
+.point{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #eee;cursor:pointer}
+.point input{margin-top:3px}
+.point.done{color:var(--blue)}
+.sample{margin-top:12px;padding:12px;background:#f0f3ff;border-radius:10px;border-left:4px solid var(--blue);font-size:14px;line-height:1.7;display:none}
+.sample.show{display:block}
+.analysis{margin-top:12px;padding:12px;background:#fafafa;border-radius:10px;font-size:13px;line-height:1.6}
+.analysis h4{color:var(--purple);margin:6px 0 4px}
+.actions{display:flex;gap:10px;margin-top:14px}
+.btn{flex:1;padding:10px;border-radius:10px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-size:15px}
+.btn.sec{background:#fff;color:var(--blue);border:1px solid var(--blue)}
+.tips-card{background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+.tips-card h3{color:var(--blue);margin-bottom:10px}
+.step{margin-bottom:8px;padding-left:8px;border-left:3px solid var(--blue)}
+.clue{background:#f0f3ff;padding:10px;border-radius:10px;margin:8px 0;border-left:4px solid var(--purple)}
+.mantra{background:linear-gradient(135deg,#eef2ff,#f8f0ff);padding:16px;border-radius:12px;text-align:center;font-weight:bold;color:var(--purple);margin:12px 0;line-height:1.8}
+.bar{display:flex;align-items:flex-end;gap:8px;height:120px;padding:10px;background:#f8f9ff;border-radius:10px;margin:10px 0}
+.bar i{display:block;width:100%;background:linear-gradient(180deg,var(--blue),var(--purple));border-radius:4px 4px 0 0;min-height:10px;position:relative}
+.bar i span{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--gray);white-space:nowrap}
+.test-q{margin-top:10px}
+.test-opt{padding:8px;border:1px solid #ddd;border-radius:8px;margin:6px 0;cursor:pointer}
+.test-opt.sel{background:#eef2ff;border-color:var(--blue)}
+.toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;z-index:99;display:none}
+</style>
+</head>
+<body>
+
+<div class="header" id="header">
+  <h1>✍️ Micro Writing</h1>
+  <p>微写作 · 北京卷 2017–2026 十年真题模拟 · 共 10 篇</p>
+  <div class="stats">
+    <div class="stat"><b id="s-total">10</b><span>篇目</span></div>
+    <div class="stat"><b id="s-done">0</b><span>已研读</span></div>
+    <div class="stat"><b id="s-cover">0%</b><span>要点覆盖</span></div>
+    <div class="stat"><b id="s-score">0</b><span>累计分</span></div>
+  </div>
+</div>
+
+<div class="progress"><i id="progressBar"></i></div>
+
+<div class="tabs">
+  <div class="tab active" data-page="practice">🎯 练习</div>
+  <div class="tab" data-page="tips">💡 写作技巧</div>
+</div>
+
+<div class="search"><input id="searchInput" placeholder="搜索主题 / 类型 / 年份..."></div>
+<div class="filters">
+  <div class="filter active" data-f="all">全部</div>
+  <div class="filter" data-f="undone">未研读</div>
+  <div class="filter" data-f="done">已研读</div>
+</div>
+
+<div class="content">
+  <div class="page active" id="page-practice"></div>
+
+  <div class="page" id="page-tips">
+    <div class="tips-card">
+      <h3>① 微写作四步法</h3>
+      <div class="step"><b>审题：</b>定体裁（介绍/推荐/倡议）、定人称、定时态</div>
+      <div class="step"><b>拆要点：</b>把题干 1/2/3 点拆成 4 个可自查的小点</div>
+      <div class="step"><b>列句式：</b>每点用 1 个高级句型（倒装/强调/非谓语）</div>
+      <div class="step"><b>控字数：</b>60–80 词，先写满要点再润色</div>
+    </div>
+    <div class="tips-card">
+      <h3>② 高频得分点分布</h3>
+      <div class="bar">
+        <i style="height:95%"><span>要点95</span></i>
+        <i style="height:85%"><span>句式85</span></i>
+        <i style="height:90%"><span>逻辑90</span></i>
+        <i style="height:80%"><span>词数80</span></i>
+        <i style="height:75%"><span>卷面75</span></i>
+      </div>
+    </div>
+    <div class="tips-card">
+      <h3>③ 5 大致命失分点</h3>
+      <div class="clue"><b>漏要点：</b>题干 3 点必须全部覆盖，宁多勿少</div>
+      <div class="clue"><b>超词数：</b>超过 80 词会扣分，用短句</div>
+      <div class="clue"><b>时态乱：</b>介绍类用一般现在时，倡议类用 should/must</div>
+      <div class="clue"><b>中式英语：</b>避免直译，用 there be / It is + adj.</div>
+      <div class="clue"><b>无逻辑词：</b>缺 first, besides, in a word 等连接</div>
+    </div>
+    <div class="tips-card">
+      <h3>④ 十年命题趋势</h3>
+      <div>· 文化介绍类占 40%（胡同/茶文化/中轴线）</div>
+      <div>· 推荐 + 倡议类约 30%</div>
+      <div>· 时政热点类约 20%（冬奥会/AI）</div>
+      <div>· 词数稳定在 60–80，句式要求逐年提高</div>
+    </div>
+    <div class="mantra">
+      🎵 速记口诀<br>
+      一审二拆三句式，四控词数莫忘记；<br>
+      要点齐全是根基，逻辑连接不能弃；<br>
+      倒装强调非谓语，北京微写拿高分。
+    </div>
+    <div class="tips-card test-q">
+      <h3>🎯 技巧速测</h3>
+      <div id="testQ">微写作词数要求一般是？</div>
+      <div class="test-opt" data-t="A">A. 30–40 词</div>
+      <div class="test-opt" data-t="B">B. 60–80 词</div>
+      <div class="test-opt" data-t="C">C. 100–120 词</div>
+      <div id="testRes" style="margin-top:8px;font-size:14px;"></div>
+      <button class="btn sec" id="nextTest" style="margin-top:10px;">下一题</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var PROMPTS = [
+  {year:2017,topic:"介绍北京胡同",type:"文化介绍",
+   title:"假定你是李华，你的英国朋友 Chris 想了解北京胡同。请你根据以下提示写一段 60–80 词的介绍。",
+   points:["1. 胡同的历史（已有数百年）","2. 胡同的特点（窄巷、四合院）","3. 胡同的现状（旅游景点、受保护）"],
+   sample:"Beijing Hutong, with a history of hundreds of years, is one of the city's most famous symbols. These narrow lanes are lined with traditional courtyard houses called siheyuan. Not only do they show the charm of old Beijing, but they also attract millions of tourists every year. Nowadays, many hutongs have been protected as cultural heritage, allowing visitors to experience the real local life.",
+   sentences:["Not only do they show..., but they also..."],mistakes:["漏掉\"数百年历史\"这一要点","用 very long history 中式表达"]},
+  {year:2018,topic:"推荐一本好书",type:"推荐类",
+   title:"假定你是李华，你的美国朋友 Mike 想读一本中国书。请你推荐《论语》并写 60–80 词。",
+   points:["1. 书名与作者","2. 书的主要内容","3. 推荐理由"],
+   sample:"I'd like to recommend The Analects of Confucius, a classic written by Confucius's students. It collects wise sayings about life, learning and morality. What makes it valuable is that it still teaches us how to be a better person today. Once you start reading it, you will find it both meaningful and inspiring.",
+   sentences:["What makes it valuable is that..."],mistakes:["把\"论语\"直译为 Lun Yu","漏掉推荐理由"]},
+  {year:2019,topic:"倡议绿色出行",type:"倡议类",
+   title:"假定你是学生会主席，请写一份 60–80 词的倡议书，呼吁同学们绿色出行。",
+   points:["1. 倡议的背景（空气污染/交通拥堵）","2. 具体做法（步行、骑车、公交）","3. 呼吁行动"],
+   sample:"To reduce air pollution and traffic jams, our school is launching a green travel campaign. We strongly suggest that you walk, cycle or take public transport instead of cars. Every small step counts. If everyone takes action, we will surely create a cleaner and greener environment. Let's start now!",
+   sentences:["We strongly suggest that you (should)..."],mistakes:["倡议语气不足，只用 should","超过 80 词"]},
+  {year:2020,topic:"介绍中国茶文化",type:"文化介绍",
+   title:"假定你是李华，请向外国朋友介绍中国茶文化，写 60–80 词。",
+   points:["1. 茶的历史","2. 茶的种类","3. 饮茶习俗"],
+   sample:"China has a long history of tea culture dating back thousands of years. There are many kinds of tea, such as green tea, black tea and oolong. What is special is that Chinese people often serve tea to guests as a sign of respect. Drinking tea not only refreshes the mind but also helps people relax.",
+   sentences:["What is special is that..."],mistakes:["把种类写成 only green tea","漏掉待客习俗"]},
+  {year:2021,topic:"推荐学习APP",type:"推荐类",
+   title:"假定你是李华，请向同学推荐一个帮助你学习英语的 APP，写 60–80 词。",
+   points:["1. APP 名称与功能","2. 你的使用体验","3. 推荐理由"],
+   sample:"I'd like to recommend an APP called \"Daily English\", which has greatly improved my English. It provides short videos, vocabulary cards and instant translation. What I like most is that it creates a study plan just for me. Thanks to this APP, my listening and speaking have improved a lot in just two months.",
+   sentences:["Thanks to this APP, ..."],mistakes:["只介绍功能不谈体验","用 very good 空洞表达"]},
+  {year:2022,topic:"介绍冬奥会项目",type:"时政介绍",
+   title:"假定你是李华，请向外国朋友介绍一项冬奥会项目（如滑雪），写 60–80 词。",
+   points:["1. 项目名称","2. 基本规则","3. 魅力所在"],
+   sample:"Skiing is one of the most exciting events in the Winter Olympics. Athletes slide down snowy mountains at amazing speed, performing jumps and turns. What makes it thrilling is that it tests both courage and skill. Every time I watch the competition, I am deeply impressed by the athletes' spirit. It is truly a sport worth trying.",
+   sentences:["What makes it thrilling is that..."],mistakes:["把 skiing 写成 ski","漏掉规则或魅力"]},
+  {year:2023,topic:"倡议节约用水",type:"倡议类",
+   title:"假定你是李华，请写一份 60–80 词的倡议书，呼吁节约用水。",
+   points:["1. 水的重要性","2. 浪费水的现象","3. 具体倡议"],
+   sample:"Water is so precious that we cannot live without it. However, many people still waste it by leaving taps running. It is high time that we took action. I suggest that we turn off the tap in time, reuse water and remind others to save water. Remember, saving water is saving our future.",
+   sentences:["It is high time that we took action."],mistakes:["倡议不具体","用 must 语气生硬"]},
+  {year:2024,topic:"介绍传统技艺",type:"文化介绍",
+   title:"假定你是李华，请向外国朋友介绍一项中国传统技艺（如剪纸），写 60–80 词。",
+   points:["1. 技艺名称与历史","2. 制作过程","3. 文化意义"],
+   sample:"Paper-cutting, a traditional Chinese art with a history of over 1,500 years, is still popular today. Using just scissors and paper, artists create beautiful patterns of flowers, animals and characters. What is amazing is that all the designs are made by hand. It is not only a symbol of good luck but also an important part of Chinese culture.",
+   sentences:["What is amazing is that..."],mistakes:["把 paper-cutting 写成 cut paper","漏掉文化意义"]},
+  {year:2025,topic:"介绍北京中轴线",type:"文化介绍",
+   title:"假定你是李华，请向外国朋友介绍北京中轴线（Beijing Central Axis），写 60–80 词。",
+   points:["1. 中轴线的位置与长度","2. 沿线的著名建筑","3. 文化价值"],
+   sample:"The Beijing Central Axis, running from north to south for about 7.8 kilometers, is the backbone of the old city. Along it stand famous buildings such as the Forbidden City and the Temple of Heaven. What makes it unique is that it shows the wisdom of ancient Chinese city planning. In 2024, it was listed as a UNESCO World Heritage Site.",
+   sentences:["What makes it unique is that..."],mistakes:["长度数据错误","漏掉申遗信息"]},
+  {year:2026,topic:"介绍AI学习工具",type:"时政介绍",
+   title:"假定你是李华，请向同学介绍一款 AI 辅助学习工具，写 60–80 词。",
+   points:["1. 工具名称与功能","2. 使用场景","3. 注意事项（不过度依赖）"],
+   sample:"AI study tools are becoming popular among students. Take an AI writing assistant for example — it can correct grammar, explain mistakes and offer useful expressions. However, we should remember that AI is only a helper, not a replacement. If we use it wisely, it will surely make our learning more efficient and enjoyable.",
+   sentences:["Take ... for example,"],mistakes:["过度吹捧 AI","漏掉\"不过度依赖\"这一要点"]}
+];
+
+var cur = 0, done = {}, score = 0, filter = "all";
+var page = document.getElementById('page-practice');
+
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none'},1800);}
+
+function render(){
+  var list = PROMPTS.map(function(p,i){return {p:i};}).filter(function(o){
+    if(filter==='done')return done[o.p];if(filter==='undone')return !done[o.p];return true;
+  }).map(function(o){return o.p;});
+
+  var html = '';
+  list.forEach(function(i){
+    var p = PROMPTS[i];
+    var checked = done[i] ? done[i].length : 0;
+    var pts = p.points.map(function(pt,j){
+      var isDone = done[i] && done[i][j];
+      return '<label class="point '+(isDone?'done':'')+'"><input type="checkbox" data-i="'+i+'" data-j="'+j+'" '+(isDone?'checked':'')+'><span>'+pt+'</span></label>';
+    }).join('');
+    html += '<div class="prompt-card" data-i="'+i+'" style="display:'+(i===cur?'block':'none')+'">'
+      + '<div class="prompt-meta"><span>第 '+(i+1)+'/'+PROMPTS.length+' · '+p.year+'年 · '+p.topic+'</span><span class="type">'+p.type+'</span></div>'
+      + '<div class="prompt-text">'+p.title+'</div>'
+      + '<div class="points">'+pts+'</div>'
+      + '<div class="actions">'
+      + '<button class="btn sec" data-act="prev">上一题</button>'
+      + '<button class="btn" data-act="sample" data-i="'+i+'">查看范文</button>'
+      + '<button class="btn sec" data-act="next">下一题</button>'
+      + '</div>'
+      + '<div class="sample" id="sample'+i+'"><b>📄 参考范文：</b><br>'+p.sample+'<div class="analysis">'
+      + '<h4>💎 高分句式</h4>'+p.sentences.join('<br>')
+      + '<h4>⚠️ 易错点</h4>'+p.mistakes.join('<br>')
+      + '</div></div>'
+      + '</div>';
+  });
+  page.innerHTML = html || '<div style="text-align:center;color:#888;padding:40px">暂无内容</div>';
+
+  page.querySelectorAll('input[type=checkbox]').forEach(function(el){
+    el.onchange = function(){
+      var i = +el.dataset.i, j = +el.dataset.j;
+      if(!done[i])done[i]={};
+      if(el.checked){done[i][j]=1;score+=2;}else{delete done[i][j];score=Math.max(0,score-2);}
+      updateStats();render();
+    };
+  });
+  page.querySelectorAll('button[data-act]').forEach(function(btn){
+    btn.onclick = function(){
+      var act = btn.dataset.act;
+      if(act==='prev'&&cur>0){cur--;render();}
+      else if(act==='next'&&cur<PROMPTS.length-1){cur++;render();}
+      else if(act==='sample'){
+        var si = btn.dataset.i;
+        var s = document.getElementById('sample'+si);
+        if(s.classList.contains('show')){s.classList.remove('show');btn.textContent='查看范文';}
+        else{s.classList.add('show');btn.textContent='收起范文';}
+      }
+    };
+  });
+}
+
+function updateStats(){
+  var doneCount = 0;
+  PROMPTS.forEach(function(p,i){if(done[i]&&Object.keys(done[i]).length===p.points.length)doneCount++;});
+  document.getElementById('s-done').textContent = doneCount;
+  document.getElementById('s-cover').textContent = Math.round(doneCount/PROMPTS.length*100)+'%';
+  document.getElementById('s-score').textContent = score;
+  document.getElementById('progressBar').style.width = (doneCount/PROMPTS.length*100)+'%';
+}
+
+document.querySelectorAll('.tab').forEach(function(t){
+  t.onclick = function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+    t.classList.add('active');
+    var p = t.dataset.page;
+    document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+    document.getElementById('page-'+p).classList.add('active');
+  };
+});
+
+document.querySelectorAll('.filter').forEach(function(f){
+  f.onclick = function(){
+    document.querySelectorAll('.filter').forEach(function(x){x.classList.remove('active');});
+    f.classList.add('active');
+    filter = f.dataset.f;render();
+  };
+});
+
+document.getElementById('searchInput').oninput = function(){
+  var kw = this.value.trim().toLowerCase();
+  if(!kw){render();return;}
+  var first = PROMPTS.findIndex(function(p){return (p.topic+kw).toLowerCase().indexOf(kw)>=0 || (p.type+kw).toLowerCase().indexOf(kw)>=0 || (''+p.year).indexOf(kw)>=0;});
+  if(first>=0){cur=first;render();}
+};
+
+var tests=[{q:"微写作词数要求一般是？",ans:"B",res:"✅ 60–80 词"},
+  {q:"介绍类文章常用哪种时态？",ans:"A",res:"✅ 一般现在时"},
+  {q:"下列哪个是高级句型连接词？",ans:"B",res:"✅ What makes it ... is that..."}];
+var ti=0;
+document.querySelectorAll('.test-opt').forEach(function(o){
+  o.onclick = function(){
+    document.querySelectorAll('.test-opt').forEach(function(x){x.classList.remove('sel');});
+    o.classList.add('sel');
+    document.getElementById('testRes').innerHTML = (o.dataset.t===tests[ti].ans?'✅ 正确':'❌ 错误')+' — '+tests[ti].res;
+  };
+});
+document.getElementById('nextTest').onclick = function(){
+  ti=(ti+1)%tests.length;
+  document.getElementById('testQ').textContent = tests[ti].q;
+  document.getElementById('testRes').textContent = '';
+  document.querySelectorAll('.test-opt').forEach(function(x){x.classList.remove('sel');});
+};
+
+render();updateStats();
+</script>
+</body>
+</html>

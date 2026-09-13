@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>语法填空 专项突破</title>
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --blue: #3b5cff;
+    --purple: #6a3dff;
+    --text: #222;
+    --card: #fff;
+    --gray: #888;
+    --shadow: 0 6px 18px rgba(60, 80, 200, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .header {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff;
+    padding: 24px 16px 16px;
+    padding-top: calc(24px + env(safe-area-inset-top));
+    position: sticky; top: 0; z-index: 50;
+  }
+  .header h1 { font-size: 24px; display: flex; align-items: center; gap: 8px; }
+  .header p { opacity: 0.95; margin-top: 6px; font-size: 14px; }
+  .stats {
+    display: flex; gap: 10px; margin-top: 14px;
+    background: rgba(255,255,255,0.15);
+    padding: 10px; border-radius: 12px;
+  }
+  .stat { flex: 1; text-align: center; background: #fff; color: var(--text); border-radius: 10px; padding: 8px 0; box-shadow: var(--shadow); }
+  .stat b { display: block; font-size: 18px; color: var(--blue); }
+  .stat span { font-size: 11px; color: var(--gray); }
+  .progress-wrap { margin: 10px 16px 0; }
+  .progress-bar { height: 6px; background: #e5e8ef; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0; background: linear-gradient(135deg, var(--blue), var(--purple)); transition: width .3s; }
+  .tabs {
+    background: var(--bg); padding: 10px 16px;
+    display: flex; gap: 10px; border-bottom: 1px solid #e5e8ef;
+    position: sticky; top: 0; z-index: 49;
+  }
+  .tab {
+    padding: 8px 16px; border-radius: 20px; font-size: 14px;
+    background: #fff; color: var(--text); border: 1px solid #ddd; cursor: pointer;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff; border: none; font-weight: bold;
+  }
+  .search { padding: 10px 16px; background: var(--bg); }
+  .search input {
+    width: 100%; padding: 10px 14px 10px 36px; border-radius: 20px;
+    border: 1px solid #ddd; background: #fff; outline: none; font-size: 14px;
+  }
+  .filters { display: flex; gap: 8px; padding: 8px 16px; background: var(--bg); overflow-x: auto; }
+  .filter {
+    padding: 6px 14px; border-radius: 16px; font-size: 13px; white-space: nowrap;
+    background: #fff; border: 1px solid #ddd; color: var(--gray); cursor: pointer;
+  }
+  .filter.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .content { padding: 10px 16px 20px; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .quiz-card {
+    background: var(--card); border-radius: 14px; padding: 16px;
+    box-shadow: var(--shadow); margin-bottom: 16px;
+  }
+  .quiz-meta { display: flex; justify-content: space-between; color: var(--gray); font-size: 13px; margin-bottom: 10px; }
+  .quiz-meta .type { color: var(--purple); font-weight: bold; }
+  .text { line-height: 1.8; font-size: 16px; margin-bottom: 14px; }
+  .blank {
+    display: inline-block; min-width: 44px; border-bottom: 2px solid var(--blue);
+    color: var(--purple); font-weight: bold; text-align: center; margin: 0 3px;
+    font-size: 15px;
+  }
+  .blanks { margin-bottom: 14px; }
+  .blank-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+    padding: 10px; border-radius: 10px; background: #f8f9ff; border: 1px solid #eef2ff;
+  }
+  .blank-num { font-weight: bold; color: var(--blue); min-width: 28px; }
+  .blank-input {
+    flex: 1; padding: 8px 12px; border: 1.5px solid #dde3f0; border-radius: 8px;
+    font-size: 15px; outline: none; background: #fff;
+  }
+  .blank-input.correct { border-color: #2ecc71; background: #e6f7ec; color: #2ecc71; }
+  .blank-input.wrong { border-color: #e74c3c; background: #fdecea; color: #e74c3c; }
+  .prompt { color: var(--gray); font-size: 13px; min-width: 70px; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .actions { display: flex; gap: 10px; margin-top: 14px; }
+  .btn {
+    flex: 1; padding: 10px; border-radius: 10px; border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; font-size: 15px;
+  }
+  .btn.sec { background: #fff; color: var(--blue); border: 1px solid var(--blue); }
+  .analysis {
+    margin-top: 14px; padding: 12px; background: #f8f9ff; border-radius: 10px;
+    border-left: 4px solid var(--blue); font-size: 14px; line-height: 1.6; display: none;
+  }
+  .analysis.show { display: block; }
+  .analysis .item { margin-bottom: 4px; }
+  .analysis .item b { color: var(--purple); }
+  /* 技巧页 */
+  .tips-card { background: var(--card); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 14px; }
+  .tips-card h3 { color: var(--blue); margin-bottom: 10px; }
+  .step { margin-bottom: 10px; padding-left: 8px; border-left: 3px solid var(--blue); }
+  .clue { background: #f0f3ff; padding: 10px; border-radius: 10px; margin: 8px 0; border-left: 4px solid var(--purple); }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 13px; }
+  .bar-label { width: 130px; color: var(--gray); }
+  .bar-track { flex: 1; height: 10px; background: #eef2ff; border-radius: 5px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(135deg, var(--blue), var(--purple)); }
+  .mantra {
+    background: linear-gradient(135deg, #eef2ff, #f8f0ff); padding: 16px;
+    border-radius: 12px; text-align: center; font-weight: bold; color: var(--purple);
+    margin: 12px 0; line-height: 1.8;
+  }
+  .test-q { margin-top: 10px; }
+  .test-opt { padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; margin: 6px 0; cursor: pointer; font-size: 14px; }
+  .test-opt.sel { background: #eef2ff; border-color: var(--blue); color: var(--blue); font-weight: bold; }
+  .toast {
+    position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.75); color: #fff; padding: 10px 20px; border-radius: 20px;
+    font-size: 14px; z-index: 200; opacity: 0; transition: opacity .3s; pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+  @media (max-width: 360px) {
+    .header h1 { font-size: 20px; }
+    .stat b { font-size: 16px; }
+    .bar-label { width: 110px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header" id="header">
+  <h1>📝 语法填空 专项突破</h1>
+  <p>北京卷 · 2017-2026 十年真题模拟 · 共 10 篇</p>
+  <div class="stats">
+    <div class="stat"><b id="s-total">10</b><span>篇目</span></div>
+    <div class="stat"><b id="s-blanks">100</b><span>填空数</span></div>
+    <div class="stat"><b id="s-rate">0%</b><span>正确率</span></div>
+    <div class="stat"><b id="s-score">0</b><span>累计分</span></div>
+  </div>
+</div>
+
+<div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div></div>
+
+<div class="tabs">
+  <div class="tab active" data-page="practice">🎯 练习</div>
+  <div class="tab" data-page="tips">💡答题技巧</div>
+</div>
+
+<div class="search">
+  <input id="searchInput" placeholder="搜索主题 / 语法点 / 年份...">
+</div>
+<div class="filters">
+  <div class="filter active" data-f="all">全部</div>
+  <div class="filter" data-f="undone">未作答</div>
+  <div class="filter" data-f="done">已作答</div>
+</div>
+
+<div class="content">
+  <div class="page active" id="page-practice">
+    <div class="quiz-card" id="quizCard"><div class="quiz-meta"><span>第 1/10 · 2017年 · 科技与生活</span><span class="type">说明文</span></div><div class="text" id="textArea"></div><div class="blanks" id="blanksArea"></div><div class="prompts" id="promptsArea"></div><div class="actions"><button class="btn sec" id="prevBtn">上一题</button><button class="btn" id="checkBtn">核对</button><button class="btn sec" id="nextBtn">下一题</button></div><div class="analysis" id="ana"></div></div>
+  </div>
+  <div class="page" id="page-tips">
+    <div class="tips-card">
+      <h3>① 解题四步法</h3>
+      <div class="step">通读全文，把握大意与体裁（说明/记叙/议论）</div>
+      <div class="step">看提示词，判断词性与可能变形方向</div>
+      <div class="step">结合句子结构，确定具体语法点（时态/语态/非谓语…）</div>
+      <div class="step">代入检查：语法正确 + 语义通顺 + 拼写无误</div>
+    </div>
+    <div class="tips-card">
+      <h3>② 高频语法点分布</h3>
+      <div class="bar-row"><span class="bar-label">动词时态/语态</span><span class="bar-track"><span class="bar-fill" style="width:54%"></span></span></div><div class="bar-row"><span class="bar-label">非谓语(不定式/动名词/分词)</span><span class="bar-track"><span class="bar-fill" style="width:48%"></span></span></div><div class="bar-row"><span class="bar-label">词性转换</span><span class="bar-track"><span class="bar-fill" style="width:42%"></span></span></div><div class="bar-row"><span class="bar-label">从句(定语/状语/名词性)</span><span class="bar-track"><span class="bar-fill" style="width:36%"></span></span></div><div class="bar-row"><span class="bar-label">比较级/最高级</span><span class="bar-track"><span class="bar-fill" style="width:18%"></span></span></div><div class="bar-row"><span class="bar-label">冠词/介词/连词</span><span class="bar-track"><span class="bar-fill" style="width:24%"></span></span></div>
+    </div>
+    <div class="tips-card">
+      <h3>③ 5 大必考线索</h3>
+      <div class="clue"><b>时间状语</b>：now/nowadays→进行时或完成时；in the future→将来时；since→完成时</div>
+      <div class="clue"><b>句子成分</b>：缺主语/宾语→名词或动名词；修饰动词→副词</div>
+      <div class="clue"><b>固定搭配</b>：suggest doing / be used to / key to / spend...in</div>
+      <div class="clue"><b>从句引导词</b>：先行词是物→that/which；人→who；地点→where；非限定→which</div>
+      <div class="clue"><b>比较与倒装</b>：than→比较级；the more...the more；only/only in this way→部分倒装</div>
+    </div>
+    <div class="tips-card">
+      <h3>④ 十年命题趋势</h3>
+      <div>· 提示词变形为主（约7-8空），纯填虚词（冠词/介词/连词）为辅</div>
+      <div>· 非谓语（不定式/动名词/分词）是重中之重</div>
+      <div>· 短文主题贴近时代（中轴线申遗、AI助教）</div>
+    </div>
+    <div class="mantra">
+      🎵 速记口诀<br>
+      先看提示判词性，再看结构定时态；<br>
+      主谓宾定状补清，非谓语别发呆；<br>
+      固定搭配要记牢，十年趋势重时代。
+    </div>
+    <div class="tips-card test-q">
+      <h3>🎯 技巧速测</h3>
+      <div id="testQ">题干：It is important ___ (learn) a foreign language. 应填？</div>
+      <div class="test-opt" data-t="A">A. learn</div>
+      <div class="test-opt" data-t="B">B. to learn</div>
+      <div class="test-opt" data-t="C">C. learning</div>
+      <div class="test-opt" data-t="D">D. learned</div>
+      <div id="testRes" style="margin-top:8px;font-size:14px;"></div>
+      <button class="btn sec" id="nextTest" style="margin-top:10px;">下一题</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== 数据注入（由 build.js 从 gen.js 生成）=====
+const QUIZZES = [{"year":2017,"topic":"科技与生活","type":"说明文","text":"Nowadays, smartphones ___1___ (become) an important part of our daily life. Most young people use them ___2___ (check) news and chat with friends. ___3___ is also common to see people taking photos everywhere. Many apps are ___4___ (design) to make life easier. However, spending too much time on phones is ___5___ (harm) to our health. Experts suggest ___6___ (take) a break every hour. In the future, technology ___7___ (continue) to change the way we live. We should learn to use it ___8___ (wise). Only in this way ___9___ we enjoy the benefits without losing touch ___10___ the real world.","prompts":["become","check","It","design","harm","take","continue","wise","can","with"],"answers":["have become","to check","It","designed","harmful","taking","will continue","wisely","can","with"],"points":["现在完成时","不定式目的","形式主语","被动语态","词性转换(形)","动名词","一般将来时","词性转换(副)","部分倒装","固定搭配"],"analysis":["Nowadays+日常事实用现在完成时 have become","use ... to check 不定式表目的","It is common 形式主语","are designed 被动","is harmful to 形容词作表语","suggest doing 动名词","In the future 用一般将来时","use it wisely 副词修饰动词","Only in this way can we 部分倒装","lose touch with 固定搭配"]},{"year":2018,"topic":"早起习惯","type":"说明文","text":"Waking up early is a good habit ___1___ many successful people share. A morning person usually feels ___2___ (energetic) than those who stay up late. ___3___ (start) the day with a plan can help you focus better. It is ___4___ (general) believed that early risers are more productive. If you want to develop this habit, you should go to bed ___5___ (early) than usual. A healthy breakfast is also ___6___ (importance). Remember, the early bird ___7___ (catch) the worm. Many students ___8___ have tried this report feeling more confident. So why not give ___9___ a try? Little by little, you ___10___ (find) your days become more meaningful.","prompts":["that","energetic","Start","general","early","importance","catch","who","it","find"],"answers":["that","more energetic","Starting","generally","earlier","important","catches","who","it","will find"],"points":["定语从句","比较级","动名词主语","词性转换(副)","比较级","词性转换(形)","主谓一致","定语从句","固定表达","一般将来时"],"analysis":["habit 后接 that 引导的定语从句","than 提示比较级 more energetic","动名词 Starting 作主语","is generally believed 副词","than usual 用比较级 earlier","is important 形容词作表语","the early bird catches 一般现在时第三人称单数","students who 定语从句关系代词","give it a try 固定表达","养成习惯后你会发现，用一般将来时"]},{"year":2019,"topic":"失败的意义","type":"议论文","text":"Failure is something ___1___ everyone experiences. Instead of feeling sad, we should learn from ___2___ (we) mistakes. A person ___3___ never fails never tries anything new. When you fail, it means you are actually ___4___ (move) forward. Many famous ___5___ (invent), such as Edison, failed thousands of times before they succeeded. The key is to keep ___6___ (try) and never give up. ___7___ you see failure as a lesson, you will grow stronger. Remember that success is not final, and failure is not ___8___ (die). It is simply a step on the road to ___9___ (succeed). So don't be afraid of failing; be afraid of ___10___ (do) nothing.","prompts":["that","we","who","move","invent","try","If","die","succeed","do"],"answers":["that","our","who","moving","inventors","trying","If","dead","success","doing"],"points":["定语从句","物主代词","定语从句","现在进行时","名词复数","动名词","条件状语从句","词性转换(形)","词性转换(名)","动名词"],"analysis":["something that 定语从句","our mistakes 物主代词","person who 定语从句","are moving 现在进行时","famous inventors 名词复数","keep trying 动名词","If 引导条件句","is not dead 形容词","road to success 名词","of doing nothing 动名词"]},{"year":2020,"topic":"环境保护","type":"说明文","text":"Protecting the environment has become one of ___1___ (big) challenges of our time. ___2___ (pollute) from factories and cars is getting worse. Many animals are ___3___ (lose) their homes because of deforestation. If we do nothing, the earth ___4___ (become) unlivable in the future. ___5___ (luck), more and more people are now aware of the problem. Simple actions, such as ___6___ (recycle) and saving water, can make a big difference. Governments should also pass laws ___7___ (protect) the environment. It is everyone's ___8___ (responsible) to care for our planet. The earlier we act, ___9___ (good) the result will be. Let's work together ___10___ a greener world.","prompts":["big","Pollute","lose","become","Luck","recycle","protect","responsible","good","for"],"answers":["the biggest","Pollution","losing","will become","Luckily","recycling","to protect","responsibility","the better","for"],"points":["最高级","名词作主语","现在进行时","一般将来时","词性转换(副)","动名词","不定式目的","词性转换(名)","the比较级the比较级","固定搭配"],"analysis":["one of the biggest 最高级","Pollution 名词作主语","are losing 现在进行时","in the future 一般将来时","Luckily 副词","such as recycling 动名词","laws to protect 不定式目的","everyone's responsibility 名词","the earlier... the better 固定句型","work for 为了"]},{"year":2021,"topic":"学外语","type":"记叙文","text":"When I was young, I found English ___1___ (extreme) difficult. I could hardly remember new words, ___2___ made me very frustrated. My teacher told me that the secret ___3___ learning a language was practice. She encouraged me ___4___ (read) aloud every morning. At first, I was too shy ___5___ (speak) in class. But gradually, I made some ___6___ (friend) who also wanted to improve. We practiced together and ___7___ (correct) each other's mistakes. Now I can communicate ___8___ (confident) with foreigners. Looking back, I realize that persistence is ___9___ key to success. ___10___ you keep trying, you will surely make progress.","prompts":["extreme","which","to","read","speak","friend","correct","confident","the","If"],"answers":["extremely","which","to","to read","to speak","friends","corrected","confidently","the","If"],"points":["词性转换(副)","非限定性定语从句","固定搭配","不定式","too...to","名词复数","一般过去时","词性转换(副)","定冠词","条件状语从句"],"analysis":["extremely difficult 副词","which 非限定性定语从句","secret to 固定搭配","encourage sb to do","too shy to speak","some friends 复数","corrected 一般过去时","communicate confidently 副词","the key to success 定冠词","If 条件句"]},{"year":2022,"topic":"时间管理","type":"说明文","text":"Good time management is ___1___ (essence) for students. With so many tasks to finish, it is easy to feel ___2___ (overwhelm). A useful method is ___3___ (make) a to-do list every morning. By ___4___ (write) down priorities, you can focus on what matters most. ___5___ is important to avoid distractions like phones. Taking short breaks can actually help you work ___6___ (efficient). Many students find that planning ahead ___7___ (save) them a lot of time. Remember, time ___8___ (wait) for no one. The better you manage your time, ___9___ (much) you can achieve. Start today, ___10___ you will see the difference.","prompts":["essence","overwhelm","make","write","It","efficient","save","wait","much","and"],"answers":["essential","overwhelmed","to make","writing","It","more efficiently","saves","waits","the more","and"],"points":["词性转换(形)","过去分词(表语)","不定式","动名词","形式主语","比较级","主谓一致","一般现在时","the比较级","祈使句+and"],"analysis":["is essential 形容词","feel overwhelmed 过去分词作表语","to make a list 不定式表语","by writing 动名词","It is important 形式主语","work more efficiently 比较级副词","planning saves 主谓一致","time waits 一般现在时","the more you can achieve","祈使句 + and + 将来句"]},{"year":2023,"topic":"志愿者经历","type":"记叙文","text":"Last summer, I volunteered at a local shelter, ___1___ I helped take care of homeless animals. It was an experience I will never ___2___ (forget). At first, I was nervous because I ___3___ (never own) a pet before. But the staff taught me how ___4___ (feed) and clean them. Slowly, I became ___5___ (confidence) and even made friends with a dog ___6___ (call) Lucky. Seeing the animals find new homes made me ___7___ (real) happy. I learned that giving to others is ___8___ (reward) than receiving. Since then, I ___9___ (volunteer) there every month. If you have time, I strongly suggest you ___10___ (join) us.","prompts":["where","forget","never own","feed","confidence","call","real","reward","volunteer","join"],"answers":["where","forget","had never owned","to feed","confident","called","really","more rewarding","have volunteered","join"],"points":["非限定性定语从句","一般将来时","过去完成时","疑问句+不定式","词性转换(形)","过去分词(定语)","词性转换(副)","比较级","现在完成时","suggest+虚拟"],"analysis":["shelter, where 非限定性定语从句","will never forget 一般将来时","before 提示过去完成时 had never owned","how to feed 疑问词+不定式","became confident 形容词","dog called Lucky 过去分词作定语","made me really happy 副词","more rewarding 比较级","Since then 用现在完成时","suggest (that) you join 虚拟语气"]},{"year":2024,"topic":"笔记方法","type":"说明文","text":"Taking good notes is a skill ___1___ can greatly improve your learning. The best notes are not those ___2___ (write) word for word, but those that capture the main ideas. One popular method ___3___ (be) the Cornell system. It encourages students to review their notes ___4___ (regular). When you review, try ___5___ (connect) new information to what you already know. This makes the knowledge ___6___ (easy) to remember. Avoid writing too fast, ___7___ your handwriting may become messy. Instead, use abbreviations ___8___ can save time. With practice, your notes ___9___ (become) a powerful study tool. Remember, the purpose of notes is ___10___ (help) you learn better.","prompts":["that","write","be","regular","connect","easy","or","that","become","help"],"answers":["that","written","is","regularly","to connect","easier","or","which","will become","to help"],"points":["定语从句","过去分词","主谓一致","词性转换(副)","try to do","比较级","连词","定语从句","一般将来时","不定式"],"analysis":["skill that 定语从句","those written 过去分词作定语","One method is 单数","review regularly 副词","try to connect 不定式","make it easier 比较级","or 选择连词","abbreviations which 定语从句","with practice 将来时","the purpose is to help 不定式"]},{"year":2025,"topic":"北京中轴线","type":"说明文","text":"The Beijing Central Axis is a cultural treasure ___1___ (stretch) from north to south through the heart of the city. It ___2___ (list) as a UNESCO World Heritage Site in 2024. Along the axis stand many famous ___3___ (build), including the Forbidden City and Tiananmen Square. The design of the axis ___4___ (reflect) ancient Chinese ideas about harmony and order. Millions of tourists visit it every year ___5___ (admire) its beauty. ___6___ (walk) along the axis, one can feel the weight of history. Protecting such heritage is ___7___ (extreme) important for future generations. The government has taken measures ___8___ (preserve) it. Many schools also organize activities ___9___ students can learn about traditional culture. It is hoped that this treasure ___10___ (pass) down forever.","prompts":["stretch","list","build","reflect","admire","Walk","extreme","preserve","where","pass"],"answers":["stretching","was listed","buildings","reflects","to admire","Walking","extremely","to preserve","where","will be passed"],"points":["现在分词","被动语态","名词复数","主谓一致","不定式目的","动名词主语","词性转换(副)","不定式目的","定语从句","一般将来时被动"],"analysis":["treasure stretching 现在分词作定语","was listed 被动 + 过去时间","famous buildings 名词复数","design reflects 单数","to admire 不定式目的","Walking 动名词作主语","extremely important 副词","measures to preserve 不定式","activities where 定语从句","will be passed 将来时被动"]},{"year":2026,"topic":"AI助教","type":"说明文","text":"Artificial intelligence is changing the way students learn. Many schools now use AI tools ___1___ (help) students understand difficult concepts. ___2___ (personal), I think AI is a useful assistant, but it can never replace teachers. These tools can provide ___3___ (instant) feedback, which saves a lot of time. However, students should be careful ___4___ (not rely) on them too much. A good approach is to use AI ___5___ (check) your answers after you have tried solving problems on your own. Teachers also use AI ___6___ (analyze) students' progress. ___7___ AI becomes more advanced, we need to learn how to use it wisely. The key is ___8___ (balance) technology with human interaction. Used ___9___ (proper), AI can greatly improve learning outcomes. In the future, I believe AI and teachers ___10___ (work) together to create better education.","prompts":["help","Personal","instant","not rely","check","analyze","As","balance","proper","work"],"answers":["to help","Personally","instant","not to rely","to check","to analyze","As","to balance","properly","will work"],"points":["不定式目的","词性转换(副)","形容词","不定式","不定式","不定式","时间状语从句","不定式","词性转换(副)","一般将来时"],"analysis":["use AI to help 不定式目的","Personally 副词作评注性状语","instant feedback 形容词","be careful not to rely 不定式否定","use AI to check 不定式","use AI to analyze 不定式","As AI becomes 时间状语从句","the key is to balance 不定式","Used properly 副词","In the future 一般将来时"]}];
+
+let cur = 0, inputs = [], done = {}, score = 0, filter = "all";
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._timer); t._timer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// 把 "___N___" 占位替换为空位元素
+function buildText(q) {
+  const parts = q.text.split(/(___\d+___)/g);
+  return parts.map(p => {
+    const m = p.match(/___(\d+)___/);
+    if (m) return '<span class="blank">' + m[1] + '</span>';
+    return p;
+  }).join('');
+}
+
+function renderQuiz() {
+  const q = QUIZZES[cur];
+  if (!inputs.length || inputs.length !== q.answers.length) inputs = new Array(q.answers.length).fill('');
+  const card = document.getElementById('quizCard');
+  card.innerHTML = '';
+  const meta = document.createElement('div'); meta.className = 'quiz-meta';
+  meta.innerHTML = '<span>第 ' + (cur+1) + '/' + QUIZZES.length + ' · ' + q.year + '年 · ' + q.topic + '</span><span class="type">' + q.type + '</span>';
+  card.appendChild(meta);
+
+  const textEl = document.createElement('div'); textEl.className = 'text';
+  textEl.innerHTML = buildText(q);
+  card.appendChild(textEl);
+
+  const blanksEl = document.createElement('div'); blanksEl.className = 'blanks';
+  for (let i = 0; i < q.answers.length; i++) {
+    const row = document.createElement('div'); row.className = 'blank-row';
+    const num = document.createElement('span'); num.className = 'blank-num'; num.textContent = (i+1) + '.';
+    const inp = document.createElement('input'); inp.className = 'blank-input'; inp.type = 'text';
+    inp.placeholder = '填正确形式'; inp.value = inputs[i] || '';
+    inp.addEventListener('input', e => { inputs[i] = e.target.value.trim(); });
+    const pr = document.createElement('span'); pr.className = 'prompt'; pr.textContent = '(' + q.prompts[i] + ')';
+    row.appendChild(num); row.appendChild(inp); row.appendChild(pr);
+    blanksEl.appendChild(row);
+  }
+  card.appendChild(blanksEl);
+
+  const actions = document.createElement('div'); actions.className = 'actions';
+  actions.innerHTML = '<button class="btn sec" id="prevBtn">上一题</button><button class="btn" id="checkBtn">核对</button><button class="btn sec" id="nextBtn">下一题</button>';
+  card.appendChild(actions);
+
+  const ana = document.createElement('div'); ana.className = 'analysis'; ana.id = 'ana';
+  card.appendChild(ana);
+
+  bindQuiz();
+  updateStats();
+}
+
+function normalize(s) { return (s || '').toString().toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
+function bindQuiz() {
+  document.getElementById('checkBtn').onclick = () => {
+    const q = QUIZZES[cur];
+    let rightCount = 0;
+    const rows = document.querySelectorAll('.blank-row');
+    inputs.forEach((val, i) => { if (!val) return; });
+    // 校验每一空（允许多解，用 | 分隔）
+    q.answers.forEach((ans, i) => {
+      const accepted = ans.split('|').map(normalize);
+      const user = normalize(inputs[i]);
+      const inpEl = rows[i] ? rows[i].querySelector('.blank-input') : null;
+      if (accepted.includes(user) && user) {
+        rightCount++;
+        if (inpEl) inpEl.classList.add('correct');
+      } else if (inpEl && user) {
+        inpEl.classList.add('wrong');
+      }
+    });
+    const filled = inputs.filter(v => v).length;
+    if (filled < q.answers.length) { toast('请先填完所有空格（' + filled + '/' + q.answers.length + '）'); }
+    const allFilled = filled >= q.answers.length;
+    if (allFilled && !done[cur]) { done[cur] = 1; score += rightCount; }
+    else if (allFilled && done[cur]) { /* 已计分，不重复 */ }
+    const ana = document.getElementById('ana');
+    let html = '<b>得分：' + rightCount + ' / ' + q.answers.length + '</b><br>';
+    q.analysis.forEach((a, i) => {
+      html += '<div class="item"><b>' + (i+1) + '.</b> ' + a + ' → <b>' + q.answers[i] + '</b></div>';
+    });
+    ana.innerHTML = html; ana.classList.add('show');
+    if (allFilled) updateStats();
+  };
+  document.getElementById('nextBtn').onclick = () => {
+    if (cur < QUIZZES.length - 1) { cur++; inputs = []; renderQuiz(); }
+    else { toast('已是最后一篇，去技巧页看看吧'); }
+  };
+  document.getElementById('prevBtn').onclick = () => {
+    if (cur > 0) { cur--; inputs = []; renderQuiz(); }
+  };
+}
+
+function updateStats() {
+  const doneCount = Object.keys(done).filter(k => done[k]).length;
+  const totalQ = QUIZZES.reduce((s, q) => s + q.answers.length, 0);
+  document.getElementById('s-rate').textContent = doneCount ? (Math.round(score / (doneCount * 10) * 100)) + '%' : '0%';
+  document.getElementById('s-score').textContent = score;
+  // 进度条：按篇目
+  const fill = document.getElementById('progressFill');
+  if (fill) fill.style.width = ((doneCount / QUIZZES.length) * 100) + '%';
+}
+
+// 标签切换（事件委托）
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  const p = t.dataset.page;
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-' + p).classList.add('active');
+}));
+
+// 筛选
+document.querySelectorAll('.filter').forEach(f => f.addEventListener('click', () => {
+  document.querySelectorAll('.filter').forEach(x => x.classList.remove('active'));
+  f.classList.add('active');
+  filter = f.dataset.f;
+  // 简单定位：未作答->第一篇未做；已作答->第一篇已做
+  const target = QUIZZES.findIndex((q, i) => filter === 'undone' ? !done[i] : filter === 'done' ? done[i] : true);
+  if (target >= 0) { cur = target; inputs = []; renderQuiz(); }
+}));
+
+// 搜索
+document.getElementById('searchInput').addEventListener('input', e => {
+  const kw = e.target.value.trim().toLowerCase();
+  if (!kw) return;
+  const target = QUIZZES.findIndex(q => (q.topic + q.year + q.type + q.analysis.join('')).toLowerCase().includes(kw));
+  if (target >= 0) { cur = target; inputs = []; renderQuiz(); }
+});
+
+// 技巧速测
+const tests = [
+  { q: "题干：It is important ___ (learn) a foreign language. 应填？", opts: [['A','learn'],['B','to learn'],['C','learning'],['D','learned']], ans: 'B', res: '✅ to learn（It is important to do 不定式）' },
+  { q: "题干：She has lived here ___ (since) 2010. 时间状语提示？", opts: [['A','一般过去时'],['B','现在完成时'],['C','现在进行时'],['D','一般将来时']], ans: 'B', res: '✅ 现在完成时（since + 时间点）' },
+  { q: "题干：The book ___ (write) by Lu Xun. 语态？", opts: [['A','writes'],['B','wrote'],['C','was written'],['D','writing']], ans: 'C', res: '✅ was written（被动语态）' }
+];
+let ti = 0;
+function renderTest() {
+  const t = tests[ti];
+  document.getElementById('testQ').textContent = t.q;
+  const card = document.querySelector('#page-tips .test-q');
+  // 保留 h3 和 testQ
+  const optsHtml = t.opts.map(o => '<div class="test-opt" data-t="' + o[0] + '">' + o[0] + '. ' + o[1] + '</div>').join('');
+  let res = document.getElementById('testRes');
+  const next = document.getElementById('nextTest');
+  // 重建选项
+  const old = card.querySelectorAll('.test-opt'); old.forEach(o => o.remove());
+  card.insertBefore(document.createRange().createContextualFragment(optsHtml), res);
+  res.textContent = '';
+  card.querySelectorAll('.test-opt').forEach(o => o.addEventListener('click', () => {
+    card.querySelectorAll('.test-opt').forEach(x => x.classList.remove('sel'));
+    o.classList.add('sel');
+    const r = o.dataset.t === tests[ti].ans ? '对 ✅' : '错 ❌';
+    res.textContent = r + '  ' + tests[ti].res;
+  }));
+  next.onclick = () => { ti = (ti + 1) % tests.length; renderTest(); };
+}
+renderTest();
+
+// 头部防压边 + 初始渲染
+function fitTopGap() {}
+renderQuiz(); updateStats();
+</script>
+</body>
+</html>

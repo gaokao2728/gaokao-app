@@ -132,9 +132,11 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
     <div class="tips-card test-q">
       <h3>🎯 技巧速测</h3>
       <div id="testQ">微写作词数要求一般是？</div>
-      <div class="test-opt" data-t="A">A. 30–40 词</div>
-      <div class="test-opt" data-t="B">B. 60–80 词</div>
-      <div class="test-opt" data-t="C">C. 100–120 词</div>
+      <div id="testOpts">
+        <div class="test-opt" data-t="A">A. 30–40 词</div>
+        <div class="test-opt" data-t="B">B. 60–80 词</div>
+        <div class="test-opt" data-t="C">C. 100–120 词</div>
+      </div>
       <div id="testRes" style="margin-top:8px;font-size:14px;"></div>
       <button class="btn sec" id="nextTest" style="margin-top:10px;">下一题</button>
     </div>
@@ -289,25 +291,40 @@ document.getElementById('searchInput').oninput = function(){
   if(first>=0){cur=first;render();}
 };
 
-var tests=[{q:"微写作词数要求一般是？",ans:"B",res:"✅ 60–80 词"},
-  {q:"介绍类文章常用哪种时态？",ans:"A",res:"✅ 一般现在时"},
-  {q:"下列哪个是高级句型连接词？",ans:"B",res:"✅ What makes it ... is that..."}];
+var tests=[
+  {q:"微写作词数要求一般是？", ans:"B", res:"✅ 60–80 词",
+   options:["A. 30–40 词","B. 60–80 词","C. 100–120 词"]},
+  {q:"介绍类文章（如介绍胡同、茶文化）常用哪种时态？", ans:"A", res:"✅ 一般现在时",
+   options:["A. 一般现在时","B. 一般过去时","C. 一般将来时"]},
+  {q:"下列哪个是范文里反复出现的高级句型？", ans:"B", res:"✅ What makes it ... is that...",
+   options:["A. Very good","B. What makes it ... is that...","C. And so on"]}
+];
 var ti=0;
-document.querySelectorAll('.test-opt').forEach(function(o){
-  o.onclick = function(){
-    document.querySelectorAll('.test-opt').forEach(function(x){x.classList.remove('sel');});
-    o.classList.add('sel');
-    document.getElementById('testRes').innerHTML = (o.dataset.t===tests[ti].ans?'✅ 正确':'❌ 错误')+' — '+tests[ti].res;
-  };
-});
+function renderTest(){
+  document.getElementById('testQ').textContent = tests[ti].q;
+  var opts=document.getElementById('testOpts');
+  opts.innerHTML = tests[ti].options.map(function(opt){
+    return '<div class="test-opt" data-t="'+opt.charAt(0)+'">'+opt+'</div>';
+  }).join('');
+  document.getElementById('testRes').textContent = '';
+  bindTestOpts();
+}
+function bindTestOpts(){
+  document.querySelectorAll('.test-opt').forEach(function(o){
+    o.onclick = function(){
+      document.querySelectorAll('.test-opt').forEach(function(x){x.classList.remove('sel');});
+      o.classList.add('sel');
+      document.getElementById('testRes').innerHTML = (o.dataset.t===tests[ti].ans?'✅ 正确':'❌ 错误')+' — '+tests[ti].res;
+    };
+  });
+}
 document.getElementById('nextTest').onclick = function(){
   ti=(ti+1)%tests.length;
-  document.getElementById('testQ').textContent = tests[ti].q;
-  document.getElementById('testRes').textContent = '';
-  document.querySelectorAll('.test-opt').forEach(function(x){x.classList.remove('sel');});
+  renderTest();
 };
 
 render();updateStats();
+renderTest();
 </script>
 </body>
 </html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语听口速记方法</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #2e3440;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        /* 大标题 */
+        .main-title {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1C3A5E 0%, #2D5F8A 100%);
+            color: #fff;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(28, 58, 94, 0.3);
+        }
+        .main-title h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .main-title p {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+        /* 章节标题 */
+        .section-title {
+            background-color: #1C3A5E;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 18px;
+            margin: 30px 0 15px 0;
+            box-shadow: 0 2px 8px rgba(28, 58, 94, 0.2);
+        }
+        .subsection-title {
+            font-size: 15px;
+            color: #1C3A5E;
+            background-color: #e8eef4;
+            padding: 8px 15px;
+            border-radius: 6px;
+            margin: 18px 0 10px 0;
+            border-left: 4px solid #2D5F8A;
+        }
+        /* 卡片式内容块 */
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px 25px;
+            margin: 12px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border: 1px solid #e1e5eb;
+        }
+        .card ul {
+            padding-left: 20px;
+        }
+        .card li {
+            margin-bottom: 6px;
+            line-height: 1.7;
+        }
+        .card li strong {
+            color: #1C3A5E;
+        }
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        table th {
+            background-color: #1C3A5E;
+            color: #fff;
+            padding: 10px 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        table td {
+            padding: 9px 15px;
+            border-bottom: 1px solid #e8eef4;
+            font-size: 14px;
+        }
+        table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        table tr:hover {
+            background-color: #eef3f8;
+        }
+        /* 代码/速记示例块 */
+        .code-block {
+            background-color: #2e3440;
+            color: #a8d5a2;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: "Consolas", "Courier New", monospace;
+            font-size: 14px;
+            margin: 12px 0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            position: relative;
+        }
+        .code-block .label {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #2A6B5A;
+            color: #fff;
+            padding: 2px 10px;
+            font-size: 11px;
+            border-radius: 0 8px 0 8px;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        /* 转述示例块 */
+        .quote-block {
+            background: linear-gradient(135deg, #eef6ff 0%, #f0f4ff 100%);
+            border-left: 5px solid #2D5F8A;
+            padding: 18px 22px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+            font-style: italic;
+            line-height: 1.8;
+        }
+        .quote-block p {
+            margin-bottom: 8px;
+        }
+        .quote-block p:last-child {
+            margin-bottom: 0;
+        }
+        /* 提示框 */
+        .tip-box {
+            background-color: #f0faf4;
+            border-left: 4px solid #2A6B5A;
+            padding: 12px 18px;
+            border-radius: 0 6px 6px 0;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+        .tip-box strong {
+            color: #2A6B5A;
+        }
+        /* 检查清单 */
+        .checklist li {
+            list-style: none;
+            padding-left: 5px;
+        }
+        .checklist li::before {
+            content: "✅ ";
+            color: #2A6B5A;
+        }
+        /* 步骤标签 */
+        .step-badge {
+            display: inline-block;
+            background: #2D5F8A;
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        /* 分隔线 */
+        hr {
+            border: none;
+            border-top: 2px dashed #d1d8e0;
+            margin: 25px 0;
+        }
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .container { padding: 15px 10px; }
+            .main-title h1 { font-size: 22px; }
+            .section-title { font-size: 16px; }
+            table { font-size: 13px; }
+            table th, table td { padding: 7px 10px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 大标题 -->
+    <div class="main-title">
+        <h1>英语听口速记方法</h1>
+        <p>核心不是"逐字听写"，而是抓关键信息 + 用符号缩写快速记录</p>
+    </div>
+
+    <!-- ===== 第一部分：核心速记方法 ===== -->
+    <h2 class="section-title">一、核心速记方法</h2>
+
+    <div class="subsection-title"><span class="step-badge">方法1</span>符号法</div>
+    <div class="card">
+        <p>用特殊符号代替单词或句子，大幅提升记录速度。</p>
+        <ul>
+            <li><strong>上升/更好：</strong>↑ 或 /</li>
+            <li><strong>下降/更差：</strong>↓ 或 \</li>
+            <li><strong>因为：</strong>∵</li>
+            <li><strong>所以/导致：</strong>∴ 或 →</li>
+            <li><strong>否定（not/don't）：</strong>×</li>
+            <li><strong>例如：</strong>e.g.</li>
+            <li><strong>大约/几乎：</strong>≈</li>
+            <li><strong>大于/超过：</strong>></li>
+            <li><strong>小于/少于：</strong>&lt;</li>
+            <li><strong>之前：</strong>↲</li>
+            <li><strong>之后：</strong>↳</li>
+            <li><strong>第一/然后：</strong>1: / 2:</li>
+            <li><strong>支持/同意：</strong>√</li>
+            <li><strong>反对/不同意：</strong>×</li>
+            <li><strong>重要/强调：</strong>★ 或 !</li>
+            <li><strong>不确定：</strong>？</li>
+        </ul>
+    </div>
+
+    <div class="subsection-title"><span class="step-badge">方法2</span>缩写法</div>
+    <div class="card">
+        <p>保留单词核心部分，用首字母、前几个字母或辅音框架代替。</p>
+        <ul>
+            <li><strong>常用词缩写：</strong>day→d，Monday→Mon，month→m，together→tg，family→fam，teacher→t，student→s</li>
+            <li><strong>长单词缩写：</strong>information→info，important→imp，government→gov，people→ppl，problem→prob，solution→sol，university→uni，environment→env</li>
+            <li><strong>去掉元音：</strong>message→msg，beautiful→btfl，homework→hmwk</li>
+        </ul>
+    </div>
+
+    <div class="subsection-title"><span class="step-badge">方法3</span>汉字/拼音法</div>
+    <div class="card">
+        <p>遇到拼写复杂的长单词，直接写汉字或拼音，节省时间。</p>
+        <ul>
+            <li><strong>daughter</strong>→女儿，<strong>person</strong>→人，<strong>football</strong>→足，<strong>window</strong>→户</li>
+            <li><strong>国家/人名：</strong>America→Ameri…/美国，Mozart→莫扎特/拼音</li>
+        </ul>
+    </div>
+
+    <div class="subsection-title"><span class="step-badge">方法4</span>音标法</div>
+    <div class="card">
+        <p>听不懂的单词，用模糊音标或大概拼写记录，避免卡壳。</p>
+        <ul>
+            <li><strong>naughty</strong>→noti，<strong>respectfully</strong>→rsbtfi，<strong>creative</strong>→crtiv</li>
+        </ul>
+    </div>
+
+    <!-- ===== 第二部分：听前预判 ===== -->
+    <h2 class="section-title">二、听前预判：抢占先机</h2>
+    <div class="card">
+        <p>利用录音前的 <strong>30秒</strong> 审题，快速扫读题干和选项，圈出核心名词（人物、事件、地点）、疑问词（what/where/when/why/how），预判故事框架（<strong>6W1H</strong>：Who/When/Where/What/Why/How/Result）。提前在草稿纸上划分区域，按句子分行记录，句与句之间留空行，方便后续补充。</p>
+    </div>
+
+    <!-- ===== 第三部分：听中速记 ===== -->
+    <h2 class="section-title">三、听中速记：抓大放小</h2>
+
+    <div class="subsection-title"><span class="step-badge">第一遍</span>抓"骨架"</div>
+    <div class="card">
+        <p>重点抓"骨架"——记录5W1H核心要素、句子主干（主谓宾）、动词，使用个性化符号、缩写、首字母代替长词，<strong>不追求逐字听写</strong>。</p>
+    </div>
+
+    <div class="subsection-title"><span class="step-badge">第二遍</span>补"血肉"</div>
+    <div class="card">
+        <p>在预留空位补全形容词、副词、逻辑连接词（but/so/finally等）、人物关系及情感态度词，次要细节可舍弃。</p>
+    </div>
+
+    <div class="subsection-title"><span class="step-badge">核心原则</span></div>
+    <div class="card">
+        <p>只记名词+动词，按顺序从左到右或一列一列记录，用箭头表示动作或主语承接，确保自己能快速识别。</p>
+    </div>
+
+    <!-- ===== 第四部分：听后重组 ===== -->
+    <h2 class="section-title">四、听后重组：串联逻辑</h2>
+    <div class="card">
+        <p>利用1分钟准备时间梳理逻辑，按时间顺序或事件发展将笔记划分为开端、发展、高潮、结局3-4个层次。补充逻辑连接词（At first/Then/However/Finally等）串联段落，将关键词转化为完整句子。检查时态（通常为一般过去时）和人称一致性，确认所有给定关键词均已使用，未听清部分可根据梗概合理推测补全。</p>
+    </div>
+
+    <!-- ===== 第五部分：备考训练建议 ===== -->
+    <h2 class="section-title">五、备考训练建议</h2>
+    <div class="card">
+        <ol style="padding-left: 20px;">
+            <li><strong>精听训练：</strong>每天用真题盲听记笔记，第二遍逐句听写对比原文，分析漏听原因（连读、词汇等）。</li>
+            <li><strong>复述录音：</strong>严格按模板复述并录音，对比参考音频修正逻辑、语速和发音。</li>
+            <li><strong>话题积累：</strong>总结高频主题（助人、环保、校园生活等）的常用词汇和万能句型。</li>
+            <li><strong>建立专属体系：</strong>最关键的是在平日练习中形成自己习惯的速记符号体系，灵活组合上述方法，熟能生巧，真正提升英语信息记录的效率。</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <!-- ===== 第二部分：真题演练 ===== -->
+    <h2 class="section-title">真题演练：听后转述完整流程</h2>
+
+    <div class="subsection-title"><span class="step-badge">模拟题目</span></div>
+    <div class="card">
+        <p><strong>表格信息（听后记录需填写）：</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:18%;">项目</th>
+                    <th>内容</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>活动名称</strong></td><td>School Clean-up Day</td></tr>
+                <tr><td><strong>时间</strong></td><td>last Saturday</td></tr>
+                <tr><td><strong>地点</strong></td><td>the school campus</td></tr>
+                <tr><td><strong>参与者</strong></td><td>all the students</td></tr>
+                <tr><td><strong>活动内容</strong></td><td>① picked up litter ② cleaned the windows ③ planted flowers</td></tr>
+                <tr><td><strong>组织者</strong></td><td>the Student Union</td></tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top:15px;"><strong>转述开头句（已给出）：</strong></p>
+        <div class="quote-block">
+            <p>Last Saturday, our school held a Clean-up Day on the campus.</p>
+        </div>
+    </div>
+
+    <!-- 第一步：听前预判 -->
+    <div class="subsection-title"><span class="step-badge">第一步</span>听前预判（30秒）</div>
+    <div class="card">
+        <p>拿到表格后，快速扫一眼，圈出核心词：</p>
+        <ul>
+            <li><strong>时间</strong>：last Saturday → 过去时，转述时动词用过去式</li>
+            <li><strong>地点</strong>：school campus → 校园活动</li>
+            <li><strong>参与者</strong>：all the students → 转述时用 "we"</li>
+            <li><strong>活动内容</strong>：3个动词短语（picked up / cleaned / planted）→ 核心得分点</li>
+            <li><strong>组织者</strong>：Student Union → 结尾可提</li>
+        </ul>
+        <p style="margin-top:12px;"><strong>预判框架（6W1H）：</strong></p>
+        <div class="quote-block">
+            <p>Who（all students）+ When（last Sat.）+ Where（campus）+ What（3件事）+ Why（美化校园）+ How（organized by SU）</p>
+        </div>
+        <p>草稿纸上提前画好横线，分3-4行，每行留空位。</p>
+    </div>
+
+    <!-- 第二步：听中速记 -->
+    <div class="subsection-title"><span class="step-badge">第二步</span>听中速记（两遍录音）</div>
+
+    <p style="margin:12px 0 6px;"><strong>第一遍：抓"骨架"——动词优先</strong></p>
+    <div class="tip-box">
+        听到什么写什么，优先记动词和核心名词，用缩写/符号：
+    </div>
+    <div class="code-block">
+        <span class="label">速记示例</span>
+last Sat. / campus / all stu
+① pick ↑ litter
+② clean window
+③ plant flower
+org: SU</div>
+    <div class="tip-box">
+        <strong>技巧：</strong>动词单独占一行，名词紧跟其后，用箭头表示动作方向。"picked up litter" 记成 "pick ↑ litter"，"Student Union" 记成 "SU"。
+    </div>
+
+    <p style="margin:15px 0 6px;"><strong>第二遍：补"血肉"——细节+逻辑词</strong></p>
+    <div class="tip-box">
+        在预留空位补充形容词、连接词、情感态度：
+    </div>
+    <div class="code-block">
+        <span class="label">速记示例</span>
+last Sat. / campus / all stu
+① pick ↑ litter  (everywhere)
+② clean window  (classroom)
+③ plant flower  (garden)
+→ campus more beautiful
+org: SU  ★</div>
+    <div class="tip-box">
+        <strong>技巧：</strong>用 "→" 表示结果（校园更美了），用 "★" 标记重点信息（组织者）。
+    </div>
+
+    <!-- 第三步：听后重组 -->
+    <div class="subsection-title"><span class="step-badge">第三步</span>听后重组（2分钟准备）</div>
+    <div class="card">
+        <p>利用准备时间，把笔记按逻辑分层，补全连接词：</p>
+        <p><strong>层次划分：</strong></p>
+        <ol style="padding-left: 20px;">
+            <li><strong>开头</strong>（已给出）：Last Saturday, our school held a Clean-up Day on the campus.</li>
+            <li><strong>主体</strong>（3件事，用 Firstly/Secondly/Finally 串联）：
+                <ul style="padding-left: 20px; margin-top: 5px;">
+                    <li>Firstly, we picked up litter everywhere on the campus.</li>
+                    <li>Secondly, we cleaned the windows of the classrooms.</li>
+                    <li>Finally, we planted flowers in the garden.</li>
+                </ul>
+            </li>
+            <li><strong>结尾</strong>（结果+组织者）：
+                <ul style="padding-left: 20px; margin-top: 5px;">
+                    <li>As a result, our campus became much more beautiful. The activity was organized by the Student Union.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <p style="margin-top:15px;"><strong>检查清单：</strong></p>
+        <ul class="checklist" style="padding-left: 0;">
+            <li>时态：全部用一般过去时</li>
+            <li>人称：录音中 "students" → 转述用 "we"</li>
+            <li>3个活动内容全部覆盖</li>
+            <li>开头句已使用</li>
+        </ul>
+    </div>
+
+    <!-- 第四步：正式转述 -->
+    <div class="subsection-title"><span class="step-badge">第四步</span>正式转述（约90秒）</div>
+    <div class="quote-block">
+        <p>Last Saturday, our school held a Clean-up Day on the campus. All the students took an active part in it. Firstly, we picked up litter everywhere on the campus. Secondly, we cleaned the windows of the classrooms carefully. Finally, we planted flowers in the garden. As a result, our campus became much more beautiful. The activity was organized by the Student Union. Everyone felt tired but happy.</p>
+    </div>
+
+    <hr>
+
+    <!-- 核心要点总结 -->
+    <h2 class="section-title">核心要点总结</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width:12%;">阶段</th>
+                <th style="width:28%;">关键动作</th>
+                <th>核心技巧</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>听前</strong></td>
+                <td>30秒预判</td>
+                <td>圈核心词，预判6W1H框架</td>
+            </tr>
+            <tr>
+                <td><strong>听中（第一遍）</strong></td>
+                <td>抓骨架</td>
+                <td>记动词+名词，用符号/缩写</td>
+            </tr>
+            <tr>
+                <td><strong>听中（第二遍）</strong></td>
+                <td>补血肉</td>
+                <td>补形容词、连接词、情感态度</td>
+            </tr>
+            <tr>
+                <td><strong>听后</strong></td>
+                <td>重组逻辑</td>
+                <td>分层串联，补连接词，检查时态人称</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="tip-box">
+        <strong>一句话口诀：</strong>抓骨架、补血肉、串逻辑——不逐字听写，只抓关键信息！
+    </div>
+
+</div>
+</body>
+</html>
